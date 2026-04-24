@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduOrbit — Educational Counselling | Admissions 2026-27</title>
+  <meta name="description" content="EduOrbit helps students find the right college with direct private admissions, expert career counseling, and 100% free education loan guidance. Trusted by 1500+ students across India.">
+  <meta name="keywords" content="college admissions, B.Tech, MBA, BBA, BCA, diploma, JIS Group, West Bengal colleges, education loan, career counseling">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- Loader -->
+  <div class="loader" id="loader">
+    <div class="loader-text">
+      <span>E</span><span>D</span><span>U</span><span>O</span><span>R</span><span>B</span><span>I</span><span>T</span>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" id="navLogo">
+        <span class="logo-edu">EDU</span><span class="logo-orbit">ORBIT</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#about" class="nav-link" data-hover>About</a>
+        <a href="#colleges" class="nav-link" data-hover>Colleges</a>
+        <a href="#fees" class="nav-link" data-hover>Fee Structure</a>
+        <a href="#services" class="nav-link" data-hover>Services</a>
+        <a href="#contact" class="nav-link nav-link--cta" data-hover>Free Counselling</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-links">
+      <a href="#about" class="mobile-link">About</a>
+      <a href="#colleges" class="mobile-link">Colleges</a>
+      <a href="#fees" class="mobile-link">Fee Structure</a>
+      <a href="#services" class="mobile-link">Services</a>
+      <a href="#contact" class="mobile-link">Free Counselling</a>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-text" aria-hidden="true">EDUORBIT</div>
+    <div class="hero-content">
+      <div class="hero-badge reveal-up">
+        <span class="badge-dot"></span>
+        Admissions Open — Session 2026-27
+      </div>
+      <h1 class="hero-title">
+        <span class="title-line reveal-up" style="--delay: 0.1s">Your Path to the</span>
+        <span class="title-line title-line--accent reveal-up" style="--delay: 0.2s">Right College</span>
+        <span class="title-line reveal-up" style="--delay: 0.3s">Starts Here.</span>
+      </h1>
+      <p class="hero-sub reveal-up" style="--delay: 0.4s">
+        Direct private college admissions, expert career counseling, and 100% free education loan guidance — all under one roof.
+      </p>
+      <div class="hero-actions reveal-up" style="--delay: 0.5s">
+        <a href="#fees" class="btn btn--primary" data-hover>Explore Fee Structure</a>
+        <a href="#contact" class="btn btn--outline" data-hover>Book Free Call</a>
+      </div>
+      <div class="hero-stats reveal-up" style="--delay: 0.6s">
+        <div class="stat">
+          <span class="stat-num" data-count="1500">0</span><span class="stat-plus">+</span>
+          <span class="stat-label">Students Trusted Us</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" data-count="5">0</span>
+          <span class="stat-label">Partner Colleges</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" data-count="40">0</span><span class="stat-plus">+</span>
+          <span class="stat-label">Courses Available</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll" id="heroScroll">
+      <span>Scroll to explore</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="section section--about" id="about">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag reveal-up">01 — About Us</span>
+        <h2 class="section-title reveal-up">We bridge the gap between <em>students</em> and their <em>dream colleges.</em></h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text reveal-up">
+          <p>EduOrbit is an educational counselling platform that simplifies the college admission process. We partner directly with top-tier institutions to offer transparent fee structures, seamless admissions, and personalized career guidance.</p>
+          <p>Whether you're looking for B.Tech, MBA, BBA, BCA, Diploma, or MCA programs — we've got you covered with verified information and dedicated support throughout your journey.</p>
+        </div>
+        <div class="about-features">
+          <div class="feature-card reveal-up" style="--delay: 0.1s">
+            <div class="feature-icon">→</div>
+            <h3>Direct Admissions</h3>
+            <p>No middlemen. Direct tie-ups with top colleges ensure transparent and hassle-free admissions.</p>
+          </div>
+          <div class="feature-card reveal-up" style="--delay: 0.2s">
+            <div class="feature-icon">→</div>
+            <h3>Career Counseling</h3>
+            <p>Expert guidance to help you choose the right course and college based on your goals.</p>
+          </div>
+          <div class="feature-card reveal-up" style="--delay: 0.3s">
+            <div class="feature-icon">→</div>
+            <h3>100% Free Loan Guidance</h3>
+            <p>Complete assistance with education loan applications under Bihar Student Credit Card Scheme.</p>
+          </div>
+          <div class="feature-card reveal-up" style="--delay: 0.4s">
+            <div class="feature-icon">→</div>
+            <h3>Pan India Service</h3>
+            <p>Serving students across India with reliable college information and admission support.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>B.Tech</span><span class="marquee-dot">●</span>
+      <span>MBA</span><span class="marquee-dot">●</span>
+      <span>BBA</span><span class="marquee-dot">●</span>
+      <span>BCA</span><span class="marquee-dot">●</span>
+      <span>MCA</span><span class="marquee-dot">●</span>
+      <span>Diploma</span><span class="marquee-dot">●</span>
+      <span>B.Tech Lateral</span><span class="marquee-dot">●</span>
+      <span>B.Tech</span><span class="marquee-dot">●</span>
+      <span>MBA</span><span class="marquee-dot">●</span>
+      <span>BBA</span><span class="marquee-dot">●</span>
+      <span>BCA</span><span class="marquee-dot">●</span>
+      <span>MCA</span><span class="marquee-dot">●</span>
+      <span>Diploma</span><span class="marquee-dot">●</span>
+      <span>B.Tech Lateral</span><span class="marquee-dot">●</span>
+    </div>
+  </div>
+
+  <!-- Colleges Section -->
+  <section class="section section--colleges" id="colleges">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag reveal-up">02 — Partner Colleges</span>
+        <h2 class="section-title reveal-up">JIS Group — <em>West Bengal</em></h2>
+        <p class="section-sub reveal-up">All colleges listed under Bihar Student Credit Card Scheme</p>
+      </div>
+      <div class="colleges-grid" id="collegesGrid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Fee Structure Section -->
+  <section class="section section--fees" id="fees">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag reveal-up">03 — Admission 2026 | Fee Structure</span>
+        <h2 class="section-title reveal-up">Transparent <em>Fee Details</em></h2>
+        <p class="section-sub reveal-up">Complete branch-wise fee structure with hostel charges</p>
+      </div>
+
+      <!-- Filters -->
+      <div class="fee-filters reveal-up">
+        <div class="filter-group">
+          <label class="filter-label">Course Type</label>
+          <div class="filter-pills" id="categoryFilter">
+            <button class="pill pill--active" data-category="all">All Courses</button>
+            <button class="pill" data-category="btech">B.Tech</button>
+            <button class="pill" data-category="diploma">Diploma</button>
+            <button class="pill" data-category="btech-lateral">B.Tech Lateral</button>
+            <button class="pill" data-category="mba">MBA</button>
+            <button class="pill" data-category="mca">MCA</button>
+            <button class="pill" data-category="bca">BCA</button>
+            <button class="pill" data-category="bba">BBA</button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">College</label>
+          <select class="filter-select" id="collegeFilter">
+            <option value="all">All Colleges</option>
+            <option value="JISCE">JIS College of Engineering</option>
+            <option value="NIT">Narula Institute of Technology</option>
+            <option value="GNIT">Guru Nanak Institute of Technology</option>
+            <option value="SURTECH">Dr Sudhir Chandra Sur Institute of Technology</option>
+            <option value="AEC">Asansol Engineering College</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">Search</label>
+          <input type="text" class="filter-search" id="searchFilter" placeholder="Search courses...">
+        </div>
+      </div>
+
+      <!-- Fee Table -->
+      <div class="fee-table-wrapper reveal-up">
+        <div class="fee-count" id="feeCount"></div>
+        <div class="fee-table-scroll">
+          <table class="fee-table" id="feeTable">
+            <thead>
+              <tr>
+                <th>Course</th>
+                <th>Type</th>
+                <th>College(s)</th>
+                <th>Duration</th>
+                <th>Total Course Fee</th>
+                <th>With Hostel (Boys)</th>
+                <th>With Hostel (Girls)</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="feeTableBody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="section section--services" id="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag reveal-up">04 — Our Services</span>
+        <h2 class="section-title reveal-up">Everything you need for a <em>smooth admission.</em></h2>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal-up" style="--delay: 0.1s">
+          <div class="service-num">01</div>
+          <h3>Direct Private College Admissions</h3>
+          <p>Skip the complexity. We have direct tie-ups with top colleges, making your admission process smooth and transparent.</p>
+          <div class="service-arrow">↗</div>
+        </div>
+        <div class="service-card reveal-up" style="--delay: 0.2s">
+          <div class="service-num">02</div>
+          <h3>Expert Career Counseling</h3>
+          <p>Not sure which course to choose? Our experienced counselors analyze your interests, aptitude, and goals to recommend the best path.</p>
+          <div class="service-arrow">↗</div>
+        </div>
+        <div class="service-card reveal-up" style="--delay: 0.3s">
+          <div class="service-num">03</div>
+          <h3>100% Free Education Loan Guidance</h3>
+          <p>Complete support for Bihar Student Credit Card Scheme and other education loan options — absolutely free of charge.</p>
+          <div class="service-arrow">↗</div>
+        </div>
+        <div class="service-card reveal-up" style="--delay: 0.4s">
+          <div class="service-num">04</div>
+          <h3>College Comparison & Analysis</h3>
+          <p>Compare colleges, courses, fees, placements, and infrastructure to make an informed decision about your future.</p>
+          <div class="service-arrow">↗</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section section--cta" id="cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title reveal-up">Ready to start your <em>journey?</em></h2>
+        <p class="cta-sub reveal-up">Book a free counselling call with our experts and take the first step towards your dream college.</p>
+        <a href="tel:+919546201805" class="btn btn--primary btn--large reveal-up" data-hover>
+          Call Now — +91 9546201805
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="section section--contact" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag reveal-up">05 — Get in Touch</span>
+        <h2 class="section-title reveal-up">Let's connect.</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info reveal-up">
+          <div class="contact-item">
+            <span class="contact-label">Phone</span>
+            <a href="tel:+919546201805" class="contact-value" data-hover>+91 9546201805</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Email</span>
+            <a href="mailto:eduorbit.admissions@gmail.com" class="contact-value" data-hover>eduorbit.admissions@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Website</span>
+            <a href="https://www.eduorbit.in" class="contact-value" data-hover>www.eduorbit.in</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">WhatsApp</span>
+            <a href="https://wa.me/919546201805" class="contact-value" data-hover>Chat with us →</a>
+          </div>
+        </div>
+        <form class="contact-form reveal-up" id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="formName">Full Name</label>
+              <input type="text" id="formName" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+              <label for="formPhone">Phone Number</label>
+              <input type="tel" id="formPhone" placeholder="+91 XXXXX XXXXX" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="formCourse">Interested Course</label>
+            <select id="formCourse">
+              <option value="">Select a course</option>
+              <option value="btech">B.Tech (1st Year)</option>
+              <option value="btech-lateral">B.Tech (Lateral)</option>
+              <option value="diploma">Diploma</option>
+              <option value="mba">MBA</option>
+              <option value="mca">MCA</option>
+              <option value="bca">BCA</option>
+              <option value="bba">BBA</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="formMessage">Message</label>
+            <textarea id="formMessage" rows="4" placeholder="Tell us about your admission query..."></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary btn--full" data-hover>Send Enquiry</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <span class="logo-edu">EDU</span><span class="logo-orbit">ORBIT</span>
+          </div>
+          <p class="footer-tagline">Educational Counselling</p>
+          <p class="footer-desc">Your trusted partner for college admissions, career counseling, and education loan guidance.</p>
+        </div>
+        <div class="footer-links-group">
+          <h4>Quick Links</h4>
+          <a href="#about">About Us</a>
+          <a href="#colleges">Colleges</a>
+          <a href="#fees">Fee Structure</a>
+          <a href="#services">Services</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="footer-links-group">
+          <h4>Courses</h4>
+          <a href="#fees" data-filter="btech">B.Tech</a>
+          <a href="#fees" data-filter="diploma">Diploma</a>
+          <a href="#fees" data-filter="mba">MBA</a>
+          <a href="#fees" data-filter="bca">BCA</a>
+          <a href="#fees" data-filter="bba">BBA</a>
+        </div>
+        <div class="footer-links-group">
+          <h4>Contact</h4>
+          <a href="tel:+919546201805">+91 9546201805</a>
+          <a href="mailto:eduorbit.admissions@gmail.com">Email Us</a>
+          <a href="https://wa.me/919546201805">WhatsApp</a>
+          <a href="https://www.eduorbit.in">Website</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 EduOrbit. All rights reserved. | T&C Apply</p>
+        <p>Free Counselling Call — <a href="tel:+919546201805">+91 9546201805</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Year-wise Detail Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div class="modal-content" id="modalContent">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
