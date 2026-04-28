@@ -159,8 +159,13 @@
     <div class="container">
       <div class="section-header">
         <span class="section-tag reveal-up">02 — Partner Colleges</span>
-        <h2 class="section-title reveal-up">JIS Group — <em>West Bengal</em></h2>
-        <p class="section-sub reveal-up">All colleges listed under Bihar Student Credit Card Scheme</p>
+        <h2 class="section-title reveal-up">Top <em>Partner Colleges</em></h2>
+        <p class="section-sub reveal-up">All colleges approved for DRCC & Guruji Student Credit Card</p>
+      </div>
+      <div class="filter-pills reveal-up" id="collegeGroupFilter" style="justify-content: center; margin-bottom: 40px;">
+        <button class="pill pill--active" data-group="all">All Colleges</button>
+        <button class="pill" data-group="JIS Group">JIS Group</button>
+        <button class="pill" data-group="Individual Colleges">Individual Colleges</button>
       </div>
       <div class="colleges-grid" id="collegesGrid">
         <!-- Populated by JS -->
@@ -212,6 +217,10 @@
           <label class="filter-label">Search</label>
           <input type="text" class="filter-search" id="searchFilter" placeholder="Search courses...">
         </div>
+        <div class="filter-group">
+          <label class="filter-label">12th Marks (%)</label>
+          <input type="number" class="filter-search" id="marksFilter" placeholder="Enter % to check eligibility" min="0" max="100">
+        </div>
       </div>
 
       <!-- Fee Table -->
@@ -262,8 +271,13 @@
         </div>
         <div class="service-card reveal-up" style="--delay: 0.3s">
           <div class="service-num">03</div>
-          <h3>Loans & Scholarships (Bihar & Jharkhand Only)</h3>
-          <p>Complete support for Bihar Student Credit Card Scheme. Exclusive scholarships available for B.Tech students from Bihar & Jharkhand.</p>
+          <h3>Govt. Loans & Scholarships</h3>
+          <p>Complete documentation & processing support for state government schemes:</p>
+          <ul style="font-size: 0.85rem; color: var(--gray); margin-top: 10px; padding-left: 15px; line-height: 1.5;">
+            <li><strong>Bihar:</strong> DRCC (Student Credit Card Scheme) up to ₹4 Lakhs</li>
+            <li><strong>Jharkhand:</strong> Guruji Student Credit Card Scheme up to ₹15 Lakhs</li>
+            <li><strong>Jharkhand:</strong> E-Kalyan Scholarship assistance</li>
+          </ul>
           <div style="margin-top: 15px; padding: 12px; background: rgba(243,156,18,0.05); border-left: 3px solid var(--orange); border-radius: 0 6px 6px 0;">
             <strong style="font-size: 0.85rem; color: var(--blue);">2026 Medhabritti Scholarship (B.Tech CSE):</strong>
             <ul style="font-size: 0.8rem; color: var(--gray); margin-top: 6px; padding-left: 15px; line-height: 1.5;">

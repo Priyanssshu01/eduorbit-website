@@ -113,13 +113,20 @@
   }
 
   // --- Populate Colleges ---
+  let currentCollegeGroup = 'all';
+
   function renderColleges() {
     const grid = document.getElementById('collegesGrid');
     if (!grid) return;
-    grid.innerHTML = COLLEGES.map(c => `
+
+    const filteredColleges = COLLEGES.filter(c => 
+      currentCollegeGroup === 'all' || c.group === currentCollegeGroup
+    );
+
+    grid.innerHTML = filteredColleges.map(c => `
       <div class="college-card">
+        <img src="${c.img}" alt="${c.name} Campus" class="college-card-img" onerror="this.src='https://via.placeholder.com/600x400?text=Campus'">
         <span class="college-card-abbr">${c.abbr}</span>
-        <div class="college-card-emoji">${c.img}</div>
         <div class="college-card-name">${c.name}</div>
         <div class="college-card-meta">
           <span class="college-tag college-tag--naac">NAAC '${c.naac}' Grade</span>
@@ -131,10 +138,24 @@
   }
   renderColleges();
 
+  // College Group filter
+  const groupFilter = document.getElementById('collegeGroupFilter');
+  if (groupFilter) {
+    groupFilter.addEventListener('click', (e) => {
+      if (e.target.classList.contains('pill')) {
+        document.querySelectorAll('#collegeGroupFilter .pill').forEach(p => p.classList.remove('pill--active'));
+        e.target.classList.add('pill--active');
+        currentCollegeGroup = e.target.dataset.group;
+        renderColleges();
+      }
+    });
+  }
+
   // --- Fee Structure ---
   let currentCategory = 'all';
   let currentCollege = 'all';
   let currentSearch = '';
+  let currentMarks = 0;
 
   function formatCurrency(n) {
     return '₹ ' + n.toLocaleString('en-IN');
@@ -145,7 +166,8 @@
       const catMatch = currentCategory === 'all' || c.category === currentCategory;
       const colMatch = currentCollege === 'all' || c.colleges.includes(currentCollege);
       const searchMatch = !currentSearch || c.name.toLowerCase().includes(currentSearch.toLowerCase()) || c.type.toLowerCase().includes(currentSearch.toLowerCase());
-      return catMatch && colMatch && searchMatch;
+      const marksMatch = currentMarks === 0 || (c.minMarks12 && currentMarks >= c.minMarks12);
+      return catMatch && colMatch && searchMatch && marksMatch;
     });
   }
 
@@ -200,6 +222,15 @@
     currentSearch = e.target.value;
     renderFeeTable();
   });
+
+  // Marks filter
+  const marksFilterInput = document.getElementById('marksFilter');
+  if (marksFilterInput) {
+    marksFilterInput.addEventListener('input', (e) => {
+      currentMarks = parseInt(e.target.value) || 0;
+      renderFeeTable();
+    });
+  }
 
   // Footer course links filter
   document.querySelectorAll('[data-filter]').forEach(link => {
