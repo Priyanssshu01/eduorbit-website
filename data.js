@@ -7,6 +7,7 @@ const COLLEGES = [
   { id: 'gnit', name: 'Guru Nanak Institute of Technology', abbr: 'GNIT', est: 2003, naac: 'A+', location: 'Sodepur, Kolkata', img: '🎓' },
   { id: 'surtech', name: 'Dr Sudhir Chandra Sur Institute of Technology', abbr: 'SURTECH', est: 2009, naac: 'A', location: 'Dumdum, Kolkata', img: '🏢' },
   { id: 'aec', name: 'Asansol Engineering College', abbr: 'AEC', est: 1998, naac: 'A', location: 'Asansol', img: '🏗️' },
+  { id: 'bwu', name: 'Brainware University', abbr: 'BWU', est: 2016, naac: 'UGC', location: 'Barasat, Kolkata', img: '🏫' },
 ];
 
 const COURSES = [
@@ -25,6 +26,7 @@ const COURSES = [
   { name: 'CSE (IOT) / CS & Business Systems', type: 'B.Tech (1st Year)', category: 'btech', colleges: ['AEC'], duration: 4, totalFee: 600000, hostelBoys: 800000, hostelGirls: 780000, yearWise: [150000,150000,150000,150000], hostelBoysYW: [200000,200000,200000,200000], hostelGirlsYW: [195000,195000,195000,195000] },
   { name: 'CSE (Data Science) / CSE (Cyber Security)', type: 'B.Tech (1st Year)', category: 'btech', colleges: ['SURTECH'], duration: 4, totalFee: 560000, hostelBoys: 800000, hostelGirls: 780000, yearWise: [140000,140000,140000,140000], hostelBoysYW: [200000,200000,200000,200000], hostelGirlsYW: [195000,195000,195000,195000] },
   { name: 'CSE / CSE (AI & ML)', type: 'B.Tech (1st Year)', category: 'btech', colleges: ['SURTECH'], duration: 4, totalFee: 580000, hostelBoys: 850000, hostelGirls: 830000, yearWise: [145000,145000,145000,145000], hostelBoysYW: [215000,215000,210000,210000], hostelGirlsYW: [210000,210000,205000,205000] },
+  { name: 'Computer Science & Engineering', type: 'B.Tech (1st Year)', category: 'btech', colleges: ['BWU'], duration: 4, totalFee: 579600, hostelBoys: 0, hostelGirls: 0, yearWise: [194400,150400,133400,101400], hostelBoysYW: [0,0,0,0], hostelGirlsYW: [0,0,0,0] },
 
   // ===== Diploma (1st Year) =====
   { name: 'Electrical Engineering', type: 'Diploma (1st Year)', category: 'diploma', colleges: ['JISCE','NIT','GNIT'], duration: 3, totalFee: 180000, hostelBoys: 360000, hostelGirls: 345000, yearWise: [70000,55000,55000], hostelBoysYW: [130000,115000,115000], hostelGirlsYW: [125000,110000,110000] },
@@ -47,6 +49,7 @@ const COURSES = [
   // ===== BCA =====
   { name: 'BCA', type: 'BCA', category: 'bca', colleges: ['JISCE'], duration: 3, totalFee: 325000, hostelBoys: 525000, hostelGirls: 510000, yearWise: [110000,110000,105000], hostelBoysYW: [175000,175000,175000], hostelGirlsYW: [170000,170000,170000] },
   { name: 'BCA', type: 'BCA', category: 'bca', colleges: ['SURTECH'], duration: 3, totalFee: 325000, hostelBoys: 500000, hostelGirls: 485000, yearWise: [110000,110000,105000], hostelBoysYW: [170000,165000,165000], hostelGirlsYW: [165000,160000,160000] },
+  { name: 'BCA (Honours)', type: 'BCA', category: 'bca', colleges: ['BWU'], duration: 4, totalFee: 482600, hostelBoys: 0, hostelGirls: 0, yearWise: [154400,121400,103400,103400], hostelBoysYW: [0,0,0,0], hostelGirlsYW: [0,0,0,0] },
 
   // ===== BBA =====
   { name: 'BBA / BBA (Digital Marketing) / BBA (Hospital Management)', type: 'BBA', category: 'bba', colleges: ['JISCE'], duration: 3, totalFee: 280000, hostelBoys: 450000, hostelGirls: 435000, yearWise: [100000,90000,90000], hostelBoysYW: [150000,150000,150000], hostelGirlsYW: [145000,145000,145000] },
