@@ -161,8 +161,8 @@
     <div class="container">
       <div class="section-header">
         <span class="section-tag reveal-up">02 — Partner Colleges</span>
-        <h2 class="section-title reveal-up">JIS Group — <em>West Bengal</em></h2>
-        <p class="section-sub reveal-up">All colleges listed under Bihar Student Credit Card Scheme</p>
+        <h2 class="section-title reveal-up">Top Colleges & <em>Universities</em></h2>
+        <p class="section-sub reveal-up">Explore premium institutions approved under student credit card schemes.</p>
       </div>
       <div class="colleges-grid" id="collegesGrid">
         <!-- Populated by JS -->
@@ -182,17 +182,20 @@
       <!-- Filters -->
       <div class="fee-filters reveal-up">
         <div class="filter-group">
-          <label class="filter-label">Course Type</label>
-          <div class="filter-pills" id="categoryFilter">
-            <button class="pill pill--active" data-category="all">All Courses</button>
-            <button class="pill" data-category="btech">B.Tech</button>
-            <button class="pill" data-category="diploma">Diploma</button>
-            <button class="pill" data-category="btech-lateral">B.Tech Lateral</button>
-            <button class="pill" data-category="mba">MBA</button>
-            <button class="pill" data-category="mca">MCA</button>
-            <button class="pill" data-category="bca">BCA</button>
-            <button class="pill" data-category="bba">BBA</button>
-          </div>
+          <label class="filter-label">Course Category</label>
+          <select class="filter-select" id="categoryFilterSelect">
+            <option value="all">All Categories</option>
+            <option value="engineering">Engineering & Technology</option>
+            <option value="management">Business & Management</option>
+            <option value="computer_applications">Computer Applications</option>
+            <option value="science">Sciences (B.Sc, M.Sc)</option>
+            <option value="arts_humanities">Arts & Humanities</option>
+            <option value="law">Law & Justice</option>
+            <option value="pharmacy_health">Pharmacy & Health Sciences</option>
+            <option value="agriculture">Agriculture</option>
+            <option value="education">Education</option>
+            <option value="diploma">Diploma</option>
+          </select>
         </div>
         <div class="filter-group">
           <label class="filter-label">College</label>
@@ -204,6 +207,7 @@
             <option value="SURTECH">Dr Sudhir Chandra Sur Institute of Technology</option>
             <option value="AEC">Asansol Engineering College</option>
             <option value="BWU">Brainware University</option>
+            <option value="ADAMAS">Adamas University</option>
           </select>
         </div>
         <div class="filter-group">
@@ -501,11 +505,11 @@
         </div>
         <div class="footer-links-group">
           <h4>Courses</h4>
-          <a href="#fees" data-filter="btech">B.Tech</a>
-          <a href="#fees" data-filter="diploma">Diploma</a>
-          <a href="#fees" data-filter="mba">MBA</a>
-          <a href="#fees" data-filter="bca">BCA</a>
-          <a href="#fees" data-filter="bba">BBA</a>
+          <a href="#fees" data-filter="engineering">Engineering</a>
+          <a href="#fees" data-filter="management">Management</a>
+          <a href="#fees" data-filter="computer_applications">Computer Apps</a>
+          <a href="#fees" data-filter="pharmacy_health">Pharmacy</a>
+          <a href="#fees" data-filter="law">Law</a>
         </div>
         <div class="footer-links-group">
           <h4>Contact</h4>

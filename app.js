@@ -143,7 +143,14 @@
 
   function filterCourses() {
     return COURSES.filter(c => {
-      const catMatch = currentCategory === 'all' || c.category === currentCategory;
+      let catMatch = false;
+      if (currentCategory === 'all') catMatch = true;
+      else if (currentCategory === 'engineering') catMatch = ['btech', 'btech-lateral', 'engineering'].includes(c.category);
+      else if (currentCategory === 'management') catMatch = ['mba', 'bba', 'management'].includes(c.category);
+      else if (currentCategory === 'computer_applications') catMatch = ['mca', 'bca', 'computer_applications'].includes(c.category);
+      else if (currentCategory === 'diploma') catMatch = ['diploma'].includes(c.category);
+      else catMatch = c.category === currentCategory;
+      
       const colMatch = currentCollege === 'all' || c.colleges.includes(currentCollege);
       const searchMatch = !currentSearch || c.name.toLowerCase().includes(currentSearch.toLowerCase()) || c.type.toLowerCase().includes(currentSearch.toLowerCase());
       return catMatch && colMatch && searchMatch;
@@ -181,13 +188,9 @@
   renderFeeTable();
 
   // Category filter
-  document.getElementById('categoryFilter').addEventListener('click', (e) => {
-    if (e.target.classList.contains('pill')) {
-      document.querySelectorAll('#categoryFilter .pill').forEach(p => p.classList.remove('pill--active'));
-      e.target.classList.add('pill--active');
-      currentCategory = e.target.dataset.category;
-      renderFeeTable();
-    }
+  document.getElementById('categoryFilterSelect').addEventListener('change', (e) => {
+    currentCategory = e.target.value;
+    renderFeeTable();
   });
 
   // College filter
@@ -207,9 +210,8 @@
     link.addEventListener('click', (e) => {
       const cat = link.dataset.filter;
       currentCategory = cat;
-      document.querySelectorAll('#categoryFilter .pill').forEach(p => {
-        p.classList.toggle('pill--active', p.dataset.category === cat);
-      });
+      const select = document.getElementById('categoryFilterSelect');
+      if (select) select.value = cat;
       renderFeeTable();
     });
   });
@@ -236,9 +238,21 @@
       girlsRow += `<td>${formatCurrency(c.hostelGirlsYW[i])}</td>`;
     }
 
+    let eligibilityHtml = '';
+    if (c.eligibility) {
+      eligibilityHtml = `
+        <div class="modal-section" style="background: rgba(243,156,18,0.08); padding: 16px; border-radius: 8px; border-left: 4px solid var(--orange); margin-bottom: 24px;">
+          <h4 style="color: var(--orange-dark); margin-bottom: 8px;">Admission Eligibility Criteria</h4>
+          <p style="font-size: 0.85rem; color: var(--gray); line-height: 1.5; margin: 0;">${c.eligibility}</p>
+        </div>
+      `;
+    }
+
     modalContent.innerHTML = `
       <h3 class="modal-title">${c.name}</h3>
       <p class="modal-subtitle">${c.type} · ${c.colleges.join(', ')} · ${c.duration} Year Program</p>
+      
+      ${eligibilityHtml}
 
       <div class="modal-section">
         <h4>Tuition Fee (Year-wise Breakdown)</h4>
