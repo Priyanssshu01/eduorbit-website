@@ -9,6 +9,7 @@ const COLLEGES = [
   { id: 'aec', name: 'Asansol Engineering College', abbr: 'AEC', est: 1998, naac: 'A', location: 'Asansol', img: '🏗️' },
   { id: 'bwu', name: 'Brainware University', abbr: 'BWU', est: 2016, naac: 'UGC', location: 'Barasat, Kolkata', img: '🎓' },
   { id: 'adamas', name: 'Adamas University', abbr: 'ADAMAS', est: 2014, naac: 'A', location: 'Barasat, Kolkata', img: '🏫' },
+  { id: 'ies', name: 'IES University / College of Technology', abbr: 'IES', est: 1999, naac: 'B', location: 'Bhopal, Madhya Pradesh', img: '🏥' },
 ];
 
 const COURSES = [
@@ -116,4 +117,51 @@ const COURSES = [
   // Education
   { name: 'B.Ed', type: 'Education', category: 'education', colleges: ['ADAMAS'], duration: 2, totalFee: 231800, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [115900,115900], hostelBoysYW: ['N/A','N/A'], hostelGirlsYW: ['N/A','N/A'], eligibility: 'Graduate and/or Post Graduate with 50% marks (55% for B.Tech/Engineering).' },
   { name: 'BA (Hons) Education', type: 'Education', category: 'education', colleges: ['ADAMAS'], duration: 4, totalFee: 289100, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [72275,72275,72275,72275], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Min 50% aggregate in 10+2.' },
+
+  // ===== IES University / College of Technology, Bhopal =====
+  
+  // Pharmacy & Health Sciences (Nursing / Paramedical / Pharmacy)
+  { name: 'B.Sc Nursing', type: 'Nursing', category: 'pharmacy_health', colleges: ['IES'], duration: 4, totalFee: 420000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [105000, 105000, 105000, 105000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Pass in 10+2 with PCB (Minimum 45%).' },
+  { name: 'P.B. Nursing', type: 'Nursing', category: 'pharmacy_health', colleges: ['IES'], duration: 2, totalFee: 140000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [70000, 70000], hostelBoysYW: ['N/A','N/A'], hostelGirlsYW: ['N/A','N/A'], eligibility: 'GNM Pass.' },
+  { name: 'GNM', type: 'Nursing', category: 'pharmacy_health', colleges: ['IES'], duration: 3, totalFee: 180000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [60000, 60000, 60000], hostelBoysYW: ['N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A'], eligibility: 'Pass in 10+2.' },
+  { name: 'M.Sc Nursing (Psychiatrist / CHN)', type: 'Nursing', category: 'pharmacy_health', colleges: ['IES'], duration: 2, totalFee: 300000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [150000, 150000], hostelBoysYW: ['N/A','N/A'], hostelGirlsYW: ['N/A','N/A'], eligibility: 'B.Sc Nursing Pass.' },
+  { name: 'Bachelor of Physiotherapy (BPT)', type: 'Paramedical', category: 'pharmacy_health', colleges: ['IES'], duration: 4, totalFee: 240000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [60000, 60000, 60000, 60000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Pass in 10+2 with PCB.' },
+  { name: 'B.Sc Medical Laboratory Technology (BMLT)', type: 'Paramedical', category: 'pharmacy_health', colleges: ['IES'], duration: 3, totalFee: 180000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [60000, 60000, 60000], hostelBoysYW: ['N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A'], eligibility: 'Pass in 10+2 with PCB.' },
+  { name: 'Diploma Medical Laboratory Technology (DMLT)', type: 'Paramedical', category: 'pharmacy_health', colleges: ['IES'], duration: 2, totalFee: 80000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [40000, 40000], hostelBoysYW: ['N/A','N/A'], hostelGirlsYW: ['N/A','N/A'], eligibility: 'Pass in 10+2 with PCB.' },
+  { name: 'OT Technician', type: 'Paramedical', category: 'pharmacy_health', colleges: ['IES'], duration: 2, totalFee: 60000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [30000, 30000], hostelBoysYW: ['N/A','N/A'], hostelGirlsYW: ['N/A','N/A'], eligibility: 'Pass in 10+2.' },
+  { name: 'B.Pharma', type: 'Pharmacy', category: 'pharmacy_health', colleges: ['IES'], duration: 4, totalFee: 440000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [110000, 110000, 110000, 110000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Pass in 10+2 with PCM/PCB.' },
+  { name: 'D.Pharma', type: 'Pharmacy', category: 'pharmacy_health', colleges: ['IES'], duration: 2, totalFee: 160000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [80000, 80000], hostelBoysYW: ['N/A','N/A'], hostelGirlsYW: ['N/A','N/A'], eligibility: 'Pass in 10+2 with PCM/PCB.' },
+  { name: 'M.Pharma', type: 'Pharmacy', category: 'pharmacy_health', colleges: ['IES'], duration: 2, totalFee: 200000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [100000, 100000], hostelBoysYW: ['N/A','N/A'], hostelGirlsYW: ['N/A','N/A'], eligibility: 'B.Pharm Pass.' },
+
+  // Engineering & Technology
+  { name: 'B.Tech CSE', type: 'B.Tech', category: 'engineering', colleges: ['IES'], duration: 4, totalFee: 388000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [97000, 97000, 97000, 97000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Pass in 10+2 with PCM.' },
+  { name: 'B.Tech CSE (AIML / AIDS)', type: 'B.Tech', category: 'engineering', colleges: ['IES'], duration: 4, totalFee: 260000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [65000, 65000, 65000, 65000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Pass in 10+2 with PCM.' },
+  { name: 'B.Tech (Civil / Mech / EC / EX)', type: 'B.Tech', category: 'engineering', colleges: ['IES'], duration: 4, totalFee: 220000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [55000, 55000, 55000, 55000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Pass in 10+2 with PCM.' },
+  { name: 'B.Tech (Lateral Entry)', type: 'B.Tech', category: 'engineering', colleges: ['IES'], duration: 3, totalFee: 150000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [50000, 50000, 50000], hostelBoysYW: ['N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A'], eligibility: 'Diploma in Engineering Pass.' },
+  { name: 'M.Tech', type: 'M.Tech', category: 'engineering', colleges: ['IES'], duration: 2, totalFee: 70000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [35000, 35000], hostelBoysYW: ['N/A','N/A'], hostelGirlsYW: ['N/A','N/A'], eligibility: 'B.Tech/B.E Pass.' },
+
+  // Management & Business
+  { name: 'BBA', type: 'BBA', category: 'management', colleges: ['IES'], duration: 3, totalFee: 195000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [65000, 65000, 65000], hostelBoysYW: ['N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A'], eligibility: 'Pass in 10+2 in any stream.' },
+  { name: 'MBA (General / Business Analytics)', type: 'MBA', category: 'management', colleges: ['IES'], duration: 2, totalFee: 180000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [90000, 90000], hostelBoysYW: ['N/A','N/A'], hostelGirlsYW: ['N/A','N/A'], eligibility: 'Graduation Pass.' },
+  { name: 'Bachelor of Hotel Management (BHM)', type: 'Management', category: 'management', colleges: ['IES'], duration: 3, totalFee: 105000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [35000, 35000, 35000], hostelBoysYW: ['N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A'], eligibility: 'Pass in 10+2.' },
+
+  // Computer Applications
+  { name: 'BCA', type: 'BCA', category: 'computer_applications', colleges: ['IES'], duration: 3, totalFee: 105000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [35000, 35000, 35000], hostelBoysYW: ['N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A'], eligibility: 'Pass in 10+2 with Maths/Computer.' },
+  { name: 'MCA', type: 'MCA', category: 'computer_applications', colleges: ['IES'], duration: 2, totalFee: 80000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [40000, 40000], hostelBoysYW: ['N/A','N/A'], hostelGirlsYW: ['N/A','N/A'], eligibility: 'Graduation with Maths at 10+2 or UG level.' },
+
+  // Agriculture
+  { name: 'B.Sc Agriculture', type: 'Agriculture', category: 'agriculture', colleges: ['IES'], duration: 4, totalFee: 180000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [45000, 45000, 45000, 45000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Pass in 10+2 with Agriculture or PCM/PCB.' },
+  { name: 'M.Sc Agriculture', type: 'Agriculture', category: 'agriculture', colleges: ['IES'], duration: 2, totalFee: 90000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [45000, 45000], hostelBoysYW: ['N/A','N/A'], hostelGirlsYW: ['N/A','N/A'], eligibility: 'B.Sc Agriculture Pass.' },
+
+  // Law & Justice
+  { name: 'BA LLB / LLB', type: 'Law', category: 'law', colleges: ['IES'], duration: 3, totalFee: 135000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [45000, 45000, 45000], hostelBoysYW: ['N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A'], eligibility: 'Pass in 10+2 (for BA LLB) or Graduation (for LLB).' },
+  { name: 'LLM', type: 'Law', category: 'law', colleges: ['IES'], duration: 2, totalFee: 60000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [30000, 30000], hostelBoysYW: ['N/A','N/A'], hostelGirlsYW: ['N/A','N/A'], eligibility: 'LLB / BA-LLB Pass.' },
+
+  // Education
+  { name: 'B.Ed / D.El.Ed', type: 'Education', category: 'education', colleges: ['IES'], duration: 2, totalFee: 150000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [75000, 75000], hostelBoysYW: ['N/A','N/A'], hostelGirlsYW: ['N/A','N/A'], eligibility: 'Graduation Pass.' },
+  { name: 'B.Sc + B.Ed / BA + B.Ed', type: 'Education', category: 'education', colleges: ['IES'], duration: 4, totalFee: 180000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [45000, 45000, 45000, 45000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Pass in 10+2.' },
+  { name: 'M.Ed', type: 'Education', category: 'education', colleges: ['IES'], duration: 2, totalFee: 60000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [30000, 30000], hostelBoysYW: ['N/A','N/A'], hostelGirlsYW: ['N/A','N/A'], eligibility: 'B.Ed Pass.' },
+
+  // Diploma
+  { name: 'Diploma in Engineering (CSE / CE / ME / EE)', type: 'Diploma', category: 'diploma', colleges: ['IES'], duration: 3, totalFee: 120000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [40000, 40000, 40000], hostelBoysYW: ['N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A'], eligibility: 'Pass in 10th Class.' },
 ];
