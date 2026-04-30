@@ -33,6 +33,7 @@
         <a href="#about" class="nav-link" data-hover>About</a>
         <a href="#colleges" class="nav-link" data-hover>Colleges</a>
         <a href="#fees" class="nav-link" data-hover>Fee Structure</a>
+        <a href="#loans" class="nav-link" data-hover>Loans & Scholarships</a>
         <a href="#services" class="nav-link" data-hover>Services</a>
         <a href="#contact" class="nav-link nav-link--cta" data-hover>Free Counselling</a>
       </div>
@@ -48,6 +49,7 @@
       <a href="#about" class="mobile-link">About</a>
       <a href="#colleges" class="mobile-link">Colleges</a>
       <a href="#fees" class="mobile-link">Fee Structure</a>
+      <a href="#loans" class="mobile-link">Loans & Scholarships</a>
       <a href="#services" class="mobile-link">Services</a>
       <a href="#contact" class="mobile-link">Free Counselling</a>
     </div>
@@ -201,6 +203,7 @@
             <option value="GNIT">Guru Nanak Institute of Technology</option>
             <option value="SURTECH">Dr Sudhir Chandra Sur Institute of Technology</option>
             <option value="AEC">Asansol Engineering College</option>
+            <option value="BWU">Brainware University</option>
           </select>
         </div>
         <div class="filter-group">
@@ -235,11 +238,143 @@
     </div>
   </section>
 
+  <!-- Loans & Scholarships Section -->
+  <section class="section section--loans" id="loans">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag reveal-up">04 — Financial Assistance</span>
+        <h2 class="section-title reveal-up">Education <em>Loans & Scholarships</em></h2>
+        <p class="section-sub reveal-up">State-wise student credit card schemes and university scholarships.</p>
+      </div>
+
+      <div class="loans-wrapper reveal-up">
+        <div class="loan-tabs">
+          <button class="loan-tab active" data-target="drcc">Bihar DRCC</button>
+          <button class="loan-tab" data-target="guruji">Jharkhand Guruji</button>
+          <button class="loan-tab" data-target="mp">MP Schemes</button>
+          <button class="loan-tab" data-target="medhabritti">Brainware Medhabritti</button>
+        </div>
+
+        <div class="loan-content">
+          <!-- Bihar DRCC -->
+          <div class="loan-pane active" id="drcc">
+            <h3>Bihar Student Credit Card Scheme (DRCC)</h3>
+            <p>The Bihar government provides an education loan of up to ₹4 Lakhs at a nominal interest rate (4% general, 1% for girls/disabled) to help students pursue higher education.</p>
+            <div class="loan-details">
+              <div class="loan-box">
+                <h4>Eligibility</h4>
+                <ul>
+                  <li>Permanent resident of Bihar.</li>
+                  <li>Passed 12th standard (Intermediate).</li>
+                  <li>Age 25 years or younger.</li>
+                </ul>
+              </div>
+              <div class="loan-box">
+                <h4>Key Features</h4>
+                <ul>
+                  <li>Up to ₹4 Lakhs loan amount.</li>
+                  <li>Used for tuition, living, books, and laptop.</li>
+                  <li>Simple application via MNSSBY portal and DRCC visit.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Jharkhand Guruji -->
+          <div class="loan-pane" id="guruji">
+            <h3>Jharkhand Guruji Student Credit Card Scheme</h3>
+            <p>A visionary scheme by the Jharkhand Government offering collateral-free education loans up to ₹15 Lakhs at just 4% simple interest.</p>
+            <div class="loan-details">
+              <div class="loan-box">
+                <h4>Eligibility</h4>
+                <ul>
+                  <li>Permanent resident of Jharkhand.</li>
+                  <li>Passed Class 10/12 from a recognized school in Jharkhand.</li>
+                  <li>Maximum age of 40 years.</li>
+                </ul>
+              </div>
+              <div class="loan-box">
+                <h4>Key Features</h4>
+                <ul>
+                  <li>Up to ₹15 Lakhs (70% fees, 30% living).</li>
+                  <li>Collateral-free (Govt acts as guarantor).</li>
+                  <li>15 years repayment period with 1-year moratorium.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- MP Scheme -->
+          <div class="loan-pane" id="mp">
+            <h3>Madhya Pradesh Education Loan Schemes</h3>
+            <p>Schemes like the Mukhyamantri Medhavi Vidyarthi Yojana (MMVY) and other state education loans support meritorious students from MP.</p>
+            <div class="loan-details">
+              <div class="loan-box">
+                <h4>Eligibility (General)</h4>
+                <ul>
+                  <li>Resident of Madhya Pradesh.</li>
+                  <li>Good academic record (e.g., 70%+ in MP Board or 85%+ in CBSE/ICSE for MMVY).</li>
+                  <li>Family income limits may apply depending on the specific scheme.</li>
+                </ul>
+              </div>
+              <div class="loan-box">
+                <h4>Key Features</h4>
+                <ul>
+                  <li>Financial assistance for technical and professional courses.</li>
+                  <li>Subsidized interest rates or full fee waiver under MMVY.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Medhabritti -->
+          <div class="loan-pane" id="medhabritti">
+            <h3>2026 Medhabritti Scholarship (Brainware University)</h3>
+            <p>Exclusive scholarships for meritorious students seeking admission to Brainware University based on their qualifying exam marks. <br><em>Note: Candidate must possess minimum 60% throughout academic career to avail this scholarship.</em></p>
+            
+            <div class="medhabritti-tables">
+              <div class="m-table-wrapper">
+                <h4>For BCA (Honours)</h4>
+                <table class="modal-table">
+                  <thead>
+                    <tr><th>Percentage of Marks</th><th>Scholarship Amount (₹)</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>&gt;= 60% - &lt;70%</td><td>15,000</td></tr>
+                    <tr><td>&gt;= 70% - &lt;80%</td><td>30,000</td></tr>
+                    <tr><td>&gt;= 80% - &lt;90%</td><td>40,000</td></tr>
+                    <tr><td>&gt;= 90%</td><td>50,000*</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="m-table-wrapper">
+                <h4>For B.Tech CSE & AI/ML</h4>
+                <table class="modal-table">
+                  <thead>
+                    <tr><th>Percentage of Marks</th><th>Scholarship Amount (₹)</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>&gt;= 65% - &lt;70%</td><td>30,000</td></tr>
+                    <tr><td>&gt;= 70% - &lt;80%</td><td>50,000</td></tr>
+                    <tr><td>&gt;= 80% - &lt;90%</td><td>60,000</td></tr>
+                    <tr><td>&gt;= 90%</td><td>70,000*</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <p class="m-note" style="margin-top: 10px; font-size: 0.8rem; color: var(--gray);">*If Vidyalankar is not applicable.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Services Section -->
   <section class="section section--services" id="services">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag reveal-up">04 — Our Services</span>
+        <span class="section-tag reveal-up">05 — Our Services</span>
         <h2 class="section-title reveal-up">Everything you need for a <em>smooth admission.</em></h2>
       </div>
       <div class="services-grid">
@@ -288,7 +423,7 @@
   <section class="section section--contact" id="contact">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag reveal-up">05 — Get in Touch</span>
+        <span class="section-tag reveal-up">06 — Get in Touch</span>
         <h2 class="section-title reveal-up">Let's connect.</h2>
       </div>
       <div class="contact-grid">

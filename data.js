@@ -7,6 +7,7 @@ const COLLEGES = [
   { id: 'gnit', name: 'Guru Nanak Institute of Technology', abbr: 'GNIT', est: 2003, naac: 'A+', location: 'Sodepur, Kolkata', img: '🎓' },
   { id: 'surtech', name: 'Dr Sudhir Chandra Sur Institute of Technology', abbr: 'SURTECH', est: 2009, naac: 'A', location: 'Dumdum, Kolkata', img: '🏢' },
   { id: 'aec', name: 'Asansol Engineering College', abbr: 'AEC', est: 1998, naac: 'A', location: 'Asansol', img: '🏗️' },
+  { id: 'bwu', name: 'Brainware University', abbr: 'BWU', est: 2016, naac: 'UGC', location: 'Barasat, Kolkata', img: '🎓' },
 ];
 
 const COURSES = [
@@ -59,4 +60,9 @@ const COURSES = [
   { name: 'Electrical Engineering', type: 'B.Tech (Lateral)', category: 'btech-lateral', colleges: ['JISCE','GNIT','AEC','SURTECH'], duration: 3, totalFee: 290000, hostelBoys: 420000, hostelGirls: 405000, yearWise: [100000,95000,95000], hostelBoysYW: [140000,140000,140000], hostelGirlsYW: [135000,135000,135000] },
   { name: 'Electronics & Communication Engineering', type: 'B.Tech (Lateral)', category: 'btech-lateral', colleges: ['JISCE','SURTECH'], duration: 3, totalFee: 290000, hostelBoys: 420000, hostelGirls: 405000, yearWise: [100000,95000,95000], hostelBoysYW: [140000,140000,140000], hostelGirlsYW: [135000,135000,135000] },
   { name: 'Automobile Engineering', type: 'B.Tech (Lateral)', category: 'btech-lateral', colleges: ['SURTECH'], duration: 3, totalFee: 290000, hostelBoys: 420000, hostelGirls: 405000, yearWise: [100000,95000,95000], hostelBoysYW: [140000,140000,140000], hostelGirlsYW: [135000,135000,135000] },
+
+  // ===== Brainware University =====
+  { name: 'Computer Applications (Honours)', type: 'BCA', category: 'bca', colleges: ['BWU'], duration: 4, totalFee: 482600, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [154400, 121400, 103400, 103400], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'] },
+  { name: 'Computer Science & Engineering', type: 'B.Tech (1st Year)', category: 'btech', colleges: ['BWU'], duration: 4, totalFee: 579600, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [194400, 150400, 133400, 101400], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'] },
+  { name: 'Computer Science & Engineering (AI & ML)', type: 'B.Tech (1st Year)', category: 'btech', colleges: ['BWU'], duration: 4, totalFee: 579600, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [194400, 150400, 133400, 101400], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'] },
 ];

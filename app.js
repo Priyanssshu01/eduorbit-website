@@ -137,6 +137,7 @@
   let currentSearch = '';
 
   function formatCurrency(n) {
+    if (n === 'N/A' || n === null || n === undefined) return 'N/A';
     return '₹ ' + n.toLocaleString('en-IN');
   }
 
@@ -280,6 +281,21 @@
     modalOverlay.classList.remove('active');
     document.body.style.overflow = '';
   }
+
+  // --- Loans & Scholarships Tabs ---
+  const loanTabs = document.querySelectorAll('.loan-tab');
+  const loanPanes = document.querySelectorAll('.loan-pane');
+
+  loanTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      loanTabs.forEach(t => t.classList.remove('active'));
+      loanPanes.forEach(p => p.classList.remove('active'));
+      
+      tab.classList.add('active');
+      const target = document.getElementById(tab.dataset.target);
+      if (target) target.classList.add('active');
+    });
+  });
 
   // --- Contact Form ---
   document.getElementById('contactForm').addEventListener('submit', (e) => {

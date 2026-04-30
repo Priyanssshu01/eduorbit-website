@@ -187,6 +187,27 @@ img{max-width:100%;display:block}
 .service-arrow{position:absolute;top:24px;right:24px;font-size:1.4rem;color:var(--gray-light);transition:all .3s var(--ease)}
 @media(max-width:768px){.services-grid{grid-template-columns:1fr}}
 
+/* ===== LOANS & SCHOLARSHIPS ===== */
+.section--loans{background:var(--white)}
+.loans-wrapper{margin-top:20px}
+.loan-tabs{display:flex;gap:12px;margin-bottom:32px;overflow-x:auto;padding-bottom:12px;scrollbar-width:thin}
+.loan-tab{padding:12px 24px;font-size:.85rem;font-weight:600;background:rgba(27,77,142,.05);border:1px solid rgba(27,77,142,.1);border-radius:100px;color:var(--gray);cursor:pointer;white-space:nowrap;transition:all .3s var(--ease)}
+.loan-tab:hover{background:rgba(27,77,142,.1);color:var(--blue)}
+.loan-tab.active{background:linear-gradient(135deg,var(--blue),var(--blue-light));color:var(--white);border-color:transparent;box-shadow:0 6px 16px rgba(27,77,142,.25)}
+.loan-content{position:relative;min-height:300px}
+.loan-pane{position:absolute;top:0;left:0;width:100%;opacity:0;visibility:hidden;transition:all .4s var(--ease);transform:translateY(10px)}
+.loan-pane.active{position:relative;opacity:1;visibility:visible;transform:translateY(0)}
+.loan-pane h3{font-size:1.4rem;font-weight:800;letter-spacing:-0.02em;color:var(--blue);margin-bottom:12px}
+.loan-pane p{font-size:.95rem;color:var(--gray);line-height:1.6;margin-bottom:24px;max-width:800px}
+.loan-details{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.loan-box{background:linear-gradient(160deg,#f8faff 0%,#fff 100%);border:1px solid rgba(27,77,142,.1);padding:28px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.02)}
+.loan-box h4{font-size:.9rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--orange-dark);margin-bottom:16px}
+.loan-box ul{list-style:none;padding:0;margin:0}
+.loan-box ul li{position:relative;padding-left:20px;font-size:.85rem;color:var(--gray);margin-bottom:12px;line-height:1.5}
+.loan-box ul li::before{content:'→';position:absolute;left:0;color:var(--blue);font-weight:700}
+.medhabritti-tables{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:32px;margin-top:24px}
+.m-table-wrapper h4{font-size:.95rem;font-weight:700;color:var(--blue);margin-bottom:12px}
+
 /* ===== CTA ===== */
 .section--cta{background:linear-gradient(135deg,var(--blue) 0%,#0F2A5C 100%);color:var(--white);text-align:center;position:relative;overflow:hidden}
 .section--cta::before{content:'';position:absolute;top:-50%;right:-20%;width:500px;height:500px;border-radius:50%;background:rgba(243,156,18,.1);pointer-events:none}
