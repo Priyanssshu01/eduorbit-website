@@ -32,8 +32,8 @@
       <div class="nav-links" id="navLinks">
         <a href="#about" class="nav-link" data-hover>About</a>
         <a href="#colleges" class="nav-link" data-hover>Colleges</a>
-        <a href="#fees" class="nav-link" data-hover>Fee Structure</a>
         <a href="#eligibility" class="nav-link" data-hover>Check Eligibility</a>
+        <a href="#fees" class="nav-link" data-hover>Fee Structure</a>
         <a href="#loans" class="nav-link" data-hover>Loans & Scholarships</a>
         <a href="#services" class="nav-link" data-hover>Services</a>
         <a href="#contact" class="nav-link nav-link--cta" data-hover>Free Counselling</a>
@@ -49,8 +49,8 @@
     <div class="mobile-menu-links">
       <a href="#about" class="mobile-link">About</a>
       <a href="#colleges" class="mobile-link">Colleges</a>
-      <a href="#fees" class="mobile-link">Fee Structure</a>
       <a href="#eligibility" class="mobile-link">Check Eligibility</a>
+      <a href="#fees" class="mobile-link">Fee Structure</a>
       <a href="#loans" class="mobile-link">Loans & Scholarships</a>
       <a href="#services" class="mobile-link">Services</a>
       <a href="#contact" class="mobile-link">Free Counselling</a>
@@ -172,84 +172,11 @@
     </div>
   </section>
 
-  <!-- Fee Structure Section -->
-  <section class="section section--fees" id="fees">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag reveal-up">03 — Admission 2026 | Fee Structure</span>
-        <h2 class="section-title reveal-up">Transparent <em>Fee Details</em></h2>
-        <p class="section-sub reveal-up">Complete branch-wise fee structure with hostel charges</p>
-      </div>
-
-      <!-- Filters -->
-      <div class="fee-filters reveal-up">
-        <div class="filter-group">
-          <label class="filter-label">Course Category</label>
-          <select class="filter-select" id="categoryFilterSelect">
-            <option value="all">All Categories</option>
-            <option value="engineering">Engineering & Technology</option>
-            <option value="management">Business & Management</option>
-            <option value="computer_applications">Computer Applications</option>
-            <option value="science">Sciences (B.Sc, M.Sc)</option>
-            <option value="arts_humanities">Arts & Humanities</option>
-            <option value="law">Law & Justice</option>
-            <option value="pharmacy_health">Pharmacy & Health Sciences</option>
-            <option value="agriculture">Agriculture</option>
-            <option value="education">Education</option>
-            <option value="diploma">Diploma</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label class="filter-label">College</label>
-          <select class="filter-select" id="collegeFilter">
-            <option value="all">All Colleges</option>
-            <option value="JISCE">JIS College of Engineering</option>
-            <option value="NIT">Narula Institute of Technology</option>
-            <option value="GNIT">Guru Nanak Institute of Technology</option>
-            <option value="SURTECH">Dr Sudhir Chandra Sur Institute of Technology</option>
-            <option value="AEC">Asansol Engineering College</option>
-            <option value="BWU">Brainware University</option>
-            <option value="ADAMAS">Adamas University</option>
-            <option value="IES">IES University, Bhopal</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label class="filter-label">Search</label>
-          <input type="text" class="filter-search" id="searchFilter" placeholder="Search courses...">
-        </div>
-      </div>
-
-      <!-- Fee Table -->
-      <div class="fee-table-wrapper reveal-up">
-        <div class="fee-count" id="feeCount"></div>
-        <div class="fee-table-scroll">
-          <table class="fee-table" id="feeTable">
-            <thead>
-              <tr>
-                <th>Course</th>
-                <th>Type</th>
-                <th>College(s)</th>
-                <th>Duration</th>
-                <th>Total Course Fee</th>
-                <th>With Hostel (Boys)</th>
-                <th>With Hostel (Girls)</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="feeTableBody">
-              <!-- Populated by JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Eligibility Checker Section -->
   <section class="section section--eligibility" id="eligibility">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag reveal-up">04 — Eligibility Checker</span>
+        <span class="section-tag reveal-up">03 — Eligibility Checker</span>
         <h2 class="section-title reveal-up">Check Your <em>Admission Eligibility</em></h2>
         <p class="section-sub reveal-up">Enter your exam scores and find out which colleges & courses you qualify for — instantly.</p>
       </div>
@@ -314,6 +241,82 @@
           <div class="elig-cards" id="eligCards">
             <!-- Populated by JS -->
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fee Structure Section -->
+  <section class="section section--fees" id="fees">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag reveal-up">04 — Admission 2026 | Fee Structure</span>
+        <h2 class="section-title reveal-up">Transparent <em>Fee Details</em></h2>
+        <p class="section-sub reveal-up">Complete branch-wise fee structure with hostel charges</p>
+      </div>
+
+      <!-- Filters -->
+      <div class="fee-filters reveal-up">
+        <div class="filter-group">
+          <label class="filter-label">Course Category</label>
+          <select class="filter-select" id="categoryFilterSelect">
+            <option value="all">All Categories</option>
+            <option value="engineering">Engineering & Technology</option>
+            <option value="management">Business & Management</option>
+            <option value="computer_applications">Computer Applications</option>
+            <option value="science">Sciences (B.Sc, M.Sc)</option>
+            <option value="arts_humanities">Arts & Humanities</option>
+            <option value="law">Law & Justice</option>
+            <option value="pharmacy_health">Pharmacy & Health Sciences</option>
+            <option value="agriculture">Agriculture</option>
+            <option value="education">Education</option>
+            <option value="diploma">Diploma</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">College</label>
+          <select class="filter-select" id="collegeFilter">
+            <option value="all">All Colleges</option>
+            <option value="JISCE">JIS College of Engineering</option>
+            <option value="NIT">Narula Institute of Technology</option>
+            <option value="GNIT">Guru Nanak Institute of Technology</option>
+            <option value="SURTECH">Dr Sudhir Chandra Sur Institute of Technology</option>
+            <option value="AEC">Asansol Engineering College</option>
+            <option value="BWU">Brainware University</option>
+            <option value="ADAMAS">Adamas University</option>
+            <option value="IES">IES University, Bhopal</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">Search</label>
+          <input type="text" class="filter-search" id="searchFilter" placeholder="Search courses...">
+        </div>
+      </div>
+
+      <!-- Fee Table -->
+      <div class="fee-table-wrapper reveal-up">
+        <div class="fee-count" id="feeCount"></div>
+        <div class="fee-table-scroll">
+          <table class="fee-table" id="feeTable">
+            <thead>
+              <tr>
+                <th>Course</th>
+                <th>Type</th>
+                <th>College(s)</th>
+                <th>Duration</th>
+                <th>Total Course Fee</th>
+                <th>With Hostel (Boys)</th>
+                <th>With Hostel (Girls)</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="feeTableBody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+        <div class="fee-load-more" id="feeLoadMore" style="display:none;">
+          <button class="btn btn--outline fee-more-btn" id="feeMoreBtn" data-hover>Show More Courses ↓</button>
         </div>
       </div>
     </div>

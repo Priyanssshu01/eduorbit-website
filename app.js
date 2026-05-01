@@ -157,20 +157,28 @@
     });
   }
 
+  let visibleCount = 20;
+
   function renderFeeTable() {
     const tbody = document.getElementById('feeTableBody');
     const countEl = document.getElementById('feeCount');
+    const loadMoreDiv = document.getElementById('feeLoadMore');
+    const moreBtn = document.getElementById('feeMoreBtn');
     if (!tbody) return;
 
     const filtered = filterCourses();
-    countEl.textContent = `Showing ${filtered.length} of ${COURSES.length} courses`;
+    const showing = Math.min(visibleCount, filtered.length);
+    countEl.textContent = `Showing ${showing} of ${filtered.length} courses`;
 
     if (filtered.length === 0) {
       tbody.innerHTML = '<tr><td colspan="8" class="no-results">No courses found matching your filters.</td></tr>';
+      loadMoreDiv.style.display = 'none';
       return;
     }
 
-    tbody.innerHTML = filtered.map((c, i) => `
+    const visible = filtered.slice(0, visibleCount);
+
+    tbody.innerHTML = visible.map((c, i) => `
       <tr>
         <td class="fee-name">${c.name}</td>
         <td class="fee-type">${c.type}</td>
@@ -184,24 +192,47 @@
         <td><button class="fee-detail-btn" data-index="${i}" onclick="showDetail(${COURSES.indexOf(c)})">Details</button></td>
       </tr>
     `).join('');
+
+    // Show/hide load more button
+    if (visibleCount < filtered.length) {
+      loadMoreDiv.style.display = 'flex';
+      const remaining = filtered.length - visibleCount;
+      if (visibleCount <= 20) {
+        moreBtn.textContent = `Show More Courses (${remaining} remaining) ↓`;
+      } else {
+        moreBtn.textContent = `Show All Courses (${remaining} remaining) ↓`;
+      }
+    } else {
+      loadMoreDiv.style.display = 'none';
+    }
   }
   renderFeeTable();
+
+  // Load More button
+  document.getElementById('feeMoreBtn').addEventListener('click', () => {
+    if (visibleCount <= 20) visibleCount = 40;
+    else visibleCount = 9999;
+    renderFeeTable();
+  });
 
   // Category filter
   document.getElementById('categoryFilterSelect').addEventListener('change', (e) => {
     currentCategory = e.target.value;
+    visibleCount = 20;
     renderFeeTable();
   });
 
   // College filter
   document.getElementById('collegeFilter').addEventListener('change', (e) => {
     currentCollege = e.target.value;
+    visibleCount = 20;
     renderFeeTable();
   });
 
   // Search filter
   document.getElementById('searchFilter').addEventListener('input', (e) => {
     currentSearch = e.target.value;
+    visibleCount = 20;
     renderFeeTable();
   });
 

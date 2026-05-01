@@ -173,6 +173,11 @@ img{max-width:100%;display:block}
 .fee-detail-btn:hover{background:var(--blue);color:var(--white);border-color:var(--blue)}
 .no-results{text-align:center;padding:60px 20px;color:var(--gray-light);font-size:1rem}
 
+/* ===== FEE LOAD MORE ===== */
+.fee-load-more{display:flex;justify-content:center;padding:28px 0 8px}
+.fee-more-btn{padding:14px 40px;font-size:.9rem;border-radius:100px;letter-spacing:.02em;transition:all .3s var(--ease)}
+.fee-more-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(27,77,142,.2)}
+
 /* ===== SERVICES ===== */
 .section--services{background:var(--white)}
 .services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
