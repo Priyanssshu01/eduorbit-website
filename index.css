@@ -187,6 +187,38 @@ img{max-width:100%;display:block}
 .service-arrow{position:absolute;top:24px;right:24px;font-size:1.4rem;color:var(--gray-light);transition:all .3s var(--ease)}
 @media(max-width:768px){.services-grid{grid-template-columns:1fr}}
 
+/* ===== ELIGIBILITY CHECKER ===== */
+.section--eligibility{background:linear-gradient(180deg,#f0f4fa 0%,var(--white) 100%)}
+.elig-checker{margin-top:20px}
+.elig-form{background:var(--white);border:1px solid rgba(27,77,142,.1);border-radius:16px;padding:36px;box-shadow:0 20px 60px rgba(0,0,0,.04)}
+.elig-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px}
+.elig-field{display:flex;flex-direction:column;gap:8px}
+.elig-field label{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-light)}
+.elig-field select,.elig-field input{padding:14px 16px;font-size:.9rem;border:1.5px solid rgba(0,0,0,.1);border-radius:10px;background:var(--white);transition:all .25s;outline:none;font-family:'Inter',sans-serif}
+.elig-field select:focus,.elig-field input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,77,142,.1)}
+.elig-btn{margin-top:8px;font-size:1rem;padding:16px;border-radius:10px;letter-spacing:.02em}
+.elig-results{margin-top:40px;animation:eligFadeIn .5s ease}
+@keyframes eligFadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.elig-results-header{margin-bottom:28px}
+.elig-results-header h3{font-size:1.5rem;font-weight:800;letter-spacing:-0.03em;color:var(--blue)}
+.elig-results-header p{font-size:.9rem;color:var(--gray);margin-top:6px}
+.elig-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.elig-card{background:var(--white);border:1px solid rgba(27,77,142,.08);border-radius:14px;padding:24px;box-shadow:0 8px 24px rgba(0,0,0,.03);transition:all .3s var(--ease);position:relative;overflow:hidden}
+.elig-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,var(--blue),var(--orange));border-radius:4px 0 0 4px}
+.elig-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.08)}
+.elig-card-name{font-size:1rem;font-weight:700;color:var(--black);margin-bottom:6px;padding-left:12px}
+.elig-card-type{font-size:.75rem;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;padding-left:12px;margin-bottom:12px}
+.elig-card-meta{display:flex;flex-wrap:wrap;gap:8px;padding-left:12px;margin-bottom:12px}
+.elig-card-meta span{font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:100px;background:rgba(27,77,142,.06);color:var(--gray)}
+.elig-card-colleges{font-size:.8rem;color:var(--gray);padding-left:12px;line-height:1.4}
+.elig-card-colleges strong{color:var(--black);font-weight:600}
+.elig-card-fee{font-size:.85rem;font-weight:700;color:var(--orange-dark);padding-left:12px;margin-top:8px}
+.elig-card-eligibility{font-size:.78rem;color:var(--gray);padding:10px 12px;margin-top:12px;background:rgba(243,156,18,.05);border-radius:8px;border-left:3px solid var(--orange);line-height:1.5}
+.elig-no-results{text-align:center;padding:60px 20px}
+.elig-no-results h3{font-size:1.3rem;font-weight:700;color:var(--gray-light);margin-bottom:10px}
+.elig-no-results p{font-size:.9rem;color:var(--gray)}
+@media(max-width:768px){.elig-form-grid{grid-template-columns:1fr}.elig-cards{grid-template-columns:1fr}}
+
 /* ===== LOANS & SCHOLARSHIPS ===== */
 .section--loans{background:var(--white)}
 .loans-wrapper{margin-top:20px}

@@ -311,6 +311,144 @@
     });
   });
 
+  // --- Eligibility Checker ---
+  document.getElementById('eligCheckBtn').addEventListener('click', () => {
+    const level = document.getElementById('eligLevel').value;
+    const percent = parseFloat(document.getElementById('eligPercent').value);
+    const stream = document.getElementById('eligStream').value;
+    const exam = document.getElementById('eligExam').value;
+
+    if (!percent || percent < 0 || percent > 100) {
+      showToast('Please enter a valid percentage (0-100).');
+      return;
+    }
+
+    const results = COURSES.filter(c => {
+      if (!c.eligibility) return false;
+      const elig = c.eligibility.toLowerCase();
+
+      // --- Level matching ---
+      if (level === '10th') {
+        if (!elig.includes('10th') && !elig.includes('class 10')) return false;
+      } else if (level === 'diploma') {
+        if (!elig.includes('diploma') && !elig.includes('lateral')) return false;
+      } else if (level === 'ug') {
+        const isPG = elig.includes('graduation') || elig.includes('graduate') || elig.includes('ug') ||
+                     elig.includes('b.tech') || elig.includes('b.e') || elig.includes('b.pharm') ||
+                     elig.includes('b.sc nursing') || elig.includes('b.ed') || elig.includes('gnm') ||
+                     elig.includes('llb') || elig.includes('bca') || elig.includes('bachelor');
+        if (!isPG) return false;
+      } else {
+        // 12th level - exclude PG-only courses
+        const isPGonly = (elig.includes('graduation pass') || elig.includes('graduate and') ||
+                          elig.includes('b.tech') || elig.includes('b.e pass') ||
+                          elig.includes('b.pharm') || elig.includes('b.sc nursing') ||
+                          elig.includes('b.ed pass') || elig.includes('gnm pass') ||
+                          elig.includes('llb') || elig.includes('diploma in engineering pass') ||
+                          elig.includes('undergraduate degree')) && !elig.includes('10+2');
+        if (isPGonly) return false;
+      }
+
+      // --- Percentage matching ---
+      const percMatch = elig.match(/(\d{2,3})%/);
+      if (percMatch) {
+        const reqPerc = parseInt(percMatch[1]);
+        if (percent < reqPerc) return false;
+      }
+
+      // --- Stream matching ---
+      if (stream !== 'any') {
+        if (stream === 'pcm') {
+          if (elig.includes('pcb') && !elig.includes('pcm')) return false;
+        } else if (stream === 'pcb') {
+          if (elig.includes('pcm') && !elig.includes('pcb') && !elig.includes('bio')) return false;
+        } else if (stream === 'commerce') {
+          if (elig.includes('pcm') || elig.includes('pcb') || elig.includes('physics')) {
+            if (!elig.includes('any stream') && !elig.includes('any recognized')) return false;
+          }
+        } else if (stream === 'arts') {
+          if (elig.includes('pcm') || elig.includes('pcb') || elig.includes('physics') || elig.includes('maths')) {
+            if (!elig.includes('any stream') && !elig.includes('any recognized')) return false;
+          }
+        }
+      }
+
+      // --- Entrance exam boost (include courses requiring that exam) ---
+      if (exam !== 'none') {
+        const examMap = {
+          jee: ['jee'],
+          neet: ['neet'],
+          clat: ['clat'],
+          cat: ['cat', 'mat', 'xat'],
+          gate: ['gate'],
+          cuet: ['cuet'],
+          auat: ['auat'],
+          wbjee: ['wbjee'],
+          state: ['state']
+        };
+        const examKeywords = examMap[exam] || [];
+        const requiresExam = examKeywords.some(k => elig.includes(k));
+        // If course requires an exam and student hasn't taken it, skip
+        if (!requiresExam && examKeywords.length) {
+          const coursNeedsExam = ['clat','gate','cat','mat','xat','auat'].some(k => elig.includes(k));
+          if (coursNeedsExam) return false;
+        }
+      } else {
+        // Student has no exam - skip courses that strictly require one
+        const strictExams = ['clat', 'gate'];
+        const needsStrictExam = strictExams.some(k => elig.includes(k)) && !elig.includes('or');
+        if (needsStrictExam) return false;
+      }
+
+      return true;
+    });
+
+    const resultsDiv = document.getElementById('eligResults');
+    const titleEl = document.getElementById('eligResultsTitle');
+    const subEl = document.getElementById('eligResultsSub');
+    const cardsEl = document.getElementById('eligCards');
+
+    resultsDiv.style.display = 'block';
+
+    if (results.length === 0) {
+      titleEl.textContent = 'No Matching Courses Found';
+      subEl.textContent = 'Try adjusting your percentage or stream to see more options.';
+      cardsEl.innerHTML = `
+        <div class="elig-no-results">
+          <h3>😔 No courses match your criteria</h3>
+          <p>Don't worry! Contact our counsellors for personalized guidance.</p>
+        </div>
+      `;
+    } else {
+      titleEl.textContent = `✅ ${results.length} Course${results.length > 1 ? 's' : ''} Found!`;
+      subEl.textContent = `Based on your ${percent}% marks — here are the courses you may be eligible for:`;
+
+      cardsEl.innerHTML = results.map(c => {
+        const collegeNames = c.colleges.map(abbr => {
+          const col = COLLEGES.find(cl => cl.abbr === abbr);
+          return col ? col.name : abbr;
+        }).join(', ');
+        
+        return `
+          <div class="elig-card">
+            <div class="elig-card-name">${c.name}</div>
+            <div class="elig-card-type">${c.type}</div>
+            <div class="elig-card-meta">
+              <span>${c.duration} Year${c.duration > 1 ? 's' : ''}</span>
+              <span>${c.category.replace('_', ' ')}</span>
+            </div>
+            <div class="elig-card-colleges"><strong>College:</strong> ${collegeNames}</div>
+            <div class="elig-card-fee">Total Fee: ${formatCurrency(c.totalFee)}</div>
+            <div class="elig-card-eligibility">📋 ${c.eligibility}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Scroll to results
+    resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
   // --- Contact Form ---
   document.getElementById('contactForm').addEventListener('submit', (e) => {
     e.preventDefault();

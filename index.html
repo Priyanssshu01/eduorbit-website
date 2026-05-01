@@ -33,6 +33,7 @@
         <a href="#about" class="nav-link" data-hover>About</a>
         <a href="#colleges" class="nav-link" data-hover>Colleges</a>
         <a href="#fees" class="nav-link" data-hover>Fee Structure</a>
+        <a href="#eligibility" class="nav-link" data-hover>Check Eligibility</a>
         <a href="#loans" class="nav-link" data-hover>Loans & Scholarships</a>
         <a href="#services" class="nav-link" data-hover>Services</a>
         <a href="#contact" class="nav-link nav-link--cta" data-hover>Free Counselling</a>
@@ -49,6 +50,7 @@
       <a href="#about" class="mobile-link">About</a>
       <a href="#colleges" class="mobile-link">Colleges</a>
       <a href="#fees" class="mobile-link">Fee Structure</a>
+      <a href="#eligibility" class="mobile-link">Check Eligibility</a>
       <a href="#loans" class="mobile-link">Loans & Scholarships</a>
       <a href="#services" class="mobile-link">Services</a>
       <a href="#contact" class="mobile-link">Free Counselling</a>
@@ -243,11 +245,85 @@
     </div>
   </section>
 
+  <!-- Eligibility Checker Section -->
+  <section class="section section--eligibility" id="eligibility">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag reveal-up">04 — Eligibility Checker</span>
+        <h2 class="section-title reveal-up">Check Your <em>Admission Eligibility</em></h2>
+        <p class="section-sub reveal-up">Enter your exam scores and find out which colleges & courses you qualify for — instantly.</p>
+      </div>
+
+      <div class="elig-checker reveal-up">
+        <div class="elig-form">
+          <div class="elig-form-grid">
+            <div class="elig-field">
+              <label for="eligLevel">Your Education Level</label>
+              <select id="eligLevel">
+                <option value="12th">12th Pass (Looking for UG courses)</option>
+                <option value="ug">Graduation Pass (Looking for PG courses)</option>
+                <option value="diploma">Diploma Pass (Lateral Entry)</option>
+                <option value="10th">10th Pass (Looking for Diploma)</option>
+              </select>
+            </div>
+
+            <div class="elig-field">
+              <label for="eligPercent">Your Marks (% in qualifying exam)</label>
+              <input type="number" id="eligPercent" placeholder="e.g. 72" min="0" max="100">
+            </div>
+
+            <div class="elig-field">
+              <label for="eligStream">Stream / Subjects</label>
+              <select id="eligStream">
+                <option value="any">Any / General</option>
+                <option value="pcm">PCM (Physics, Chemistry, Maths)</option>
+                <option value="pcb">PCB (Physics, Chemistry, Biology)</option>
+                <option value="commerce">Commerce</option>
+                <option value="arts">Arts / Humanities</option>
+                <option value="agriculture">Agriculture</option>
+              </select>
+            </div>
+
+            <div class="elig-field">
+              <label for="eligExam">Entrance Exam (Optional)</label>
+              <select id="eligExam">
+                <option value="none">None / Not Applicable</option>
+                <option value="jee">JEE Main</option>
+                <option value="neet">NEET</option>
+                <option value="clat">CLAT</option>
+                <option value="cat">CAT / MAT / XAT</option>
+                <option value="gate">GATE</option>
+                <option value="cuet">CUET</option>
+                <option value="auat">AUAT</option>
+                <option value="wbjee">WBJEE</option>
+                <option value="state">Other State Level Exam</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="btn btn--primary btn--full elig-btn" id="eligCheckBtn" data-hover>
+            🔍 Check My Eligibility
+          </button>
+        </div>
+
+        <div class="elig-results" id="eligResults" style="display:none;">
+          <div class="elig-results-header">
+            <h3 id="eligResultsTitle"></h3>
+            <p id="eligResultsSub"></p>
+          </div>
+          <div class="elig-cards" id="eligCards">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Loans & Scholarships Section -->
   <section class="section section--loans" id="loans">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag reveal-up">04 — Financial Assistance</span>
+        <span class="section-tag reveal-up">05 — Financial Assistance</span>
         <h2 class="section-title reveal-up">Education <em>Loans & Scholarships</em></h2>
         <p class="section-sub reveal-up">State-wise student credit card schemes and university scholarships.</p>
       </div>
@@ -379,7 +455,7 @@
   <section class="section section--services" id="services">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag reveal-up">05 — Our Services</span>
+        <span class="section-tag reveal-up">06 — Our Services</span>
         <h2 class="section-title reveal-up">Everything you need for a <em>smooth admission.</em></h2>
       </div>
       <div class="services-grid">
@@ -428,7 +504,7 @@
   <section class="section section--contact" id="contact">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag reveal-up">06 — Get in Touch</span>
+        <span class="section-tag reveal-up">07 — Get in Touch</span>
         <h2 class="section-title reveal-up">Let's connect.</h2>
       </div>
       <div class="contact-grid">
