@@ -10,6 +10,7 @@ const COLLEGES = [
   { id: 'bwu', name: 'Brainware University', abbr: 'BWU', est: 2016, naac: 'UGC', location: 'Barasat, Kolkata', img: '🎓' },
   { id: 'adamas', name: 'Adamas University', abbr: 'ADAMAS', est: 2014, naac: 'A', location: 'Barasat, Kolkata', img: '🏫' },
   { id: 'ies', name: 'IES University / College of Technology', abbr: 'IES', est: 1999, naac: 'B', location: 'Bhopal, Madhya Pradesh', img: '🏥' },
+  { id: 'svu', name: 'Swami Vivekananda University', abbr: 'SVU', est: 2019, naac: 'WBCER', location: 'Barrackpore, West Bengal', img: '🏫' },
 ];
 
 const COURSES = [
@@ -164,4 +165,39 @@ const COURSES = [
 
   // Diploma
   { name: 'Diploma in Engineering (CSE / CE / ME / EE)', type: 'Diploma', category: 'diploma', colleges: ['IES'], duration: 3, totalFee: 120000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [40000, 40000, 40000], hostelBoysYW: ['N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A'], eligibility: 'Pass in 10th Class.' },
+
+  // ===== Swami Vivekananda University (SVU), Barrackpore =====
+  
+  // Allied Health Sciences
+  { name: 'B.Sc(H) Clinical Nutrition & Dietetics', type: 'Allied Health', category: 'pharmacy_health', colleges: ['SVU'], duration: 4, totalFee: 377300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [157300, 90000, 90000, 40000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Min 50% in 10+2 with Science.' },
+  { name: 'Bachelor of Optometry / Physiotherapy (BPT)', type: 'Allied Health', category: 'pharmacy_health', colleges: ['SVU'], duration: 4, totalFee: 427300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [157300, 90000, 90000, 90000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Min 50% in 10+2 with PCB.' },
+  { name: 'B.Sc Medical Radiology / Lab Technology (BMLT) / Anesthesia', type: 'Allied Health', category: 'pharmacy_health', colleges: ['SVU'], duration: 3, totalFee: 397300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [177300, 110000, 110000], hostelBoysYW: ['N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A'], eligibility: 'Min 50% in 10+2 with PCB.' },
+  { name: 'B.Sc(H) Psychology', type: 'Allied Health', category: 'pharmacy_health', colleges: ['SVU'], duration: 4, totalFee: 377300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [137300, 80000, 80000, 80000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Min 50% in 10+2.' },
+  
+  // Computer Science
+  { name: 'BCA / B.Sc Cyber Security / Networking', type: 'BCA', category: 'computer_applications', colleges: ['SVU'], duration: 4, totalFee: 382300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [142300, 80000, 80000, 80000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Min 50% in 10+2.' },
+  { name: 'B.Sc Animation & Multimedia', type: 'B.Sc', category: 'science', colleges: ['SVU'], duration: 4, totalFee: 422300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [152300, 90000, 90000, 90000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Min 50% in 10+2.' },
+  { name: 'MCA / M.Sc Animation', type: 'MCA', category: 'computer_applications', colleges: ['SVU'], duration: 2, totalFee: 207300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [132300, 75000], hostelBoysYW: ['N/A','N/A'], hostelGirlsYW: ['N/A','N/A'], eligibility: 'Graduation with Maths.' },
+
+  // Engineering
+  { name: 'B.Tech CSE (AIML / Data Science / Cyber Security / Gaming)', type: 'B.Tech', category: 'engineering', colleges: ['SVU'], duration: 4, totalFee: 427300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [157300, 90000, 90000, 90000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Min 60% in 10+2 with PCM.' },
+  { name: 'B.Tech (EE / ECE / ME / Civil)', type: 'B.Tech', category: 'engineering', colleges: ['SVU'], duration: 4, totalFee: 387300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [147300, 80000, 80000, 80000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Min 55% in 10+2 with PCM.' },
+  { name: 'B.Tech Lateral (CSE / ECE / EE / ME / CE)', type: 'B.Tech', category: 'engineering', colleges: ['SVU'], duration: 3, totalFee: 205500, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [65500, 70000, 70000], hostelBoysYW: ['N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A'], eligibility: 'Diploma in Engineering.' },
+  { name: 'Diploma (EE / ME)', type: 'Diploma', category: 'diploma', colleges: ['SVU'], duration: 3, totalFee: 172300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [82300, 45000, 45000], hostelBoysYW: ['N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A'], eligibility: 'Pass in 10th.' },
+  { name: 'Diploma Lateral (CS / EE / ME)', type: 'Diploma', category: 'diploma', colleges: ['SVU'], duration: 2, totalFee: 121300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [76300, 45000], hostelBoysYW: ['N/A','N/A'], hostelGirlsYW: ['N/A','N/A'], eligibility: 'Pass in 12th Sc / ITI.' },
+
+  // Agriculture & Life Sciences
+  { name: 'B.Sc(H) Agriculture', type: 'Agriculture', category: 'agriculture', colleges: ['SVU'], duration: 4, totalFee: 342300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [132300, 70000, 70000, 70000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Min 50% in 10+2 with PCM/PCB.' },
+  { name: 'B.Sc(H) Biotechnology', type: 'B.Sc', category: 'science', colleges: ['SVU'], duration: 4, totalFee: 382300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [142300, 80000, 80000, 80000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Min 50% in 10+2 with PCB.' },
+  { name: 'M.Sc (Agri / Biotech / Microbio)', type: 'M.Sc', category: 'science', colleges: ['SVU'], duration: 2, totalFee: 182300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [122300, 60000], hostelBoysYW: ['N/A','N/A'], hostelGirlsYW: ['N/A','N/A'], eligibility: 'Graduation in Science.' },
+
+  // Management & Humanities
+  { name: 'BBA / BBA (Digital Marketing)', type: 'BBA', category: 'management', colleges: ['SVU'], duration: 4, totalFee: 382300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [142300, 80000, 80000, 80000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Min 50% in 10+2.' },
+  { name: 'BBA (Hospital / Hotel Management)', type: 'BBA', category: 'management', colleges: ['SVU'], duration: 4, totalFee: 437300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [167300, 90000, 90000, 90000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Min 50% in 10+2.' },
+  { name: 'MBA', type: 'MBA', category: 'management', colleges: ['SVU'], duration: 2, totalFee: 527300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [327300, 200000], hostelBoysYW: ['N/A','N/A'], hostelGirlsYW: ['N/A','N/A'], eligibility: 'Graduation Pass.' },
+  { name: 'BA(H) Journalism & Mass Comm', type: 'BA', category: 'arts_humanities', colleges: ['SVU'], duration: 4, totalFee: 302300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [122300, 60000, 60000, 60000], hostelBoysYW: ['N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A'], eligibility: 'Min 50% in 10+2.' },
+
+  // Legal Studies
+  { name: 'BA LLB(H) / BBA LLB(H)', type: 'Law', category: 'law', colleges: ['SVU'], duration: 5, totalFee: 467300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [131300, 84000, 84000, 84000, 84000], hostelBoysYW: ['N/A','N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A','N/A'], eligibility: 'Min 60% in 10+2.' },
+  { name: 'LL.B (Hons)', type: 'Law', category: 'law', colleges: ['SVU'], duration: 3, totalFee: 299300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [131300, 84000, 84000], hostelBoysYW: ['N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A'], eligibility: 'Graduation Pass.' },
 ];
