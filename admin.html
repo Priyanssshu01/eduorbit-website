@@ -6,25 +6,75 @@
   <title>EduOrbit Admin Panel</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="admin.css">
+  <!-- CRITICAL: Inline login styles so it always shows -->
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:#060D1F}
+    #loginScreen{
+      position:fixed;inset:0;
+      background:linear-gradient(135deg,#060D1F 0%,#0F2A5C 100%);
+      display:flex;align-items:center;justify-content:center;
+      z-index:9999;padding:20px;
+    }
+    #adminWrap{display:none}
+    .login-box{
+      background:#fff;border-radius:20px;
+      padding:48px 40px;width:100%;max-width:420px;
+      box-shadow:0 40px 80px rgba(0,0,0,.5);
+    }
+    .login-logo{font-size:2rem;font-weight:900;letter-spacing:-0.04em;margin-bottom:6px;text-align:center;font-family:'Inter',sans-serif}
+    .logo-edu{color:#0a0a0a}.logo-orbit{color:#6b7280}
+    .admin-label{font-size:.65rem;font-weight:700;letter-spacing:.12em;background:#F39C12;color:#fff;padding:3px 10px;border-radius:4px;margin-left:6px;vertical-align:middle}
+    .login-sub{font-size:.83rem;color:#6b7280;text-align:center;margin-bottom:32px;font-family:'Inter',sans-serif}
+    .login-form{display:flex;flex-direction:column;gap:18px}
+    .lf-field{display:flex;flex-direction:column;gap:6px}
+    .lf-field label{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6b7280;font-family:'Inter',sans-serif}
+    .lf-field input{
+      padding:14px 16px;font-size:.95rem;
+      border:1.5px solid rgba(0,0,0,.12);border-radius:12px;
+      outline:none;font-family:'Inter',sans-serif;
+      transition:border-color .2s;width:100%;
+    }
+    .lf-field input:focus{border-color:#1B4D8E;box-shadow:0 0 0 3px rgba(27,77,142,.1)}
+    #loginError{
+      background:#fee2e2;color:#dc2626;font-size:.82rem;
+      padding:11px 14px;border-radius:8px;display:none;
+      font-family:'Inter',sans-serif;text-align:center;
+    }
+    #loginError.show{display:block}
+    #loginBtn{
+      padding:15px;background:linear-gradient(135deg,#1B4D8E,#2E86C1);
+      color:#fff;border:none;border-radius:12px;
+      font-size:.95rem;font-weight:700;cursor:pointer;
+      font-family:'Inter',sans-serif;width:100%;
+      transition:all .3s;margin-top:4px;
+    }
+    #loginBtn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(27,77,142,.4)}
+    .login-hint{font-size:.72rem;color:#9ca3af;text-align:center;margin-top:4px;font-family:'Inter',sans-serif}
+    @media(max-width:480px){.login-box{padding:32px 24px}}
+  </style>
 </head>
 <body>
 
   <!-- LOGIN SCREEN -->
-  <div class="login-screen" id="loginScreen">
+  <div id="loginScreen">
     <div class="login-box">
-      <div class="login-logo"><span class="logo-edu">EDU</span><span class="logo-orbit">ORBIT</span></div>
-      <p class="login-sub">Admin Panel — Secure Access</p>
+      <div class="login-logo">
+        <span class="logo-edu">EDU</span><span class="logo-orbit">ORBIT</span><span class="admin-label">ADMIN</span>
+      </div>
+      <p class="login-sub">Secure Admin Dashboard</p>
       <div class="login-form">
-        <div class="form-field">
+        <div class="lf-field">
           <label>Username</label>
-          <input type="text" id="loginUser" placeholder="admin" autocomplete="off">
+          <input type="text" id="loginUser" placeholder="Enter username" autocomplete="off">
         </div>
-        <div class="form-field">
+        <div class="lf-field">
           <label>Password</label>
-          <input type="password" id="loginPass" placeholder="••••••••">
+          <input type="password" id="loginPass" placeholder="Enter password">
         </div>
-        <div class="login-error" id="loginError">❌ Invalid credentials</div>
-        <button class="btn-primary" id="loginBtn" onclick="doLogin()">Login to Dashboard</button>
+        <div id="loginError">❌ Wrong username or password. Try again.</div>
+        <button id="loginBtn" onclick="doLogin()">🔐 Login to Dashboard</button>
+        <p class="login-hint">Default: eduorbit / admin@2026</p>
       </div>
     </div>
   </div>

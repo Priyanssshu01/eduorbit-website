@@ -1,40 +1,41 @@
 // ===== EDUORBIT ADMIN PANEL =====
-// Credentials (change these!)
+// Credentials (change these to keep secure!)
 const ADMIN_USER = 'eduorbit';
 const ADMIN_PASS = 'admin@2026';
 
 // ===== AUTH =====
 function doLogin() {
-  const u = document.getElementById('loginUser').value.trim();
-  const p = document.getElementById('loginPass').value.trim();
+  const u = (document.getElementById('loginUser').value || '').trim();
+  const p = (document.getElementById('loginPass').value || '').trim();
   const err = document.getElementById('loginError');
   if (u === ADMIN_USER && p === ADMIN_PASS) {
-    localStorage.setItem('eo_admin', 'true');
+    sessionStorage.setItem('eo_admin', 'true');
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('adminWrap').style.display = 'flex';
     initAdmin();
   } else {
-    err.classList.add('show');
-    setTimeout(() => err.classList.remove('show'), 3000);
+    err.style.display = 'block';
+    setTimeout(() => { err.style.display = 'none'; }, 3000);
   }
 }
 
 function doLogout() {
-  localStorage.removeItem('eo_admin');
+  sessionStorage.removeItem('eo_admin');
   location.reload();
 }
 
-document.getElementById('loginPass').addEventListener('keydown', e => {
-  if (e.key === 'Enter') doLogin();
-});
-
-// Auto login if session active
-window.addEventListener('load', () => {
-  if (localStorage.getItem('eo_admin') === 'true') {
+document.addEventListener('DOMContentLoaded', () => {
+  // Always show login first — only skip if session active in same browser tab
+  if (sessionStorage.getItem('eo_admin') === 'true') {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('adminWrap').style.display = 'flex';
     initAdmin();
   }
+  // Enter key on password
+  const passEl = document.getElementById('loginPass');
+  if (passEl) passEl.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+  const userEl = document.getElementById('loginUser');
+  if (userEl) userEl.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 });
 
 // ===== DATA STORE =====
