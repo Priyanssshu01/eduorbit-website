@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduOrbit Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-box">
+      <div class="login-logo"><span class="logo-edu">EDU</span><span class="logo-orbit">ORBIT</span></div>
+      <p class="login-sub">Admin Panel — Secure Access</p>
+      <div class="login-form">
+        <div class="form-field">
+          <label>Username</label>
+          <input type="text" id="loginUser" placeholder="admin" autocomplete="off">
+        </div>
+        <div class="form-field">
+          <label>Password</label>
+          <input type="password" id="loginPass" placeholder="••••••••">
+        </div>
+        <div class="login-error" id="loginError">❌ Invalid credentials</div>
+        <button class="btn-primary" id="loginBtn" onclick="doLogin()">Login to Dashboard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN DASHBOARD -->
+  <div class="admin-wrap" id="adminWrap" style="display:none">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo"><span class="logo-edu">EDU</span><span class="logo-orbit">ORBIT</span><span class="admin-badge">ADMIN</span></div>
+      <nav class="sidebar-nav">
+        <button class="nav-item active" onclick="showTab('dashboard',this)">📊 Dashboard</button>
+        <button class="nav-item" onclick="showTab('colleges',this)">🏫 Colleges</button>
+        <button class="nav-item" onclick="showTab('courses',this)">📚 Courses</button>
+        <button class="nav-item" onclick="showTab('leads',this)">👤 Student Leads</button>
+        <button class="nav-item" onclick="showTab('export',this)">💾 Export Data</button>
+      </nav>
+      <button class="logout-btn" onclick="doLogout()">🚪 Logout</button>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="admin-main">
+
+      <!-- TOPBAR -->
+      <div class="topbar">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <h1 class="page-title" id="pageTitle">Dashboard</h1>
+        <div class="topbar-right">
+          <span class="admin-name">👤 Admin</span>
+        </div>
+      </div>
+
+      <!-- DASHBOARD TAB -->
+      <div class="tab-content active" id="tab-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card" style="--c:#1B4D8E">
+            <div class="stat-icon">🏫</div>
+            <div class="stat-val" id="statColleges">0</div>
+            <div class="stat-label">Total Colleges</div>
+          </div>
+          <div class="stat-card" style="--c:#F39C12">
+            <div class="stat-icon">📚</div>
+            <div class="stat-val" id="statCourses">0</div>
+            <div class="stat-label">Total Courses</div>
+          </div>
+          <div class="stat-card" style="--c:#22c55e">
+            <div class="stat-icon">👤</div>
+            <div class="stat-val" id="statLeads">0</div>
+            <div class="stat-label">Student Leads</div>
+          </div>
+          <div class="stat-card" style="--c:#e74c3c">
+            <div class="stat-icon">📅</div>
+            <div class="stat-val" id="statToday">0</div>
+            <div class="stat-label">Today's Leads</div>
+          </div>
+        </div>
+        <div class="dashboard-grid">
+          <div class="dash-card">
+            <h3>Recent Leads</h3>
+            <div id="recentLeads" class="recent-list"></div>
+          </div>
+          <div class="dash-card">
+            <h3>Quick Actions</h3>
+            <div class="quick-actions">
+              <button class="qa-btn" onclick="showTab('colleges',null);openAddCollege()">➕ Add College</button>
+              <button class="qa-btn" onclick="showTab('courses',null);openAddCourse()">➕ Add Course</button>
+              <button class="qa-btn" onclick="showTab('export',null)">💾 Export data.js</button>
+              <a href="index.html" target="_blank" class="qa-btn">🌐 View Website</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLLEGES TAB -->
+      <div class="tab-content" id="tab-colleges">
+        <div class="tab-header">
+          <h2>Manage Colleges</h2>
+          <button class="btn-primary" onclick="openAddCollege()">➕ Add College</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="collegesTable">
+            <thead><tr><th>Emoji</th><th>Name</th><th>Abbr</th><th>NAAC</th><th>Location</th><th>Est.</th><th>Actions</th></tr></thead>
+            <tbody id="collegesBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- COURSES TAB -->
+      <div class="tab-content" id="tab-courses">
+        <div class="tab-header">
+          <h2>Manage Courses</h2>
+          <button class="btn-primary" onclick="openAddCourse()">➕ Add Course</button>
+        </div>
+        <div class="courses-search">
+          <input type="text" id="courseSearch" placeholder="Search courses..." oninput="filterCoursesTable()">
+          <select id="courseColFilter" onchange="filterCoursesTable()">
+            <option value="">All Colleges</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="coursesTable">
+            <thead><tr><th>Course Name</th><th>Type</th><th>College(s)</th><th>Duration</th><th>Total Fee</th><th>Actions</th></tr></thead>
+            <tbody id="coursesBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- LEADS TAB -->
+      <div class="tab-content" id="tab-leads">
+        <div class="tab-header">
+          <h2>Student Leads</h2>
+          <div class="lead-actions">
+            <button class="btn-outline" onclick="exportLeadsCSV()">📥 Export CSV</button>
+            <button class="btn-danger" onclick="clearLeads()">🗑 Clear All</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>#</th><th>Name</th><th>Phone</th><th>Course</th><th>Message</th><th>Date</th><th>Action</th></tr></thead>
+            <tbody id="leadsBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- EXPORT TAB -->
+      <div class="tab-content" id="tab-export">
+        <div class="tab-header"><h2>Export Data</h2></div>
+        <div class="export-cards">
+          <div class="export-card">
+            <div class="export-icon">📄</div>
+            <h3>Export data.js</h3>
+            <p>Download updated data.js file with all your colleges and courses. Replace the file in your project folder.</p>
+            <button class="btn-primary" onclick="exportDataJS()">⬇ Download data.js</button>
+          </div>
+          <div class="export-card">
+            <div class="export-icon">📊</div>
+            <h3>Export Leads (CSV)</h3>
+            <p>Download all student enquiries as a CSV file for use in Excel or Google Sheets.</p>
+            <button class="btn-primary" onclick="exportLeadsCSV()">⬇ Download Leads CSV</button>
+          </div>
+        </div>
+        <div class="export-preview">
+          <h3>Preview data.js</h3>
+          <textarea id="exportPreview" readonly></textarea>
+          <button class="btn-outline" onclick="copyExport()">📋 Copy to Clipboard</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal-box" id="modalBox">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="data.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

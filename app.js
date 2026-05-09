@@ -483,8 +483,17 @@
   // --- Contact Form ---
   document.getElementById('contactForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('formName').value;
-    showToast(`Thank you ${name}! We'll contact you shortly.`);
+    const name = document.getElementById('formName').value.trim();
+    const phone = document.getElementById('formPhone').value.trim();
+    const course = document.getElementById('formCourse').value;
+    const message = document.getElementById('formMessage').value.trim();
+
+    // Save lead to localStorage for admin panel
+    const leads = JSON.parse(localStorage.getItem('eo_leads') || '[]');
+    leads.push({ name, phone, course, message, date: new Date().toISOString() });
+    localStorage.setItem('eo_leads', JSON.stringify(leads));
+
+    showToast(`✅ Thank you ${name}! We'll contact you shortly.`);
     e.target.reset();
   });
 
