@@ -509,4 +509,56 @@
     setTimeout(() => toast.classList.remove('active'), 3500);
   }
 
+  // --- Lead Popup ---
+  let popupShown = false;
+  function showLeadPopup() {
+    if (popupShown || sessionStorage.getItem('eo_popup_shown')) return;
+    popupShown = true;
+    sessionStorage.setItem('eo_popup_shown', '1');
+    document.getElementById('leadPopupOverlay').classList.add('show');
+  }
+  function closeLeadPopup() {
+    document.getElementById('leadPopupOverlay').classList.remove('show');
+  }
+  window.closeLeadPopup = closeLeadPopup;
+
+  // Show popup after 20 seconds
+  setTimeout(showLeadPopup, 20000);
+
+  // Exit intent (mouse leaves viewport top)
+  document.addEventListener('mouseleave', (e) => {
+    if (e.clientY < 10) showLeadPopup();
+  });
+
+  // Close on overlay click
+  document.getElementById('leadPopupOverlay').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('leadPopupOverlay')) closeLeadPopup();
+  });
+
+  window.submitLeadPopup = function(e) {
+    e.preventDefault();
+    const name = document.getElementById('popupName').value.trim();
+    const phone = document.getElementById('popupPhone').value.trim();
+    const course = document.getElementById('popupCourse').value;
+
+    // Save to localStorage for admin panel
+    const leads = JSON.parse(localStorage.getItem('eo_leads') || '[]');
+    leads.push({ name, phone, course, message: 'Via Popup Lead Form', date: new Date().toISOString() });
+    localStorage.setItem('eo_leads', JSON.stringify(leads));
+
+    // Show success
+    document.getElementById('leadPopupForm').closest('.lead-popup').innerHTML = `
+      <div class="lead-popup-success">
+        <div class="success-icon">🎉</div>
+        <h3>Thank You, ${name}!</h3>
+        <p>Our counsellor will call you on <strong>${phone}</strong> within 2 hours.<br><br>
+        Meanwhile, you can also WhatsApp us directly:</p>
+        <a href="https://wa.me/919546201805?text=Hi!%20I%20am%20${encodeURIComponent(name)}%20and%20I%20want%20guidance%20for%20${encodeURIComponent(course||'college admissions')}."
+          target="_blank" style="display:inline-block;margin-top:16px;padding:12px 28px;background:#25D366;color:#fff;border-radius:10px;font-weight:700;font-size:.9rem;text-decoration:none">
+          💬 WhatsApp Now
+        </a>
+      </div>`;
+    setTimeout(closeLeadPopup, 8000);
+  };
+
 })();

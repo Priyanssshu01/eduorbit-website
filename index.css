@@ -313,6 +313,29 @@ img{max-width:100%;display:block}
 .toast{position:fixed;bottom:30px;right:30px;background:var(--black);color:var(--white);padding:16px 28px;font-size:.85rem;font-weight:500;border-radius:2px;z-index:3000;transform:translateY(20px);opacity:0;transition:all .3s var(--ease)}
 .toast.active{transform:translateY(0);opacity:1}
 
+/* ===== LEAD GENERATION POPUP ===== */
+.lead-popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);z-index:3000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:all .4s var(--ease)}
+.lead-popup-overlay.show{opacity:1;visibility:visible}
+.lead-popup{background:#fff;border-radius:20px;padding:36px 32px;max-width:460px;width:100%;position:relative;transform:translateY(30px) scale(.96);transition:transform .4s var(--ease);box-shadow:0 40px 80px rgba(0,0,0,.3)}
+.lead-popup-overlay.show .lead-popup{transform:translateY(0) scale(1)}
+.lead-popup-close{position:absolute;top:14px;right:16px;background:rgba(0,0,0,.06);border:none;width:30px;height:30px;border-radius:50%;font-size:.9rem;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center}
+.lead-popup-close:hover{background:rgba(0,0,0,.14)}
+.lead-popup-badge{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);background:rgba(27,77,142,.08);border:1px solid rgba(27,77,142,.15);padding:6px 14px;border-radius:100px;margin-bottom:14px}
+.lead-popup-title{font-size:1.5rem;font-weight:900;letter-spacing:-0.04em;line-height:1.2;margin-bottom:10px;color:var(--black)}
+.lead-popup-sub{font-size:.88rem;color:var(--gray);line-height:1.6;margin-bottom:22px}
+.lead-popup-sub strong{color:var(--blue)}
+.lead-popup-form{display:flex;flex-direction:column;gap:12px;margin-bottom:14px}
+.lead-popup-form input,.lead-popup-form select{padding:13px 16px;font-size:.88rem;border:1.5px solid rgba(0,0,0,.12);border-radius:10px;outline:none;font-family:'Inter',sans-serif;transition:border-color .2s;width:100%}
+.lead-popup-form input:focus,.lead-popup-form select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,77,142,.08)}
+.lead-popup-btn{padding:15px;background:linear-gradient(135deg,var(--blue),var(--blue-light));color:#fff;border:none;border-radius:10px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .3s var(--ease)}
+.lead-popup-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(27,77,142,.4)}
+.lead-popup-note{font-size:.72rem;color:var(--gray-light);text-align:center}
+.lead-popup-success{text-align:center;padding:20px 0}
+.lead-popup-success .success-icon{font-size:3rem;margin-bottom:12px}
+.lead-popup-success h3{font-size:1.2rem;font-weight:800;color:var(--blue);margin-bottom:8px}
+.lead-popup-success p{font-size:.88rem;color:var(--gray);line-height:1.6}
+@media(max-width:480px){.lead-popup{padding:28px 20px}.lead-popup-title{font-size:1.25rem}}
+
 /* ===== WHATSAPP FAB ===== */
 .whatsapp-fab{position:fixed;bottom:100px;right:24px;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,.4);z-index:1500;transition:all .3s var(--ease)}
 .whatsapp-fab:hover{transform:scale(1.1);box-shadow:0 6px 24px rgba(37,211,102,.5)}
