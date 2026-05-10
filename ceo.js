@@ -1,5 +1,5 @@
 // ===== ARIA — FULL POWER CEO AI =====
-const GEMINI_MODEL = 'gemini-pro';
+const GEMINI_MODEL = 'gemini-2.0-flash';
 const API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models/';
 
 const SYSTEM_PROMPT = `You are ARIA, the Virtual CEO and Chief Intelligence Officer of EduOrbit Educational Counselling.
