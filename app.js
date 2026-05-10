@@ -546,9 +546,12 @@
     const courseName = document.getElementById('rCourse').value;
 
     const college = COLLEGES.find(c => c.abbr === colAbbr);
-    const course = COURSES.find(c => c.name === courseName);
+    const course = COURSES.find(c => c.name === courseName && c.colleges.includes(colAbbr));
 
-    if (!college || !course) return;
+    if (!college || !course) {
+      showToast('⚠️ Please select a valid college and course combination.');
+      return;
+    }
 
     // Save lead
     const leads = JSON.parse(localStorage.getItem('eo_leads') || '[]');
