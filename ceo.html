@@ -3,105 +3,207 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ARIA — EduOrbit Virtual CEO</title>
+  <title>ARIA — EduOrbit CEO Intelligence</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="ceo.css">
 </head>
 <body>
 
-  <!-- BOOT SCREEN -->
-  <div class="boot-screen" id="bootScreen">
-    <div class="boot-logo">
-      <div class="boot-ring"></div>
-      <div class="boot-icon">🧠</div>
+<!-- BOOT -->
+<div class="boot-screen" id="bootScreen">
+  <div class="boot-logo"><div class="boot-ring"></div><div class="boot-icon">🧠</div></div>
+  <div class="boot-text">ARIA<span class="boot-cursor">|</span></div>
+  <div class="boot-sub">Loading CEO Intelligence Engine...</div>
+  <div class="boot-bar"><div class="boot-progress" id="bootProgress"></div></div>
+</div>
+
+<!-- API KEY SETUP -->
+<div class="setup-screen" id="setupScreen" style="display:none">
+  <div class="setup-box">
+    <div class="setup-icon">🔑</div>
+    <h2>Connect AI Brain</h2>
+    <p>ARIA runs on <strong>Google Gemini AI</strong> (100% Free). Get your free API key in 30 seconds:</p>
+    <ol>
+      <li>Go to <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com/app/apikey</a></li>
+      <li>Click <strong>"Create API Key"</strong></li>
+      <li>Copy and paste below 👇</li>
+    </ol>
+    <div class="setup-input-wrap">
+      <input type="password" id="apiKeyInput" placeholder="AIza...your-gemini-api-key">
+      <button onclick="saveApiKey()">Activate ARIA →</button>
     </div>
-    <div class="boot-text">ARIA<span class="boot-cursor">|</span></div>
-    <div class="boot-sub">Initializing EduOrbit CEO Intelligence...</div>
-    <div class="boot-bar"><div class="boot-progress" id="bootProgress"></div></div>
+    <p class="setup-note">Key is saved locally on your device only. Never shared.</p>
   </div>
+</div>
 
-  <!-- MAIN APP -->
-  <div class="app" id="app" style="display:none">
+<!-- MAIN APP -->
+<div class="app" id="app" style="display:none">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="sidebar-brand">
-        <div class="brand-avatar">A</div>
-        <div class="brand-info">
-          <strong>ARIA</strong>
-          <span class="brand-status"><i></i> Online — CEO Mode</span>
-        </div>
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-avatar">A</div>
+      <div class="brand-info">
+        <strong>ARIA</strong>
+        <span class="brand-status"><i></i>CEO • Full Power Mode</span>
       </div>
+    </div>
 
-      <div class="sidebar-section">
-        <div class="section-label">Quick Tasks</div>
-        <button class="task-btn" onclick="sendTask('📊 Give me today\'s business report for EduOrbit')">📊 Daily Report</button>
-        <button class="task-btn" onclick="sendTask('✍️ Write a WhatsApp marketing message to send to students about B.Tech admissions 2026')">✍️ Write Marketing Msg</button>
-        <button class="task-btn" onclick="sendTask('📧 Draft a professional email to a partner college asking for more seats and better incentives')">📧 Draft Email</button>
-        <button class="task-btn" onclick="sendTask('💰 How can I increase revenue for EduOrbit this month? Give me 5 actionable strategies')">💰 Revenue Strategy</button>
-        <button class="task-btn" onclick="sendTask('🎯 Create a complete lead generation plan for EduOrbit targeting Bihar and Jharkhand students')">🎯 Lead Gen Plan</button>
-        <button class="task-btn" onclick="sendTask('📱 Write Instagram captions and post ideas for EduOrbit for this week')">📱 Social Media Plan</button>
-        <button class="task-btn" onclick="sendTask('🤝 How should I approach a new college for partnership? Give me a complete pitch script')">🤝 College Pitch</button>
-        <button class="task-btn" onclick="sendTask('📋 Review our current business model and suggest improvements')">📋 Business Review</button>
+    <!-- TABS -->
+    <div class="sidebar-tabs">
+      <button class="stab active" onclick="switchMode('chat',this)">💬 CEO Chat</button>
+      <button class="stab" onclick="switchMode('leads',this)">🚀 Lead Engine</button>
+      <button class="stab" onclick="switchMode('campaigns',this)">📣 Campaigns</button>
+      <button class="stab" onclick="switchMode('pipeline',this)">📊 Pipeline</button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="section-label">Quick Commands</div>
+      <button class="task-btn" onclick="sendTask('Give me today complete business report with lead analysis and revenue forecast')">📊 Daily Report</button>
+      <button class="task-btn" onclick="sendTask('Generate 5 high-converting WhatsApp messages for B.Tech admissions 2026 targeting Bihar students')">💬 WhatsApp Msgs</button>
+      <button class="task-btn" onclick="sendTask('Create a full week Instagram content calendar with captions and hashtags for EduOrbit')">📱 Instagram Plan</button>
+      <button class="task-btn" onclick="sendTask('Write a cold email to 5 different college admission directors for partnership')">📧 College Email</button>
+      <button class="task-btn" onclick="sendTask('Give me a script to call student leads and convert them in under 3 minutes')">📞 Call Script</button>
+      <button class="task-btn" onclick="sendTask('Analyze my current leads and tell me who to call first and what to say')">🧠 Lead Analysis</button>
+      <button class="task-btn" onclick="sendTask('Create a referral program plan where students bring more students')">🤝 Referral Plan</button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="section-label">Live Stats</div>
+      <div class="stat-row"><span>👤 Total Leads</span><strong id="sL">0</strong></div>
+      <div class="stat-row"><span>📅 Today</span><strong id="sT">0</strong></div>
+      <div class="stat-row"><span>🏫 Colleges</span><strong id="sC">0</strong></div>
+      <div class="stat-row"><span>📚 Courses</span><strong id="sCr">0</strong></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="admin.html" target="_blank" class="foot-link">⚙️ Admin Panel</a>
+      <a href="index.html" target="_blank" class="foot-link">🌐 Website</a>
+      <button class="clear-btn" onclick="clearChat()">🗑 New Chat</button>
+      <button class="reset-btn" onclick="resetKey()">🔑 Change API Key</button>
+    </div>
+  </aside>
+
+  <!-- MAIN PANEL -->
+  <main class="main">
+    <div class="topbar">
+      <button class="menu-btn" onclick="toggleMenu()">☰</button>
+      <div class="topbar-center">
+        <div class="aria-dot"></div>
+        <span>ARIA — <strong>EduOrbit CEO Intelligence</strong></span>
       </div>
+      <div class="model-badge" id="modelBadge">Gemini 1.5 Flash ⚡</div>
+    </div>
 
-      <div class="sidebar-section">
-        <div class="section-label">Company Data</div>
-        <div class="data-pill" id="leadsPill">👤 <span id="sideLeads">0</span> Leads</div>
-        <div class="data-pill">🏫 <span id="sideCols">0</span> Colleges</div>
-        <div class="data-pill">📚 <span id="sideCourses">0</span> Courses</div>
-        <a href="admin.html" target="_blank" class="data-pill link-pill">⚙️ Admin Panel →</a>
-        <a href="index.html" target="_blank" class="data-pill link-pill">🌐 View Website →</a>
-      </div>
-
-      <div class="sidebar-footer">
-        <button class="clear-btn" onclick="clearChat()">🗑 Clear Chat</button>
-      </div>
-    </aside>
-
-    <!-- MAIN -->
-    <main class="main">
-
-      <!-- TOPBAR -->
-      <div class="topbar">
-        <button class="menu-btn" id="menuBtn" onclick="toggleMenu()">☰</button>
-        <div class="topbar-center">
-          <div class="aria-dot"></div>
-          <span>ARIA is thinking for <strong>EduOrbit</strong></span>
-        </div>
-        <div class="model-badge">CEO Intelligence v2.0</div>
-      </div>
-
-      <!-- CHAT -->
+    <!-- CEO CHAT MODE -->
+    <div class="mode-panel active" id="mode-chat">
       <div class="chat-area" id="chatArea">
         <div class="welcome-card">
           <div class="welcome-avatar">🧠</div>
-          <h1>Namaste, I'm ARIA</h1>
-          <p>Your <strong>Virtual CEO</strong> for EduOrbit. I know your business — colleges, courses, students, revenue model, everything. Tell me what to do and I'll handle it with full strategic intelligence.</p>
+          <h1>Main hoon ARIA — Tumhara CEO</h1>
+          <p>Main <strong>Google Gemini AI</strong> se powered hoon aur EduOrbit ka complete knowledge rakhta hoon. Mujhe batao kya karna hai — main likhuga, plan karunga, strategy dunga, sab kuch.</p>
           <div class="welcome-chips">
-            <span onclick="sendTask('What should be my top 3 priorities this week as EduOrbit?')">🎯 Weekly Priorities</span>
-            <span onclick="sendTask('Analyze our EduOrbit business and tell me where we can earn more money')">💰 Earn More</span>
-            <span onclick="sendTask('Write a script for calling a student lead for college admission')">📞 Call Script</span>
-            <span onclick="sendTask('What is the biggest risk for EduOrbit right now and how to handle it?')">⚠️ Risk Analysis</span>
+            <span onclick="sendTask('Create a complete lead generation campaign for this week')">🎯 Lead Campaign</span>
+            <span onclick="sendTask('Write WhatsApp messages to send to 200 students today')">💬 Bulk Messages</span>
+            <span onclick="sendTask('Analyze my business and give me the fastest path to ₹1 Lakh this month')">💰 ₹1L Strategy</span>
+            <span onclick="sendTask('Draft email to JIS College asking for higher commission per student')">📧 Negotiate Commission</span>
           </div>
         </div>
       </div>
-
-      <!-- INPUT -->
       <div class="input-area">
         <div class="input-wrap">
-          <textarea id="userInput" placeholder="Tell ARIA what to do... (e.g. 'Write a WhatsApp message for leads', 'Plan this week's marketing')" rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+          <textarea id="userInput" placeholder="ARIA ko batao kya karna hai... (Hindi ya English mein)" rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
           <button class="send-btn" id="sendBtn" onclick="sendMessage()">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
           </button>
         </div>
-        <div class="input-hint">ARIA knows EduOrbit completely — ask anything about admissions, marketing, revenue, operations</div>
+        <div class="input-hint">⚡ Powered by Gemini AI — Full CEO Intelligence Active</div>
       </div>
+    </div>
 
-    </main>
-  </div>
+    <!-- LEAD ENGINE MODE -->
+    <div class="mode-panel" id="mode-leads">
+      <div class="lead-engine">
+        <div class="engine-header">
+          <h2>🚀 Lead Generation Engine</h2>
+          <p>ARIA automatically generates leads through multiple channels</p>
+        </div>
+        <div class="engine-grid">
+          <div class="engine-card" onclick="runLeadEngine('whatsapp')">
+            <div class="engine-icon">💬</div>
+            <h3>WhatsApp Campaign</h3>
+            <p>AI generates bulk messages + follow-up sequence</p>
+            <button class="run-btn">Generate Now →</button>
+          </div>
+          <div class="engine-card" onclick="runLeadEngine('instagram')">
+            <div class="engine-icon">📱</div>
+            <h3>Instagram Content</h3>
+            <p>7-day content calendar with captions + hashtags</p>
+            <button class="run-btn">Generate Now →</button>
+          </div>
+          <div class="engine-card" onclick="runLeadEngine('email')">
+            <div class="engine-icon">📧</div>
+            <h3>Email Outreach</h3>
+            <p>Cold emails to colleges + student nurture sequence</p>
+            <button class="run-btn">Generate Now →</button>
+          </div>
+          <div class="engine-card" onclick="runLeadEngine('sms')">
+            <div class="engine-icon">📩</div>
+            <h3>SMS Campaign</h3>
+            <p>Short SMS blasts for result season urgency</p>
+            <button class="run-btn">Generate Now →</button>
+          </div>
+          <div class="engine-card" onclick="runLeadEngine('referral')">
+            <div class="engine-icon">🤝</div>
+            <h3>Referral System</h3>
+            <p>Student referral program scripts + incentive plan</p>
+            <button class="run-btn">Generate Now →</button>
+          </div>
+          <div class="engine-card" onclick="runLeadEngine('coaching')">
+            <div class="engine-icon">🏫</div>
+            <h3>Coaching Center Pitch</h3>
+            <p>Partnership pitch for local coaching centers</p>
+            <button class="run-btn">Generate Now →</button>
+          </div>
+        </div>
+        <div class="engine-output" id="engineOutput" style="display:none">
+          <div class="engine-output-header">
+            <h3 id="engineOutputTitle">Generated Content</h3>
+            <button onclick="copyEngineOutput()">📋 Copy All</button>
+            <button onclick="document.getElementById('engineOutput').style.display='none'">✕</button>
+          </div>
+          <div class="engine-output-body" id="engineOutputBody"></div>
+        </div>
+      </div>
+    </div>
 
-  <script src="data.js"></script>
-  <script src="ceo.js"></script>
+    <!-- CAMPAIGNS MODE -->
+    <div class="mode-panel" id="mode-campaigns">
+      <div class="campaigns-panel">
+        <div class="engine-header">
+          <h2>📣 Active Campaigns</h2>
+          <button class="run-btn" onclick="createCampaign()">+ New Campaign</button>
+        </div>
+        <div id="campaignsList"></div>
+      </div>
+    </div>
+
+    <!-- PIPELINE MODE -->
+    <div class="mode-panel" id="mode-pipeline">
+      <div class="pipeline-panel">
+        <div class="engine-header">
+          <h2>📊 Lead Pipeline</h2>
+          <p>Track every lead from capture to admission</p>
+        </div>
+        <div class="pipeline-cols" id="pipelineCols"></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="data.js"></script>
+<script src="ceo.js"></script>
 </body>
 </html>
