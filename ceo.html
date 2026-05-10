@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARIA — EduOrbit Virtual CEO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ceo.css">
+</head>
+<body>
+
+  <!-- BOOT SCREEN -->
+  <div class="boot-screen" id="bootScreen">
+    <div class="boot-logo">
+      <div class="boot-ring"></div>
+      <div class="boot-icon">🧠</div>
+    </div>
+    <div class="boot-text">ARIA<span class="boot-cursor">|</span></div>
+    <div class="boot-sub">Initializing EduOrbit CEO Intelligence...</div>
+    <div class="boot-bar"><div class="boot-progress" id="bootProgress"></div></div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div class="app" id="app" style="display:none">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-avatar">A</div>
+        <div class="brand-info">
+          <strong>ARIA</strong>
+          <span class="brand-status"><i></i> Online — CEO Mode</span>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="section-label">Quick Tasks</div>
+        <button class="task-btn" onclick="sendTask('📊 Give me today\'s business report for EduOrbit')">📊 Daily Report</button>
+        <button class="task-btn" onclick="sendTask('✍️ Write a WhatsApp marketing message to send to students about B.Tech admissions 2026')">✍️ Write Marketing Msg</button>
+        <button class="task-btn" onclick="sendTask('📧 Draft a professional email to a partner college asking for more seats and better incentives')">📧 Draft Email</button>
+        <button class="task-btn" onclick="sendTask('💰 How can I increase revenue for EduOrbit this month? Give me 5 actionable strategies')">💰 Revenue Strategy</button>
+        <button class="task-btn" onclick="sendTask('🎯 Create a complete lead generation plan for EduOrbit targeting Bihar and Jharkhand students')">🎯 Lead Gen Plan</button>
+        <button class="task-btn" onclick="sendTask('📱 Write Instagram captions and post ideas for EduOrbit for this week')">📱 Social Media Plan</button>
+        <button class="task-btn" onclick="sendTask('🤝 How should I approach a new college for partnership? Give me a complete pitch script')">🤝 College Pitch</button>
+        <button class="task-btn" onclick="sendTask('📋 Review our current business model and suggest improvements')">📋 Business Review</button>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="section-label">Company Data</div>
+        <div class="data-pill" id="leadsPill">👤 <span id="sideLeads">0</span> Leads</div>
+        <div class="data-pill">🏫 <span id="sideCols">0</span> Colleges</div>
+        <div class="data-pill">📚 <span id="sideCourses">0</span> Courses</div>
+        <a href="admin.html" target="_blank" class="data-pill link-pill">⚙️ Admin Panel →</a>
+        <a href="index.html" target="_blank" class="data-pill link-pill">🌐 View Website →</a>
+      </div>
+
+      <div class="sidebar-footer">
+        <button class="clear-btn" onclick="clearChat()">🗑 Clear Chat</button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <!-- TOPBAR -->
+      <div class="topbar">
+        <button class="menu-btn" id="menuBtn" onclick="toggleMenu()">☰</button>
+        <div class="topbar-center">
+          <div class="aria-dot"></div>
+          <span>ARIA is thinking for <strong>EduOrbit</strong></span>
+        </div>
+        <div class="model-badge">CEO Intelligence v2.0</div>
+      </div>
+
+      <!-- CHAT -->
+      <div class="chat-area" id="chatArea">
+        <div class="welcome-card">
+          <div class="welcome-avatar">🧠</div>
+          <h1>Namaste, I'm ARIA</h1>
+          <p>Your <strong>Virtual CEO</strong> for EduOrbit. I know your business — colleges, courses, students, revenue model, everything. Tell me what to do and I'll handle it with full strategic intelligence.</p>
+          <div class="welcome-chips">
+            <span onclick="sendTask('What should be my top 3 priorities this week as EduOrbit?')">🎯 Weekly Priorities</span>
+            <span onclick="sendTask('Analyze our EduOrbit business and tell me where we can earn more money')">💰 Earn More</span>
+            <span onclick="sendTask('Write a script for calling a student lead for college admission')">📞 Call Script</span>
+            <span onclick="sendTask('What is the biggest risk for EduOrbit right now and how to handle it?')">⚠️ Risk Analysis</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- INPUT -->
+      <div class="input-area">
+        <div class="input-wrap">
+          <textarea id="userInput" placeholder="Tell ARIA what to do... (e.g. 'Write a WhatsApp message for leads', 'Plan this week's marketing')" rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+          <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+        <div class="input-hint">ARIA knows EduOrbit completely — ask anything about admissions, marketing, revenue, operations</div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="ceo.js"></script>
+</body>
+</html>
