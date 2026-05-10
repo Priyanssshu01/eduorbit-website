@@ -73,10 +73,11 @@
       <p class="hero-sub reveal-up" style="--delay: 0.4s">
         Direct private college admissions, expert career counseling, and 100% free education loan guidance — all under one roof.
       </p>
-      <div class="hero-actions reveal-up" style="--delay: 0.5s">
-        <a href="#fees" class="btn btn--primary" data-hover>Explore Fee Structure</a>
-        <a href="#contact" class="btn btn--outline" data-hover>Book Free Call</a>
-      </div>
+        <div class="hero-actions reveal-up" style="--delay: 0.3s">
+          <button class="btn btn-primary" onclick="document.getElementById('eligResults').scrollIntoView({behavior: 'smooth'})">Check Eligibility</button>
+          <button class="btn btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Free Counselling</button>
+          <button class="btn btn-primary" style="background:var(--green);border-color:var(--green);margin-left:8px" onclick="openReceiptModal()">🎟️ Generate Fee Receipt</button>
+        </div>
       <div class="hero-stats reveal-up" style="--delay: 0.6s">
         <div class="stat">
           <span class="stat-num" data-count="1500">0</span><span class="stat-plus">+</span>
@@ -613,6 +614,72 @@
       <button class="modal-close" id="modalClose">✕</button>
       <div class="modal-content" id="modalContent">
         <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- FEE RECEIPT PRINTER MODAL -->
+  <div class="receipt-overlay" id="receiptOverlay">
+    <div class="receipt-modal">
+      <button class="receipt-close" onclick="closeReceiptModal()">✕</button>
+      
+      <!-- STEP 1: FORM -->
+      <div id="receiptFormView">
+        <div class="receipt-header">
+          <h2>🎟️ Generate Fee Estimate</h2>
+          <p>Fill details to print your customized 4-year fee receipt.</p>
+        </div>
+        <form class="receipt-form" id="receiptForm" onsubmit="generateReceipt(event)">
+          <div class="r-field"><input type="text" id="rName" placeholder="Your Name *" required></div>
+          <div class="r-field"><input type="tel" id="rPhone" placeholder="WhatsApp Number *" required pattern="[0-9]{10}"></div>
+          <div class="r-field">
+            <select id="rCollege" required onchange="updateReceiptCourses()">
+              <option value="">Select College *</option>
+            </select>
+          </div>
+          <div class="r-field">
+            <select id="rCourse" required>
+              <option value="">Select Course *</option>
+            </select>
+          </div>
+          <button type="submit" class="receipt-btn">🖨️ Print My Receipt</button>
+        </form>
+      </div>
+
+      <!-- STEP 2: PRINTER ANIMATION -->
+      <div id="receiptPrintView" style="display:none">
+        <div class="printer-machine">
+          <div class="printer-top">
+            <div class="printer-light"></div>
+            <div class="printer-logo">EduOrbit POS</div>
+          </div>
+          <div class="printer-slot-area">
+            <div class="printer-slot"></div>
+            <!-- The Ticket -->
+            <div class="ticket-wrapper">
+              <div class="ticket" id="printedTicket">
+                <div class="ticket-head">
+                  <h3>EduOrbit</h3>
+                  <p>Admissions 2026-27</p>
+                </div>
+                <div class="ticket-body">
+                  <div class="t-row"><span>Student:</span><strong id="tName"></strong></div>
+                  <div class="t-row"><span>College:</span><strong id="tCollege"></strong></div>
+                  <div class="t-row"><span>Course:</span><strong id="tCourse"></strong></div>
+                  <div class="t-divider"></div>
+                  <div class="t-title">Fee Breakdown</div>
+                  <div id="tYears"></div>
+                  <div class="t-divider"></div>
+                  <div class="t-total"><span>Total Fee:</span><strong id="tTotal"></strong></div>
+                </div>
+                <div class="ticket-foot">
+                  <p>🎉 Thank you for choosing us!</p>
+                  <p>Our counsellor will call you shortly.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

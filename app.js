@@ -509,7 +509,73 @@
     setTimeout(() => toast.classList.remove('active'), 3500);
   }
 
-  // --- Lead Popup ---
+  // --- Receipt Printer Modal ---
+  window.openReceiptModal = function() {
+    const colSelect = document.getElementById('rCollege');
+    colSelect.innerHTML = '<option value="">Select College *</option>' + 
+      COLLEGES.map(c => `<option value="${c.abbr}">${c.name}</option>`).join('');
+    
+    document.getElementById('receiptFormView').style.display = 'block';
+    document.getElementById('receiptPrintView').style.display = 'none';
+    document.getElementById('printedTicket').classList.remove('printing');
+    document.getElementById('receiptForm').reset();
+    document.getElementById('receiptOverlay').classList.add('show');
+  };
+
+  window.closeReceiptModal = function() {
+    document.getElementById('receiptOverlay').classList.remove('show');
+  };
+
+  window.updateReceiptCourses = function() {
+    const col = document.getElementById('rCollege').value;
+    const courseSelect = document.getElementById('rCourse');
+    if (!col) {
+      courseSelect.innerHTML = '<option value="">Select Course *</option>';
+      return;
+    }
+    const available = COURSES.filter(c => c.colleges.includes(col));
+    courseSelect.innerHTML = '<option value="">Select Course *</option>' + 
+      available.map(c => `<option value="${c.name}">${c.name} (${c.type})</option>`).join('');
+  };
+
+  window.generateReceipt = function(e) {
+    e.preventDefault();
+    const name = document.getElementById('rName').value.trim();
+    const phone = document.getElementById('rPhone').value.trim();
+    const colAbbr = document.getElementById('rCollege').value;
+    const courseName = document.getElementById('rCourse').value;
+
+    const college = COLLEGES.find(c => c.abbr === colAbbr);
+    const course = COURSES.find(c => c.name === courseName);
+
+    if (!college || !course) return;
+
+    // Save lead
+    const leads = JSON.parse(localStorage.getItem('eo_leads') || '[]');
+    leads.push({ name, phone, course: courseName, message: `Fee Receipt generated for ${colAbbr}`, date: new Date().toISOString(), stage: 'new' });
+    localStorage.setItem('eo_leads', JSON.stringify(leads));
+
+    // Populate Receipt
+    document.getElementById('tName').textContent = name;
+    document.getElementById('tCollege').textContent = college.abbr;
+    document.getElementById('tCourse').textContent = course.type;
+    
+    let yearHtml = '';
+    for(let i=0; i<course.duration; i++) {
+      yearHtml += `<div class="t-row"><span>Year ${i+1}:</span><strong>${formatCurrency(course.yearWise[i])}</strong></div>`;
+    }
+    document.getElementById('tYears').innerHTML = yearHtml;
+    document.getElementById('tTotal').textContent = formatCurrency(course.totalFee);
+
+    // Animate
+    document.getElementById('receiptFormView').style.display = 'none';
+    document.getElementById('receiptPrintView').style.display = 'block';
+    
+    // Trigger CSS animation by adding class after a tiny delay
+    setTimeout(() => {
+      document.getElementById('printedTicket').classList.add('printing');
+    }, 50);
+  };
   let popupShown = false;
   function showLeadPopup() {
     if (popupShown || sessionStorage.getItem('eo_popup_shown')) return;
