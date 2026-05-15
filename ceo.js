@@ -1,6 +1,6 @@
-// ===== ARIA — FULL POWER CEO AI =====
-const GEMINI_MODEL = 'gemini-2.0-flash';
-const API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models/';
+// ===== ARIA — FULL POWER CEO AI (GROQ LLAMA-3) =====
+const GROQ_MODEL = 'llama3-8b-8192';
+const API_BASE = 'https://api.groq.com/openai/v1/chat/completions';
 
 const SYSTEM_PROMPT = `You are ARIA, the Virtual CEO and Chief Intelligence Officer of EduOrbit Educational Counselling.
 
@@ -75,7 +75,7 @@ window.addEventListener('load', () => {
 
 function saveApiKey() {
   const key = document.getElementById('apiKeyInput').value.trim();
-  if (!key || !key.startsWith('AIza')) { showToast('❌ Invalid key. Should start with AIza...'); return; }
+  if (!key || !key.startsWith('gsk_')) { showToast('❌ Invalid key. Should start with gsk_ (Groq API Key)'); return; }
   localStorage.setItem('aria_api_key', key);
   apiKey = key;
   document.getElementById('setupScreen').style.display = 'none';
@@ -120,26 +120,36 @@ function switchMode(mode, btn) {
 
 function toggleMenu() { document.getElementById('sidebar').classList.toggle('open'); }
 
-// ===== GEMINI AI CALL =====
-async function callGemini(userMessage) {
-  chatHistory.push({ role: 'user', parts: [{ text: userMessage }] });
+// ===== GROQ AI CALL =====
+async function callGroq(userMessage) {
+  if (chatHistory.length === 0) {
+    chatHistory.push({ role: 'system', content: SYSTEM_PROMPT });
+  }
+  chatHistory.push({ role: 'user', content: userMessage });
+  
   const body = {
-    contents: chatHistory,
-    systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
-    generationConfig: { temperature: 0.8, maxOutputTokens: 2048 }
+    model: GROQ_MODEL,
+    messages: chatHistory,
+    temperature: 0.8,
+    max_tokens: 2048
   };
-  const resp = await fetch(`${API_BASE}${GEMINI_MODEL}:generateContent?key=${apiKey}`, {
+  
+  const resp = await fetch(API_BASE, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`
+    },
     body: JSON.stringify(body)
   });
+  
   if (!resp.ok) {
     const err = await resp.json();
     throw new Error(err.error?.message || 'API Error');
   }
   const data = await resp.json();
-  const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response';
-  chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+  const reply = data.choices?.[0]?.message?.content || 'No response';
+  chatHistory.push({ role: 'assistant', content: reply });
   return reply;
 }
 
@@ -164,13 +174,13 @@ async function sendMessage() {
   const contextMsg = `${text}\n\n[CONTEXT: EduOrbit currently has ${leads.length} total leads. Today's leads: ${leads.filter(l=>new Date(l.date).toDateString()===new Date().toDateString()).length}. Recent leads: ${leads.slice(-3).map(l=>`${l.name} (${l.course||'General'})`).join(', ') || 'None'}]`;
 
   try {
-    const reply = await callGemini(contextMsg);
+    const reply = await callGroq(contextMsg);
     hideTyping();
     appendMsg('bot', reply);
   } catch (err) {
     hideTyping();
-    if (err.message.includes('API_KEY_INVALID') || err.message.includes('401')) {
-      appendMsg('bot', '❌ **API Key Invalid.** Please click "Change API Key" and enter a valid Gemini API key from [aistudio.google.com](https://aistudio.google.com/app/apikey)');
+    if (err.message.includes('invalid_api_key') || err.message.includes('401')) {
+      appendMsg('bot', '❌ **API Key Invalid.** Please click "Change API Key" and enter a valid Groq API key from [console.groq.com](https://console.groq.com/keys)');
     } else {
       appendMsg('bot', `❌ Error: ${err.message}. Check your internet connection or API key.`);
     }
