@@ -49,7 +49,7 @@ COMMUNICATION STYLE:
 IMPORTANT: Always end responses with a specific next action Priyanshu should take RIGHT NOW.`;
 
 // ===== BOOT =====
-let apiKey = localStorage.getItem('aria_api_key') || '';
+let apiKey = localStorage.getItem('aria_api_key') || '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';
 let chatHistory = [];
 let isTyping = false;
 
