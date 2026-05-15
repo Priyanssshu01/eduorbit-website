@@ -630,4 +630,47 @@
     setTimeout(closeLeadPopup, 8000);
   };
 
+  // --- Live Social Proof Popup Logic ---
+  function initSocialProof() {
+    const spPopup = document.getElementById('socialProof');
+    if (!spPopup) return;
+
+    const names = ['Rahul', 'Aman', 'Priya', 'Neha', 'Rohan', 'Sneha', 'Aditya', 'Vikash', 'Anjali', 'Kunal'];
+    const locations = ['Patna', 'Ranchi', 'Kolkata', 'Dhanbad', 'Gaya', 'Muzaffarpur', 'Asansol', 'Siliguri', 'Purnia'];
+    const actions = ['just booked a seat in B.Tech', 'is checking fee for MBA', 'applied for Bihar DRCC admission', 'downloaded fee structure', 'just got free counselling'];
+
+    function showRandomProof() {
+      const name = names[Math.floor(Math.random() * names.length)];
+      const loc = locations[Math.floor(Math.random() * locations.length)];
+      const action = actions[Math.floor(Math.random() * actions.length)];
+      const time = Math.floor(Math.random() * 10) + 1; // 1 to 10 mins ago
+
+      document.getElementById('spName').textContent = `${name} from ${loc}`;
+      document.getElementById('spAction').textContent = action;
+      document.getElementById('spTime').textContent = `${time} min${time > 1 ? 's' : ''} ago`;
+
+      spPopup.classList.add('show');
+
+      // Hide after 5 seconds
+      setTimeout(() => {
+        spPopup.classList.remove('show');
+      }, 5000);
+    }
+
+    // Initial delay before showing first popup (10 seconds)
+    setTimeout(() => {
+      showRandomProof();
+      // Then show a new one every 20-35 seconds
+      setInterval(() => {
+        // Only show if not currently showing
+        if (!spPopup.classList.contains('show')) {
+          showRandomProof();
+        }
+      }, Math.floor(Math.random() * 15000) + 20000);
+    }, 10000);
+  }
+
+  // Initialize social proof
+  initSocialProof();
+
 })();
