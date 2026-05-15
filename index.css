@@ -374,7 +374,7 @@ img{max-width:100%;display:block}
 
 /* ===== HIGH CONVERSION WIDGETS ===== */
 /* Sticky WhatsApp */
-.wa-float{position:fixed;width:60px;height:60px;bottom:40px;left:40px;background-color:#25d366;color:#FFF;border-radius:50px;text-align:center;font-size:30px;box-shadow:2px 2px 3px #999;z-index:4000;display:flex;align-items:center;justify-content:center;transition:all .3s var(--ease);animation:pulse-wa 2s infinite}
+.wa-float{position:fixed;width:60px;height:60px;bottom:120px;left:30px;background-color:#25d366;color:#FFF;border-radius:50px;text-align:center;font-size:30px;box-shadow:2px 2px 3px #999;z-index:4000;display:flex;align-items:center;justify-content:center;transition:all .3s var(--ease);animation:pulse-wa 2s infinite}
 .wa-float:hover{transform:scale(1.1);background-color:#1ebe57}
 @keyframes pulse-wa{0%{box-shadow:0 0 0 0 rgba(37,211,102,.7)}70%{box-shadow:0 0 0 15px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
 .wa-tooltip{position:absolute;left:75px;background:#fff;color:#333;padding:6px 12px;border-radius:20px;font-size:.8rem;font-weight:600;white-space:nowrap;box-shadow:0 4px 10px rgba(0,0,0,.1);opacity:0;visibility:hidden;transition:all .3s var(--ease);pointer-events:none}
@@ -392,8 +392,8 @@ img{max-width:100%;display:block}
 @keyframes ring{0%,100%{transform:rotate(0)}10%,30%,50%,70%,90%{transform:rotate(-10deg)}20%,40%,60%,80%{transform:rotate(10deg)}}
 
 @media (max-width: 768px){
-  .wa-float{width:50px;height:50px;bottom:20px;left:20px}
-  .social-proof-popup{bottom:90px;left:20px;right:20px;max-width:none}
+  .wa-float{width:50px;height:50px;bottom:110px;left:20px}
+  .social-proof-popup{bottom:20px;left:20px;right:auto;max-width:300px}
   .wa-tooltip{display:none}
 }
 .lead-popup-note{font-size:.72rem;color:var(--gray-light);text-align:center}
