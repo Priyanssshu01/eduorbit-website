@@ -116,6 +116,9 @@ function switchMode(mode, btn) {
   document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
   document.getElementById('mode-' + mode).classList.add('active');
   if (btn) btn.classList.add('active');
+  if (window.innerWidth <= 768) {
+    document.getElementById('sidebar').classList.remove('open');
+  }
 }
 
 function toggleMenu() { document.getElementById('sidebar').classList.toggle('open'); }
@@ -156,7 +159,13 @@ async function callGroq(userMessage) {
 // ===== CHAT =====
 function handleKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
 function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 140) + 'px'; }
-function sendTask(text) { document.getElementById('userInput').value = text; sendMessage(); }
+function sendTask(text) { 
+  document.getElementById('userInput').value = text; 
+  sendMessage(); 
+  if (window.innerWidth <= 768) {
+    document.getElementById('sidebar').classList.remove('open');
+  }
+}
 
 async function sendMessage() {
   const input = document.getElementById('userInput');

@@ -85,6 +85,7 @@ function showTab(tab, btn) {
   const titles = { dashboard:'Dashboard', colleges:'Colleges', courses:'Courses', leads:'Student Leads', export:'Export Data' };
   document.getElementById('pageTitle').textContent = titles[tab] || tab;
   if (tab === 'export') updateExportPreview();
+  if (window.innerWidth <= 768) toggleSidebar();
 }
 
 // ===== DASHBOARD =====

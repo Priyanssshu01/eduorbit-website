@@ -11,6 +11,7 @@ const COLLEGES = [
   { id: 'adamas', name: 'Adamas University', abbr: 'ADAMAS', est: 2014, naac: 'A', location: 'Barasat, Kolkata', img: '🏫' },
   { id: 'ies', name: 'IES University / College of Technology', abbr: 'IES', est: 1999, naac: 'B', location: 'Bhopal, Madhya Pradesh', img: '🏥' },
   { id: 'svu', name: 'Swami Vivekananda University', abbr: 'SVU', est: 2019, naac: 'WBCER', location: 'Barrackpore, West Bengal', img: '🏫' },
+  { id: 'nshm_dgp', name: 'NSHM Knowledge Campus', abbr: 'NSHM', est: 2006, naac: 'B++', location: 'Durgapur, West Bengal', img: '<img src="images/nshm_logo.png" style="width:20px; vertical-align:middle; border-radius:50%;">' },
 ];
 
 const COURSES = [
@@ -44,9 +45,13 @@ const COURSES = [
 
   // ===== MBA =====
   { name: 'MBA', type: 'MBA', category: 'mba', colleges: ['JISCE'], duration: 2, totalFee: 410000, hostelBoys: 500000, hostelGirls: 490000, yearWise: [210000,200000], hostelBoysYW: [260000,240000], hostelGirlsYW: [255000,235000] },
+  { name: 'MBA (Healthcare & Hospital Management)', type: 'MBA', category: 'mba', colleges: ['nshm_dgp'], duration: 2, totalFee: 505600, hostelBoys: 160000, hostelGirls: 160000, yearWise: [280000,225600], hostelBoysYW: [80000,80000], hostelGirlsYW: [80000,80000] },
+  { name: 'MBA (Master of Business Administration)', type: 'MBA', category: 'mba', colleges: ['nshm_dgp'], duration: 2, totalFee: 625200, hostelBoys: 160000, hostelGirls: 160000, yearWise: [337800,287400], hostelBoysYW: [80000,80000], hostelGirlsYW: [80000,80000] },
+  { name: 'Master of Hospital Administration (MHA)', type: 'MHA', category: 'mba', colleges: ['nshm_dgp'], duration: 2, totalFee: 467500, hostelBoys: 160000, hostelGirls: 160000, yearWise: [260000,207500], hostelBoysYW: [80000,80000], hostelGirlsYW: [80000,80000] },
 
   // ===== MCA =====
   { name: 'MCA', type: 'MCA', category: 'mca', colleges: ['JISCE'], duration: 2, totalFee: 300000, hostelBoys: 400000, hostelGirls: 390000, yearWise: [160000,140000], hostelBoysYW: [210000,190000], hostelGirlsYW: [205000,185000] },
+  { name: 'MCA', type: 'MCA', category: 'mca', colleges: ['nshm_dgp'], duration: 2, totalFee: 255600, hostelBoys: 160000, hostelGirls: 160000, yearWise: [153000,102600], hostelBoysYW: [80000,80000], hostelGirlsYW: [80000,80000] },
 
   // ===== BCA =====
   { name: 'BCA', type: 'BCA', category: 'bca', colleges: ['JISCE'], duration: 3, totalFee: 325000, hostelBoys: 525000, hostelGirls: 510000, yearWise: [110000,110000,105000], hostelBoysYW: [175000,175000,175000], hostelGirlsYW: [170000,170000,170000] },
@@ -200,4 +205,32 @@ const COURSES = [
   // Legal Studies
   { name: 'BA LLB(H) / BBA LLB(H)', type: 'Law', category: 'law', colleges: ['SVU'], duration: 5, totalFee: 467300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [131300, 84000, 84000, 84000, 84000], hostelBoysYW: ['N/A','N/A','N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A','N/A','N/A'], eligibility: 'Min 60% in 10+2.' },
   { name: 'LL.B (Hons)', type: 'Law', category: 'law', colleges: ['SVU'], duration: 3, totalFee: 299300, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [131300, 84000, 84000], hostelBoysYW: ['N/A','N/A','N/A'], hostelGirlsYW: ['N/A','N/A','N/A'], eligibility: 'Graduation Pass.' },
+
+  // ===== NSHM Durgapur Additional Courses =====
+  { name: 'B.Tech AI & ML (1st Year)', type: 'B.Tech', category: 'engineering', colleges: ['nshm_dgp'], duration: 4, totalFee: 587500, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [200000, 127500, 127500, 132500], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 60% in 10+2 with PCM' },
+  { name: 'B.Tech AI & ML (Lateral)', type: 'B.Tech', category: 'engineering', colleges: ['nshm_dgp'], duration: 3, totalFee: 417950, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [157950, 127500, 132500], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Diploma in Engineering' },
+  { name: 'B.Tech CSE (1st Year)', type: 'B.Tech', category: 'engineering', colleges: ['nshm_dgp'], duration: 4, totalFee: 547500, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [160000, 127500, 127500, 132500], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 60% in 10+2 with PCM' },
+  { name: 'B.Tech CSE (Lateral)', type: 'B.Tech', category: 'engineering', colleges: ['nshm_dgp'], duration: 3, totalFee: 417950, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [157950, 127500, 132500], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Diploma in Engineering' },
+  { name: 'B.Tech DS (1st Year)', type: 'B.Tech', category: 'engineering', colleges: ['nshm_dgp'], duration: 4, totalFee: 547500, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [160000, 127500, 127500, 132500], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 60% in 10+2 with PCM' },
+  { name: 'B.Tech DS (Lateral)', type: 'B.Tech', category: 'engineering', colleges: ['nshm_dgp'], duration: 3, totalFee: 417950, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [157950, 127500, 132500], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Diploma in Engineering' },
+  { name: 'B.Tech ECE (1st Year)', type: 'B.Tech', category: 'engineering', colleges: ['nshm_dgp'], duration: 4, totalFee: 528000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [149000, 122000, 125000, 132000], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 60% in 10+2 with PCM' },
+  { name: 'B.Tech ECE (Lateral)', type: 'B.Tech', category: 'engineering', colleges: ['nshm_dgp'], duration: 3, totalFee: 311150, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [120350, 91900, 98900], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Diploma in Engineering' },
+  { name: 'Bachelor of Pharmacy (1st Year)', type: 'B.Pharm', category: 'pharmacy_health', colleges: ['nshm_dgp'], duration: 4, totalFee: 575200, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [187700, 127500, 127500, 132500], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 60% in 10+2 with PCM/PCB' },
+  { name: 'Bachelor of Pharmacy (Lateral)', type: 'B.Pharm', category: 'pharmacy_health', colleges: ['nshm_dgp'], duration: 3, totalFee: 406200, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [146200, 127500, 132500], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'D.Pharm' },
+  { name: 'BSc Nursing', type: 'Nursing', category: 'pharmacy_health', colleges: ['nshm_dgp'], duration: 4, totalFee: 450000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [122900, 108900, 108900, 109300], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 50% in 10+2 with PCB' },
+  { name: 'Diploma in GNM', type: 'Nursing', category: 'diploma', colleges: ['nshm_dgp'], duration: 3, totalFee: 300000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [101200, 108300, 90500], hostelBoysYW: [], hostelGirlsYW: [], eligibility: '10+2 pass' },
+  { name: 'BSc Medical Lab Technology', type: 'Allied Health', category: 'pharmacy_health', colleges: ['nshm_dgp'], duration: 4, totalFee: 455500, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [174700, 118200, 118200, 44400], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 50% in 10+2 PCB' },
+  { name: 'BSc Radiology & Imaging Technology', type: 'Allied Health', category: 'pharmacy_health', colleges: ['nshm_dgp'], duration: 4, totalFee: 455500, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [174700, 118200, 118200, 44400], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 50% in 10+2 PCB' },
+  { name: 'BSc Critical Care Technology', type: 'Allied Health', category: 'pharmacy_health', colleges: ['nshm_dgp'], duration: 4, totalFee: 430900, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [167300, 110800, 110800, 42000], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 50% in 10+2 PCB' },
+  { name: 'BSc Psychology', type: 'B.Sc', category: 'science', colleges: ['nshm_dgp'], duration: 4, totalFee: 368100, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [148500, 92000, 92000, 35600], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 50% in 10+2' },
+  { name: 'BSc Dietetics & Nutrition', type: 'B.Sc', category: 'science', colleges: ['nshm_dgp'], duration: 4, totalFee: 368100, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [148500, 92000, 92000, 35600], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 50% in 10+2' },
+  { name: 'BSc Culinary Science', type: 'B.Sc', category: 'science', colleges: ['nshm_dgp'], duration: 4, totalFee: 473500, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [180100, 123600, 123600, 46200], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 50% in 10+2' },
+  { name: 'BSc Hospitality & Hotel Administration', type: 'B.Sc', category: 'science', colleges: ['nshm_dgp'], duration: 4, totalFee: 473500, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [180100, 123600, 123600, 46200], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 50% in 10+2' },
+  { name: 'Bachelor of Computer Applications (BCA)', type: 'BCA', category: 'computer_applications', colleges: ['nshm_dgp'], duration: 4, totalFee: 468100, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [178500, 122000, 122000, 45600], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 50% in 10+2' },
+  { name: 'BBA (Bachelor of Business Administration)', type: 'BBA', category: 'management', colleges: ['nshm_dgp'], duration: 4, totalFee: 497000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [187100, 130600, 130600, 48700], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 50% in 10+2' },
+  { name: 'BBA Hospital Management', type: 'BBA', category: 'management', colleges: ['nshm_dgp'], duration: 4, totalFee: 497000, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [187100, 130600, 130600, 48700], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 50% in 10+2' },
+  { name: 'BBA Banking & Financial Services', type: 'BBA', category: 'management', colleges: ['nshm_dgp'], duration: 4, totalFee: 455500, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [174700, 118200, 118200, 44400], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 50% in 10+2' },
+  { name: 'BBA Sport Management', type: 'BBA', category: 'management', colleges: ['nshm_dgp'], duration: 4, totalFee: 368100, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [148500, 92000, 92000, 35600], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 50% in 10+2' },
+  { name: 'BBA Travel & Tourism Management', type: 'BBA', category: 'management', colleges: ['nshm_dgp'], duration: 4, totalFee: 436100, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [168900, 112400, 112400, 42400], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 50% in 10+2' },
+  { name: 'BBA Aviation Hospitality Services & Management', type: 'BBA', category: 'management', colleges: ['nshm_dgp'], duration: 4, totalFee: 436100, hostelBoys: 'N/A', hostelGirls: 'N/A', yearWise: [168900, 112400, 112400, 42400], hostelBoysYW: [], hostelGirlsYW: [], eligibility: 'Min 50% in 10+2' }
 ];

@@ -173,10 +173,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);-webk
 .toast.show{opacity:1;transform:translateY(0)}
 
 /* RESPONSIVE */
+.close-sidebar{display:none;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:1.5rem;width:32px;height:32px;border-radius:8px;cursor:pointer;align-items:center;justify-content:center;margin-left:auto;transition:all .2s;}
+.close-sidebar:hover{background:var(--red);}
+
 @media(max-width:768px){
   .sidebar{position:fixed;left:-260px;top:0;height:100vh;z-index:200;transition:left .3s var(--ease)}
   .sidebar.open{left:0;box-shadow:4px 0 40px rgba(0,0,0,.6)}
   .menu-btn{display:block}
+  .close-sidebar{display:flex}
   .pipeline-cols{grid-template-columns:1fr 1fr}
   .engine-grid{grid-template-columns:1fr}
   .chat-area{padding:14px}

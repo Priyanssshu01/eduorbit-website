@@ -130,14 +130,18 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--black);-web
 .toast.show{opacity:1;transform:translateY(0)}
 
 /* RESPONSIVE */
+.close-sidebar{display:none;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:1.5rem;width:32px;height:32px;border-radius:8px;cursor:pointer;align-items:center;justify-content:center;transition:all .2s;}
+.close-sidebar:hover{background:var(--red, #dc2626);}
+
 @media(max-width:900px){
   .stats-grid{grid-template-columns:1fr 1fr}
   .dashboard-grid{grid-template-columns:1fr}
   .export-cards{grid-template-columns:1fr}
 }
 @media(max-width:768px){
-  .sidebar{transform:translateX(-100%)}
+  .sidebar{transform:translateX(-100%);box-shadow:4px 0 40px rgba(0,0,0,.6)}
   .sidebar.open{transform:translateX(0)}
+  .close-sidebar{display:flex}
   .admin-main{margin-left:0}
   .menu-toggle{display:block}
   .stats-grid{grid-template-columns:1fr 1fr}
