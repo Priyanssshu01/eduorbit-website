@@ -1,5 +1,5 @@
 // ===== ARIA — FULL POWER CEO AI (GROQ LLAMA-3) =====
-const GROQ_MODEL = 'llama3-8b-8192';
+const GROQ_MODEL = 'llama-3.1-8b-instant';
 const API_BASE = 'https://api.groq.com/openai/v1/chat/completions';
 
 const SYSTEM_PROMPT = `You are ARIA, the Virtual CEO and Chief Intelligence Officer of EduOrbit Educational Counselling.
