@@ -550,3 +550,57 @@ img{max-width:100%;display:block}
   .loan-tab{padding:8px 14px;font-size:.76rem}
   .mobile-link{font-size:clamp(1.3rem,6vw,2rem)}
 }
+
+/* ==========================================================================
+   WhatsApp Floating Button
+   ========================================================================== */
+.wa-float {
+  position: fixed;
+  bottom: 80px;
+  right: 25px;
+  left: auto;
+  width: 55px;
+  height: 55px;
+  background-color: #25d366;
+  color: #FFF;
+  border-radius: 50px;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 0px 4px 12px rgba(37, 211, 102, 0.4);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s var(--ease);
+}
+.wa-float:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0px 6px 16px rgba(37, 211, 102, 0.6);
+  color: #fff;
+}
+.wa-tooltip {
+  position: absolute;
+  right: 70px;
+  background: var(--card);
+  color: var(--text);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(10px);
+  transition: all 0.3s var(--ease);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.wa-float:hover .wa-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+@media (max-width: 768px) {
+  .wa-float { bottom: 20px; right: 20px; width: 50px; height: 50px; }
+  .wa-tooltip { display: none; }
+}
