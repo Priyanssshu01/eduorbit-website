@@ -5,15 +5,12 @@
 /* ── 1. Announcement Bar ── */
 #announcementBar {
   position: fixed; top: 0; left: 0; right: 0; z-index: 9998;
-  background: linear-gradient(90deg, #1B4D8E, #0f3a6e, #F39C12, #1B4D8E);
-  background-size: 300% 100%;
-  animation: annGradient 6s linear infinite;
+  background: #1B4D8E;
   color: #fff; font-size: .82rem; font-weight: 600;
   padding: 10px 50px 10px 16px;
   text-align: center; display: flex; align-items: center; justify-content: center;
   gap: 8px; min-height: 40px;
 }
-@keyframes annGradient { 0%{background-position:0%} 100%{background-position:300%} }
 #annMsg { transition: opacity .3s ease; }
 #annMsg a { color: #FFD700; text-decoration: underline; margin-left: 6px; }
 #annClose {
