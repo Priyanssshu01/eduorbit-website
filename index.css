@@ -1,6 +1,6 @@
 /* ===== RESET & BASE ===== */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--black:#0A0A0A;--blue:#1B4D8E;--blue-light:#2E86C1;--orange:#F39C12;--orange-dark:#E67E22;--white:#fff;--gray:#525252;--gray-light:#737373;--bg:#fff;--footer-bg:#060D1F;--ease:cubic-bezier(0.16,1,0.3,1);--ease-out:cubic-bezier(0.33,1,0.68,1)}
+:root{--black:#0A0A0A;--blue:#1B4D8E;--blue-light:#2E86C1;--yellow:#F5C518;--yellow-dark:#E0A800;--orange:#F5C518;--orange-dark:#E0A800;--white:#fff;--gray:#525252;--gray-light:#737373;--bg:#fff;--footer-bg:#060D1F;--ease:cubic-bezier(0.16,1,0.3,1);--ease-out:cubic-bezier(0.33,1,0.68,1)}
 html{scroll-behavior:smooth;font-size:16px;cursor:none}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--black);overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased}
 ::selection{background:var(--black);color:var(--white)}
@@ -34,8 +34,8 @@ img{max-width:100%;display:block}
 .nav.scrolled{background:rgba(255,255,255,.92);backdrop-filter:blur(20px);padding:14px 40px;border-bottom:1px solid rgba(0,0,0,.08)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1400px;margin:0 auto}
 .nav-logo{display:flex;align-items:baseline;gap:0;font-size:1.3rem;font-weight:900;letter-spacing:-0.04em}
-.logo-edu{color:var(--black)}
-.logo-orbit{color:var(--gray)}
+.logo-edu{color:var(--blue);font-weight:900}
+.logo-orbit{color:var(--yellow)}
 .nav-links{display:flex;align-items:center;gap:32px}
 .nav-link{font-size:.85rem;font-weight:500;color:var(--gray);letter-spacing:.02em;position:relative;transition:color .3s}
 .nav-link::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1.5px;background:var(--black);transition:width .3s var(--ease)}
@@ -274,7 +274,8 @@ img{max-width:100%;display:block}
 .footer{background:var(--footer-bg);color:var(--white);padding:80px 40px 40px}
 .footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:60px}
 .footer-logo{font-size:1.4rem;font-weight:900;letter-spacing:-0.04em;margin-bottom:8px}
-.footer-logo .logo-orbit{color:var(--gray-light)}
+.footer-logo .logo-edu{color:var(--blue-light)}
+.footer-logo .logo-orbit{color:var(--yellow)}
 .footer-tagline{font-size:.8rem;color:var(--gray-light);margin-bottom:16px;font-weight:500}
 .footer-desc{font-size:.82rem;color:var(--gray);line-height:1.7;max-width:280px}
 .footer-links-group h4{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-light);margin-bottom:16px}
