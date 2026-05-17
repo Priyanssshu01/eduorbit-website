@@ -98,6 +98,9 @@
       el('exitSubmit').onclick = () => {
         const phone = el('exitPhone').value.trim();
         if (phone.length !== 10) return;
+        if (typeof gtag_report_conversion === 'function') {
+          gtag_report_conversion();
+        }
         window.open(`${WA_BASE}?text=${encodeURIComponent(`Hi EduOrbit! I need FREE college list. My number: ${phone}`)}`, '_blank');
         hide();
       };
@@ -168,6 +171,9 @@
         leads.push({ name, phone, course, message: 'Deep Scroll', date: new Date().toISOString() });
         localStorage.setItem('eo_leads', JSON.stringify(leads));
       } catch(e) {}
+      if (typeof gtag_report_conversion === 'function') {
+        gtag_report_conversion();
+      }
       window.open(`${WA_BASE}?text=${encodeURIComponent(`Hi EduOrbit! I'm ${name}, want FREE college shortlist. Course: ${course || 'undecided'}`)}`, '_blank');
       hide();
     };

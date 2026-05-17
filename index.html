@@ -9,6 +9,22 @@
     gtag('js', new Date());
     gtag('config', 'AW-18168176994');
     gtag('config', 'G-K0KKSSGE2P');
+
+    // Google Ads Event snippet for Lead Conversion
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      };
+      gtag('event', 'conversion', {
+          'send_to': 'AW-18168176994/85LtCOmyrK4cEOLCoddD',
+          'value': 1.0,
+          'currency': 'INR',
+          'event_callback': callback
+      });
+      return false;
+    }
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
