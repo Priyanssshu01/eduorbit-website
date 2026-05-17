@@ -22,17 +22,15 @@
     mouseX = e.clientX;
     mouseY = e.clientY;
     if (cursor) {
-      cursor.style.left = mouseX + 'px';
-      cursor.style.top = mouseY + 'px';
+      cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
     }
-  });
+  }, { passive: true });
 
   function animateCursor() {
-    followerX += (mouseX - followerX) * 0.12;
-    followerY += (mouseY - followerY) * 0.12;
+    followerX += (mouseX - followerX) * 0.15;
+    followerY += (mouseY - followerY) * 0.15;
     if (follower) {
-      follower.style.left = followerX + 'px';
-      follower.style.top = followerY + 'px';
+      follower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0) translate(-50%, -50%)`;
     }
     requestAnimationFrame(animateCursor);
   }

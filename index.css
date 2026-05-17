@@ -9,8 +9,8 @@ button,input,select,textarea{font-family:inherit;cursor:none}
 img{max-width:100%;display:block}
 
 /* ===== CUSTOM CURSOR ===== */
-.cursor{position:fixed;width:12px;height:12px;background:var(--orange);border-radius:50%;pointer-events:none;z-index:10000;transform:translate(-50%,-50%);box-shadow:0 0 10px var(--orange),0 0 20px rgba(243,156,18,.4);transition:transform .1s var(--ease)}
-.cursor-follower{position:fixed;width:36px;height:36px;border:2px solid var(--blue);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:left .12s var(--ease),top .12s var(--ease),width .3s var(--ease),height .3s var(--ease);box-shadow:0 0 8px rgba(27,77,142,.3)}
+.cursor{position:fixed;top:0;left:0;width:12px;height:12px;background:var(--orange);border-radius:50%;pointer-events:none;z-index:10000;transform:translate3d(-50%,-50%,0);box-shadow:0 0 10px var(--orange),0 0 20px rgba(243,156,18,.4);will-change:transform}
+.cursor-follower{position:fixed;top:0;left:0;width:36px;height:36px;border:2px solid var(--blue);border-radius:50%;pointer-events:none;z-index:9999;transform:translate3d(-50%,-50%,0);transition:width .25s ease,height .25s ease,background-color .25s ease;box-shadow:0 0 8px rgba(27,77,142,.3);will-change:transform}
 .cursor-follower.hover{width:56px;height:56px;border-color:var(--orange);background:rgba(243,156,18,.08);box-shadow:0 0 16px rgba(243,156,18,.3)}
 @media(max-width:768px){.cursor,.cursor-follower{display:none}html,body,a,button,input,select,textarea{cursor:auto}}
 

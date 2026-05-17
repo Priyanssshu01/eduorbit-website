@@ -11,7 +11,7 @@ const COLLEGES = [
   { id: 'adamas', name: 'Adamas University', abbr: 'ADAMAS', est: 2014, naac: 'A', location: 'Barasat, Kolkata', img: '🏫' },
   { id: 'ies', name: 'IES University / College of Technology', abbr: 'IES', est: 1999, naac: 'B', location: 'Bhopal, Madhya Pradesh', img: '🏥' },
   { id: 'svu', name: 'Swami Vivekananda University', abbr: 'SVU', est: 2019, naac: 'WBCER', location: 'Barrackpore, West Bengal', img: '🏫' },
-  { id: 'nshm_dgp', name: 'NSHM Knowledge Campus', abbr: 'NSHM', est: 2006, naac: 'B++', location: 'Durgapur, West Bengal', img: '<img src="images/nshm_logo.png" style="width:20px; vertical-align:middle; border-radius:50%;">' },
+  { id: 'nshm_dgp', name: 'NSHM Knowledge Campus', abbr: 'NSHM', est: 2006, naac: 'B++', location: 'Durgapur, West Bengal', img: '<img src="images/nshm_logo.png" alt="NSHM Knowledge Campus Logo" width="20" height="20" style="width:20px; height:20px; vertical-align:middle; border-radius:50%;">' },
 ];
 
 const COURSES = [
