@@ -13,34 +13,6 @@
   });
   document.body.style.overflow = 'hidden';
 
-  // --- Custom Cursor ---
-  const cursor = document.getElementById('cursor');
-  const follower = document.getElementById('cursorFollower');
-  let mouseX = 0, mouseY = 0, followerX = 0, followerY = 0;
-
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    if (cursor) {
-      cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
-    }
-  }, { passive: true });
-
-  function animateCursor() {
-    followerX += (mouseX - followerX) * 0.15;
-    followerY += (mouseY - followerY) * 0.15;
-    if (follower) {
-      follower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0) translate(-50%, -50%)`;
-    }
-    requestAnimationFrame(animateCursor);
-  }
-  animateCursor();
-
-  document.querySelectorAll('[data-hover], a, button, input, select, textarea').forEach(el => {
-    el.addEventListener('mouseenter', () => follower && follower.classList.add('hover'));
-    el.addEventListener('mouseleave', () => follower && follower.classList.remove('hover'));
-  });
-
   // --- Nav Scroll ---
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
