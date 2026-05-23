@@ -327,6 +327,7 @@ function renderLeadsTable() {
       <td><span class="badge badge-blue">${escHtml(l.course||'General')}</span></td>
       <td style="font-size:.78rem;color:#6b7280;max-width:200px">${escHtml((l.message||'').substring(0,60))}${(l.message||'').length>60?'...':''}</td>
       <td style="font-size:.78rem;white-space:nowrap">${new Date(l.date).toLocaleDateString('en-IN')}</td>
+      <td><a class="btn-sm btn-edit" href="https://wa.me/919546201805?text=${encodeURIComponent(`New Lead%0AName: ${l.name}%0APhone: ${l.phone}%0ACourse: ${l.course||'General'}%0AMessage: ${l.message||'-'}%0ADate: ${new Date(l.date).toLocaleDateString('en-IN')}`)}" target="_blank">📲 Enquiry</a></td>
       <td><button class="btn-sm btn-del" onclick="deleteLead(${leads.length-1-i})">🗑</button></td>
     </tr>`).join('');
 }
@@ -356,6 +357,36 @@ function exportLeadsCSV() {
   const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
   downloadFile('eduorbit_leads.csv', csv, 'text/csv');
   showToast('📥 CSV downloaded!');
+}
+
+// ===== SEND TODAY'S LEADS REPORT TO WHATSAPP =====
+function sendDailyReportWA() {
+  const leads = getLeads();
+  const today = new Date().toDateString();
+  const todayLeads = leads.filter(l => new Date(l.date).toDateString() === today);
+
+  if (todayLeads.length === 0) {
+    showToast('No leads today to send!');
+    return;
+  }
+
+  let msg = `📊 *EduOrbit Daily Lead Report*\n`;
+  msg += `📅 Date: ${new Date().toLocaleDateString('en-IN')}\n`;
+  msg += `👥 Total Leads Today: *${todayLeads.length}*\n\n`;
+
+  todayLeads.forEach((l, i) => {
+    msg += `*${i+1}. ${l.name}*\n`;
+    msg += `📞 ${l.phone}\n`;
+    msg += `📚 ${l.course || 'General'}\n`;
+    if (l.message) msg += `💬 ${l.message.substring(0, 60)}\n`;
+    msg += `\n`;
+  });
+
+  msg += `_Sent from EduOrbit Admin Panel_`;
+
+  const waUrl = `https://wa.me/919546201805?text=${encodeURIComponent(msg)}`;
+  window.open(waUrl, '_blank');
+  showToast('📲 Opening WhatsApp with today\'s report!');
 }
 
 // ===== EXPORT DATA.JS =====

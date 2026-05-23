@@ -74,7 +74,6 @@
         </div>
         <div id="loginError">❌ Wrong username or password. Try again.</div>
         <button id="loginBtn" onclick="doLogin()">🔐 Login to Dashboard</button>
-        <p class="login-hint">Default: eduorbit / admin@2026</p>
       </div>
     </div>
   </div>
@@ -191,12 +190,13 @@
           <h2>Student Leads</h2>
           <div class="lead-actions">
             <button class="btn-outline" onclick="exportLeadsCSV()">📥 Export CSV</button>
+            <button class="btn-wa" onclick="sendDailyReportWA()">📲 Send Today's Report on WhatsApp</button>
             <button class="btn-danger" onclick="clearLeads()">🗑 Clear All</button>
           </div>
         </div>
         <div class="table-wrap">
           <table class="data-table">
-            <thead><tr><th>#</th><th>Name</th><th>Phone</th><th>Course</th><th>Message</th><th>Date</th><th>Action</th></tr></thead>
+            <thead><tr><th>#</th><th>Name</th><th>Phone</th><th>Course</th><th>Message</th><th>Date</th><th>Enquiry</th><th>Delete</th></tr></thead>
             <tbody id="leadsBody"></tbody>
           </table>
         </div>
