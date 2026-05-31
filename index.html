@@ -826,17 +826,41 @@
     </div>
   </div>
 
-  <script src="data.js?v=1.4"></script>
-  <script src="app.js?v=1.4"></script>
-  <script src="marketing.js?v=1.0"></script>
+  <script src="data.js?v=3.0"></script>
+  <script src="app.js?v=3.0"></script>
+  <script src="marketing.js?v=3.0"></script>
   <script>
+    // ===== SERVICE WORKER — AUTO-UPDATE SYSTEM =====
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').then(registration => {
-          console.log('SW registered: ', registration);
-        }).catch(registrationError => {
-          console.log('SW registration failed: ', registrationError);
+        navigator.serviceWorker.register('./sw.js?v=3.0').then(registration => {
+
+          // Jab bhi naya SW install ho, turant activate karo
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'activated') {
+                // Page auto-reload — user ko latest version milega
+                window.location.reload(true);
+              }
+            });
+          });
+
+        }).catch(err => console.log('SW Error:', err));
+
+        // SW se message aane par page reload karo
+        navigator.serviceWorker.addEventListener('message', event => {
+          if (event.data && event.data.type === 'SW_UPDATED') {
+            window.location.reload(true);
+          }
         });
+
+        // Har 30 min mein SW update check karo
+        setInterval(() => {
+          navigator.serviceWorker.getRegistration().then(reg => {
+            if (reg) reg.update();
+          });
+        }, 30 * 60 * 1000);
       });
     }
   </script>

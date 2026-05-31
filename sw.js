@@ -1,89 +1,62 @@
 // ===================================================================
-// EDUORBIT — SERVICE WORKER (Version 1.5 - Optimized & Self-Updating)
+// EDUORBIT — SERVICE WORKER v3.0 (NUCLEAR CACHE BUSTER)
 // ===================================================================
-// This service worker implements active cache cleanup and stale-while-revalidate
-// strategies to ensure users never get stuck with an old or broken cached version.
+// Strategy: NETWORK FIRST for everything.
+// Koi bhi cached file nahi serve hogi jab tak network available hai.
+// Jaise hi GitHub pe push hoga, SABKE phone pe update aa jayega.
 
-const CACHE_NAME = 'eduorbit-v2.0'; // Incremented to force-bust old v1 cache
-const ASSETS_TO_CACHE = [
-  './',
-  './index.html',
-  './index.css',
-  './app.js',
-  './data.js',
-  './marketing.css',
-  './marketing.js',
-  './manifest.json'
-];
+const CACHE_NAME = 'eduorbit-v3.0'; // Version bump = old cache deleted instantly
 
-// --- 1. INSTALL: Cache all essential core assets ---
+// --- 1. INSTALL: Skip waiting immediately ---
 self.addEventListener('install', event => {
-  self.skipWaiting(); // Force the waiting service worker to become active immediately
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(ASSETS_TO_CACHE);
-    })
-  );
+  self.skipWaiting(); // New SW turant active ho jata hai
+  event.waitUntil(caches.open(CACHE_NAME)); // Just open cache, don't pre-cache
 });
 
-// --- 2. ACTIVATE: Clear out old versions and update immediately ---
+// --- 2. ACTIVATE: Purane SAARE caches delete karo ---
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cache => {
-          if (cache !== CACHE_NAME) {
-            console.log('[Service Worker] Deleting old cache:', cache);
-            return caches.delete(cache);
-          }
+          // Koi bhi purana cache — delete!
+          console.log('[SW v3.0] Deleting old cache:', cache);
+          return caches.delete(cache);
         })
       );
     }).then(() => {
-      return self.clients.claim(); // Immediately start controlling all open clients/tabs
+      // Turant SABKE open tabs/phones ko control lo
+      return self.clients.claim();
+    }).then(() => {
+      // Sabko bolo page refresh karo
+      return self.clients.matchAll({ type: 'window' }).then(clients => {
+        clients.forEach(client => {
+          client.postMessage({ type: 'SW_UPDATED', version: '3.0' });
+        });
+      });
     })
   );
 });
 
-// --- 3. FETCH: Stale-While-Revalidate Strategy ---
-// Returns cached assets instantly for speed, but fetches new updates in the background
-// to refresh the cache dynamically. Main HTML is fetched with Network-First to avoid stale pages.
+// --- 3. FETCH: NETWORK FIRST — hamesha fresh content ---
 self.addEventListener('fetch', event => {
-  const requestUrl = new URL(event.request.url);
+  // Only handle same-origin requests
+  if (!event.request.url.startsWith(self.location.origin)) return;
 
-  // For the main HTML document, always try the Network first so updates are instant
-  if (event.request.mode === 'navigate' || requestUrl.pathname.endsWith('index.html') || requestUrl.pathname === '/') {
-    event.respondWith(
-      fetch(event.request)
-        .then(networkResponse => {
-          return caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, networkResponse.clone());
-            return networkResponse;
-          });
-        })
-        .catch(() => {
-          return caches.match(event.request); // Fallback to cache if completely offline
-        })
-    );
-    return;
-  }
-
-  // Stale-While-Revalidate for other static assets (CSS, JS, Images)
   event.respondWith(
-    caches.match(event.request).then(cachedResponse => {
-      if (cachedResponse) {
-        // Fetch a fresh version in the background to update the cache
-        fetch(event.request).then(networkResponse => {
-          if (networkResponse.status === 200) {
-            caches.open(CACHE_NAME).then(cache => {
-              cache.put(event.request, networkResponse);
-            });
-          }
-        }).catch(() => {/* Ignore network failures in background */});
-
-        return cachedResponse; // Return the fast cached version immediately
-      }
-
-      return fetch(event.request); // Not in cache, fetch normally
-    })
+    fetch(event.request)
+      .then(networkResponse => {
+        // Network se mila — fresh response return karo (cache mat karo)
+        return networkResponse;
+      })
+      .catch(() => {
+        // Sirf offline hone par cache use karo (fallback only)
+        return caches.match(event.request).then(cached => {
+          return cached || new Response(
+            '<h1>You are offline</h1><p>Please check your internet connection.</p>',
+            { headers: { 'Content-Type': 'text/html' } }
+          );
+        });
+      })
   );
 });
