@@ -13,21 +13,39 @@
     Referrer-Policy = "no-referrer-when-downgrade"
     Content-Security-Policy = "upgrade-insecure-requests"
 
-# Long-term caching for static assets (images, fonts, stylesheets, scripts)
+# Long-term caching for static assets (images, fonts)
 [[headers]]
   for = "/images/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# HTML files — NEVER cache (always serve fresh on refresh)
 [[headers]]
-  for = "/*.css"
+  for = "/*.html"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
 
+# data.js — NEVER cache (college/fee data changes frequently)
+[[headers]]
+  for = "/data.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
+
+# app.js, admin.js, etc — short cache (1 hour), revalidate on change
 [[headers]]
   for = "/*.js"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+# CSS files — short cache (1 hour)
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
 
 [[headers]]
   for = "/manifest.json"
