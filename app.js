@@ -255,21 +255,6 @@
       
       ${eligibilityHtml}
 
-      ${c.donationCharge ? `
-      <div class="modal-section" style="background: linear-gradient(135deg, rgba(220,38,38,0.08), rgba(245,197,24,0.08)); padding: 18px 20px; border-radius: 12px; border-left: 5px solid #dc2626; margin-bottom: 24px;">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
-          <span style="font-size:1.4rem;">⚠️</span>
-          <h4 style="color:#dc2626; margin:0; font-size:1rem;">Donation / Direct Admission Charge</h4>
-        </div>
-        <p style="font-size:0.82rem; color:#6b7280; margin:0 0 10px 0;">This is a one-time charge payable at the time of admission (separate from tuition fee).</p>
-        <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border-radius:8px; padding:12px 16px; border:1.5px solid #fca5a5;">
-          <span style="font-size:0.9rem; font-weight:600; color:#374151;">Direct Admission Charge:</span>
-          <span style="font-size:1.3rem; font-weight:800; color:#dc2626;">${formatCurrency(c.donationCharge)}</span>
-        </div>
-        <p style="font-size:0.75rem; color:#9ca3af; margin:8px 0 0 0;">💡 This includes our service charge of ₹1,00,000. Payable directly to the college.</p>
-      </div>
-      ` : ''}
-
       <div class="modal-section">
         <h4>Tuition Fee (Year-wise Breakdown)</h4>
         <table class="modal-table">

@@ -69,6 +69,7 @@ function initAdmin() {
   renderLeadsTable();
   updateExportPreview();
   populateCollegeFilter();
+  renderDonationTable();
 }
 
 // ===== TAB SWITCH =====
@@ -82,10 +83,74 @@ function showTab(tab, btn) {
       if (b.textContent.toLowerCase().includes(tab.substring(0,4))) b.classList.add('active');
     });
   }
-  const titles = { dashboard:'Dashboard', colleges:'Colleges', courses:'Courses', leads:'Student Leads', export:'Export Data' };
+  const titles = { dashboard:'Dashboard', colleges:'Colleges', courses:'Courses', leads:'Student Leads', donation:'Direct Admission Charges', export:'Export Data' };
   document.getElementById('pageTitle').textContent = titles[tab] || tab;
   if (tab === 'export') updateExportPreview();
+  if (tab === 'donation') renderDonationTable();
   if (window.innerWidth <= 768) toggleSidebar();
+}
+
+// ===== DONATION CHARGES TABLE =====
+function fmt(n) {
+  if (!n && n !== 0) return 'N/A';
+  return '₹ ' + Number(n).toLocaleString('en-IN');
+}
+
+function renderDonationTable() {
+  const courses = getCourses();
+  const colleges = getColleges();
+  // Only courses that have a donationCharge
+  const donationCourses = courses.filter(c => c.donationCharge && c.donationCharge > 0);
+
+  // Populate college filter
+  const sel = document.getElementById('donationColFilter');
+  if (sel) {
+    const existing = Array.from(sel.options).map(o => o.value);
+    const abbrs = [...new Set(donationCourses.flatMap(c => c.colleges))];
+    abbrs.forEach(abbr => {
+      if (!existing.includes(abbr)) {
+        const opt = document.createElement('option');
+        opt.value = abbr;
+        opt.textContent = abbr;
+        sel.appendChild(opt);
+      }
+    });
+  }
+
+  filterDonationTable();
+}
+
+function filterDonationTable() {
+  const courses = getCourses();
+  const filterCol = (document.getElementById('donationColFilter') || {}).value || '';
+  const search = ((document.getElementById('donationSearch') || {}).value || '').toLowerCase();
+
+  const donationCourses = courses.filter(c => {
+    if (!c.donationCharge || c.donationCharge <= 0) return false;
+    if (filterCol && !c.colleges.includes(filterCol)) return false;
+    if (search && !c.name.toLowerCase().includes(search) && !c.colleges.join(' ').toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  const tbody = document.getElementById('donationBody');
+  if (!tbody) return;
+
+  if (donationCourses.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#888;padding:24px;">No direct admission charge data found.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = donationCourses.map((c, i) => `
+    <tr>
+      <td style="color:#888;font-size:0.8rem;">${i + 1}</td>
+      <td>
+        ${c.colleges.map(col => `<span class="fee-college-tag">${col}</span>`).join(' ')}
+      </td>
+      <td style="font-weight:600;">${c.name}</td>
+      <td style="color:#1B4D8E;font-weight:600;">${fmt(c.totalFee)}</td>
+      <td style="color:#dc2626;font-weight:800;font-size:1.05rem;">${fmt(c.donationCharge)}</td>
+    </tr>
+  `).join('');
 }
 
 // ===== DASHBOARD =====
