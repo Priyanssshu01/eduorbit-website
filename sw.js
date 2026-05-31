@@ -1,33 +1,24 @@
 // ===================================================================
-// EDUORBIT — SERVICE WORKER (Version 3.0 - Network-First for JS/Data)
+// EDUORBIT — SERVICE WORKER (Version 1.5 - Optimized & Self-Updating)
 // ===================================================================
-// v3.0 changes:
-//   - Cache busted to v3.0 → all old caches cleared on next visit
-//   - data.js & app.js use NETWORK-FIRST (always fresh from server)
-//   - Static assets (CSS, images) use stale-while-revalidate
+// This service worker implements active cache cleanup and stale-while-revalidate
+// strategies to ensure users never get stuck with an old or broken cached version.
 
-const CACHE_NAME = 'eduorbit-v3.0';
-
-// Only cache truly static assets — NOT data.js or app.js
+const CACHE_NAME = 'eduorbit-v2.0'; // Incremented to force-bust old v1 cache
 const ASSETS_TO_CACHE = [
+  './',
+  './index.html',
   './index.css',
+  './app.js',
+  './data.js',
   './marketing.css',
   './marketing.js',
   './manifest.json'
 ];
 
-// Files that must ALWAYS come from network (frequently updated)
-const NETWORK_FIRST_FILES = [
-  'data.js',
-  'app.js',
-  'admin.js',
-  'index.html',
-  'admin.html'
-];
-
-// --- 1. INSTALL: Cache only static assets ---
+// --- 1. INSTALL: Cache all essential core assets ---
 self.addEventListener('install', event => {
-  self.skipWaiting();
+  self.skipWaiting(); // Force the waiting service worker to become active immediately
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       return cache.addAll(ASSETS_TO_CACHE);
@@ -35,69 +26,64 @@ self.addEventListener('install', event => {
   );
 });
 
-// --- 2. ACTIVATE: Clear ALL old caches immediately ---
+// --- 2. ACTIVATE: Clear out old versions and update immediately ---
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cache => {
           if (cache !== CACHE_NAME) {
-            console.log('[SW] Deleting old cache:', cache);
+            console.log('[Service Worker] Deleting old cache:', cache);
             return caches.delete(cache);
           }
         })
       );
     }).then(() => {
-      return self.clients.claim();
+      return self.clients.claim(); // Immediately start controlling all open clients/tabs
     })
   );
 });
 
-// --- 3. FETCH Strategy ---
+// --- 3. FETCH: Stale-While-Revalidate Strategy ---
+// Returns cached assets instantly for speed, but fetches new updates in the background
+// to refresh the cache dynamically. Main HTML is fetched with Network-First to avoid stale pages.
 self.addEventListener('fetch', event => {
-  const url = new URL(event.request.url);
-  const filename = url.pathname.split('/').pop();
+  const requestUrl = new URL(event.request.url);
 
-  // NETWORK-FIRST: HTML pages, JS files, data.js — always fresh
-  const isNetworkFirst =
-    event.request.mode === 'navigate' ||
-    url.pathname === '/' ||
-    url.pathname.endsWith('index.html') ||
-    url.pathname.endsWith('admin.html') ||
-    NETWORK_FIRST_FILES.some(f => url.pathname.endsWith(f));
-
-  if (isNetworkFirst) {
+  // For the main HTML document, always try the Network first so updates are instant
+  if (event.request.mode === 'navigate' || requestUrl.pathname.endsWith('index.html') || requestUrl.pathname === '/') {
     event.respondWith(
       fetch(event.request)
         .then(networkResponse => {
-          // Don't cache these — always fetch from network
-          return networkResponse;
+          return caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, networkResponse.clone());
+            return networkResponse;
+          });
         })
         .catch(() => {
-          // Fallback to cache ONLY if completely offline
-          return caches.match(event.request);
+          return caches.match(event.request); // Fallback to cache if completely offline
         })
     );
     return;
   }
 
-  // STALE-WHILE-REVALIDATE: CSS, images, fonts (rarely change)
+  // Stale-While-Revalidate for other static assets (CSS, JS, Images)
   event.respondWith(
     caches.match(event.request).then(cachedResponse => {
       if (cachedResponse) {
-        // Update cache in background
+        // Fetch a fresh version in the background to update the cache
         fetch(event.request).then(networkResponse => {
           if (networkResponse.status === 200) {
             caches.open(CACHE_NAME).then(cache => {
               cache.put(event.request, networkResponse);
             });
           }
-        }).catch(() => {});
+        }).catch(() => {/* Ignore network failures in background */});
 
-        return cachedResponse;
+        return cachedResponse; // Return the fast cached version immediately
       }
 
-      return fetch(event.request);
+      return fetch(event.request); // Not in cache, fetch normally
     })
   );
 });

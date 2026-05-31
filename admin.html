@@ -92,7 +92,6 @@
         <button class="nav-item" onclick="showTab('colleges',this)">🏫 Colleges</button>
         <button class="nav-item" onclick="showTab('courses',this)">📚 Courses</button>
         <button class="nav-item" onclick="showTab('leads',this)">👤 Student Leads</button>
-        <button class="nav-item" onclick="showTab('donation',this)">💰 Direct Admission Charges</button>
         <button class="nav-item" onclick="showTab('export',this)">💾 Export Data</button>
       </nav>
       <button class="logout-btn" onclick="doLogout()">🚪 Logout</button>
@@ -199,34 +198,6 @@
           <table class="data-table">
             <thead><tr><th>#</th><th>Name</th><th>Phone</th><th>Course</th><th>Message</th><th>Date</th><th>Enquiry</th><th>Delete</th></tr></thead>
             <tbody id="leadsBody"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- DIRECT ADMISSION CHARGES TAB -->
-      <div class="tab-content" id="tab-donation">
-        <div class="tab-header">
-          <h2>💰 Direct Admission Charges</h2>
-          <div style="font-size:0.82rem;color:#888;margin-top:4px;">Internal reference only — NOT shown on public website</div>
-        </div>
-        <div class="courses-search" style="margin-bottom:16px;">
-          <select id="donationColFilter" onchange="filterDonationTable()" style="padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:0.9rem;">
-            <option value="">All Colleges</option>
-          </select>
-          <input type="text" id="donationSearch" placeholder="Search course..." oninput="filterDonationTable()" style="padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:0.9rem;flex:1;">
-        </div>
-        <div class="table-wrap">
-          <table class="data-table" id="donationTable">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>College</th>
-                <th>Branch / Course</th>
-                <th>Course Fee</th>
-                <th style="color:#dc2626;">Direct Admission Charge</th>
-              </tr>
-            </thead>
-            <tbody id="donationBody"></tbody>
           </table>
         </div>
       </div>

@@ -69,7 +69,6 @@ function initAdmin() {
   renderLeadsTable();
   updateExportPreview();
   populateCollegeFilter();
-  renderDonationTable();
 }
 
 // ===== TAB SWITCH =====
@@ -83,74 +82,10 @@ function showTab(tab, btn) {
       if (b.textContent.toLowerCase().includes(tab.substring(0,4))) b.classList.add('active');
     });
   }
-  const titles = { dashboard:'Dashboard', colleges:'Colleges', courses:'Courses', leads:'Student Leads', donation:'Direct Admission Charges', export:'Export Data' };
+  const titles = { dashboard:'Dashboard', colleges:'Colleges', courses:'Courses', leads:'Student Leads', export:'Export Data' };
   document.getElementById('pageTitle').textContent = titles[tab] || tab;
   if (tab === 'export') updateExportPreview();
-  if (tab === 'donation') renderDonationTable();
   if (window.innerWidth <= 768) toggleSidebar();
-}
-
-// ===== DONATION CHARGES TABLE =====
-function fmt(n) {
-  if (!n && n !== 0) return 'N/A';
-  return '₹ ' + Number(n).toLocaleString('en-IN');
-}
-
-function renderDonationTable() {
-  const courses = getCourses();
-  const colleges = getColleges();
-  // Only courses that have a donationCharge
-  const donationCourses = courses.filter(c => c.donationCharge && c.donationCharge > 0);
-
-  // Populate college filter
-  const sel = document.getElementById('donationColFilter');
-  if (sel) {
-    const existing = Array.from(sel.options).map(o => o.value);
-    const abbrs = [...new Set(donationCourses.flatMap(c => c.colleges))];
-    abbrs.forEach(abbr => {
-      if (!existing.includes(abbr)) {
-        const opt = document.createElement('option');
-        opt.value = abbr;
-        opt.textContent = abbr;
-        sel.appendChild(opt);
-      }
-    });
-  }
-
-  filterDonationTable();
-}
-
-function filterDonationTable() {
-  const courses = getCourses();
-  const filterCol = (document.getElementById('donationColFilter') || {}).value || '';
-  const search = ((document.getElementById('donationSearch') || {}).value || '').toLowerCase();
-
-  const donationCourses = courses.filter(c => {
-    if (!c.donationCharge || c.donationCharge <= 0) return false;
-    if (filterCol && !c.colleges.includes(filterCol)) return false;
-    if (search && !c.name.toLowerCase().includes(search) && !c.colleges.join(' ').toLowerCase().includes(search)) return false;
-    return true;
-  });
-
-  const tbody = document.getElementById('donationBody');
-  if (!tbody) return;
-
-  if (donationCourses.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#888;padding:24px;">No direct admission charge data found.</td></tr>';
-    return;
-  }
-
-  tbody.innerHTML = donationCourses.map((c, i) => `
-    <tr>
-      <td style="color:#888;font-size:0.8rem;">${i + 1}</td>
-      <td>
-        ${c.colleges.map(col => `<span class="fee-college-tag">${col}</span>`).join(' ')}
-      </td>
-      <td style="font-weight:600;">${c.name}</td>
-      <td style="color:#1B4D8E;font-weight:600;">${fmt(c.totalFee)}</td>
-      <td style="color:#dc2626;font-weight:800;font-size:1.05rem;">${fmt(c.donationCharge)}</td>
-    </tr>
-  `).join('');
 }
 
 // ===== DASHBOARD =====
@@ -267,7 +202,7 @@ function renderCoursesTable(filter = '') {
   if (colFilter) courses = courses.filter(c => c.colleges && c.colleges.includes(colFilter));
   const tbody = document.getElementById('coursesBody');
   if (courses.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#9ca3af;padding:40px">No courses found.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#9ca3af;padding:40px">No courses found.</td></tr>';
     return;
   }
   tbody.innerHTML = courses.map((c, i) => {
@@ -278,6 +213,7 @@ function renderCoursesTable(filter = '') {
       <td>${(c.colleges||[]).map(col=>`<span class="badge badge-orange">${col}</span>`).join(' ')}</td>
       <td>${c.duration || '-'} yrs</td>
       <td style="font-weight:700">₹${formatNum(c.totalFee)}</td>
+      <td style="font-weight:700;color:#e67e22">₹${formatNum(c.admissionCharge || 0)}</td>
       <td class="action-btns">
         <button class="btn-sm btn-edit" onclick="editCourse(${origIdx})">✏ Edit</button>
         <button class="btn-sm btn-del" onclick="deleteCourse(${origIdx})">🗑</button>
@@ -317,11 +253,12 @@ function openAddCourse(idx = null) {
             ${['btech','btech-lateral','diploma','mba','mca','bca','bba','engineering','management','computer_applications','science','arts_humanities','law','pharmacy_health','agriculture','education'].map(x=>`<option value="${x}" ${c.category===x?'selected':''}>${x}</option>`).join('')}
           </select>
         </div>
-        <div class="mf-field"><label>Duration (years) *</label><input id="cr-dur" type="number" value="${c.duration||''}" placeholder="4"></div>
-        <div class="mf-field"><label>Total Fee (₹) *</label><input id="cr-fee" type="number" value="${c.totalFee||''}" placeholder="360000"></div>
-        <div class="mf-field"><label>Hostel Boys (₹)</label><input id="cr-hb" value="${c.hostelBoys||''}" placeholder="550000 or N/A"></div>
+        <div class="mf-field"><label>Duration (years) *</label><input id="cr-dur" type="number" value="${c.duration||\''}" placeholder="4"></div>
+        <div class="mf-field"><label>Total Fee (₹) *</label><input id="cr-fee" type="number" value="${c.totalFee||\''}" placeholder="360000"></div>
+        <div class="mf-field"><label>🔒 Direct Admission Charge (₹)</label><input id="cr-dac" type="number" value="${c.admissionCharge||0}" placeholder="0" style="border-color:#e67e22"></div>
+        <div class="mf-field"><label>Hostel Boys (₹)</label><input id="cr-hb" value="${c.hostelBoys||\''}" placeholder="550000 or N/A"></div>
       </div>
-      <div class="mf-field"><label>Hostel Girls (₹)</label><input id="cr-hg" value="${c.hostelGirls||''}" placeholder="530000 or N/A"></div>
+      <div class="mf-field"><label>Hostel Girls (₹)</label><input id="cr-hg" value="${c.hostelGirls||\''}" placeholder="530000 or N/A"></div>
       <div class="mf-field"><label>Colleges (hold Ctrl/Cmd to select multiple) *</label>
         <select id="cr-cols" multiple style="height:120px">${colOptions}</select>
       </div>
@@ -347,6 +284,7 @@ function saveCourse(idx) {
   const obj = {
     name: v('cr-name'), type: v('cr-type'), category: v('cr-cat'),
     colleges: selCols, duration: dur, totalFee: fee,
+    admissionCharge: parseInt(v('cr-dac')) || 0,
     hostelBoys: isNaN(parseInt(hb)) ? 'N/A' : parseInt(hb),
     hostelGirls: isNaN(parseInt(hg)) ? 'N/A' : parseInt(hg),
     yearWise: Array(dur).fill(Math.round(fee / dur)),
