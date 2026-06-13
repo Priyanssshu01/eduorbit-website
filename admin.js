@@ -327,7 +327,7 @@ function renderLeadsTable() {
       <td style="color:#9ca3af">${leads.length - i}</td>
       <td class="cell-name">${escHtml(l.name)}</td>
       <td>${escHtml(l.phone)}</td>
-      <td><span class="badge badge-blue">${escHtml(l.course||'General')}</span></td>
+      <td><span class="badge ${l.course === 'Partner App' ? 'badge-green' : 'badge-blue'}">${escHtml(l.course||'General')}</span></td>
       <td style="font-size:.78rem;color:#6b7280;max-width:200px">${escHtml((l.message||'').substring(0,60))}${(l.message||'').length>60?'...':''}</td>
       <td style="font-size:.78rem;white-space:nowrap">${new Date(l.date).toLocaleDateString('en-IN')}</td>
       <td><a class="btn-sm btn-edit" href="https://wa.me/919546201805?text=${encodeURIComponent(`New Lead%0AName: ${l.name}%0APhone: ${l.phone}%0ACourse: ${l.course||'General'}%0AMessage: ${l.message||'-'}%0ADate: ${new Date(l.date).toLocaleDateString('en-IN')}`)}" target="_blank">📲 Enquiry</a></td>

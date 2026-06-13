@@ -68,7 +68,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="index.css?v=1.2">
+  <link rel="stylesheet" href="index.css?v=3.2">
   <link rel="stylesheet" href="marketing.css?v=1.0">
 </head>
 <body>
@@ -93,6 +93,7 @@
         <a href="#fees" class="nav-link" data-hover>Fee Structure</a>
         <a href="#loans" class="nav-link" data-hover>Loans & Scholarships</a>
         <a href="#services" class="nav-link" data-hover>Services</a>
+        <a href="#earning" class="nav-link" data-hover>Earn Money</a>
         <a href="#contact" class="nav-link nav-link--cta" data-hover>Free Counselling</a>
       </div>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
@@ -110,6 +111,7 @@
       <a href="#fees" class="mobile-link">Fee Structure</a>
       <a href="#loans" class="mobile-link">Loans & Scholarships</a>
       <a href="#services" class="mobile-link">Services</a>
+      <a href="#earning" class="mobile-link">Earning Opportunity</a>
       <a href="#contact" class="mobile-link">Free Counselling</a>
     </div>
   </div>
@@ -597,11 +599,98 @@
     </div>
   </section>
 
+  <!-- Earning Opportunity Section -->
+  <section class="section section--earning" id="earning">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag reveal-up">07 — Earning Opportunity</span>
+        <h2 class="section-title reveal-up">Zero Investment, <em>Unlimited Earning</em></h2>
+        <p class="section-sub reveal-up">Partner with us and earn up to ₹1,00,000 per student admission. No registration fee required!</p>
+      </div>
+      
+      <div class="earning-grid">
+        <div class="earning-info reveal-up">
+          <div class="earning-card-feat">
+            <div class="feat-icon">💸</div>
+            <div class="feat-text">
+              <h3>Earn Up to ₹1,00,000</h3>
+              <p>Get generous commissions on every successful admission. The payout depends directly on the student's admission fee structure (*T&C Apply).</p>
+            </div>
+          </div>
+          
+          <div class="earning-card-feat">
+            <div class="feat-icon">🛡️</div>
+            <div class="feat-text">
+              <h3>Zero Investment</h3>
+              <p>Start earning without investing a single digit. Registration is 100% free with no hidden charges.</p>
+            </div>
+          </div>
+
+          <div class="earning-card-feat">
+            <div class="feat-icon">🔑</div>
+            <div class="feat-text">
+              <h3>Unique Partner Code</h3>
+              <p>We will provide you with a unique tracking code. Share it with students to tie their admissions to your payout.</p>
+            </div>
+          </div>
+
+          <div class="earning-card-feat">
+            <div class="feat-icon">📜</div>
+            <div class="feat-text">
+              <h3>Earning Opportunity (Not Agent)</h3>
+              <p>Become our independent partner. Work on your own terms, help students find the right college, and build a steady income stream.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="earning-form-wrapper reveal-up">
+          <div class="partner-form-box">
+            <h3>Start Earning Today</h3>
+            <p>Fill in your details below. Our team will contact you to assign your unique partner code and explain the terms.</p>
+            
+            <form class="partner-form" id="partnerForm">
+              <div class="form-group">
+                <label for="partnerName">Full Name</label>
+                <input type="text" id="partnerName" placeholder="Enter your name" required>
+              </div>
+              <div class="form-group">
+                <label for="partnerPhone">Phone Number</label>
+                <input type="tel" id="partnerPhone" placeholder="Enter phone number" required>
+              </div>
+              <div class="form-group">
+                <label for="partnerWhatsapp">WhatsApp Number</label>
+                <input type="tel" id="partnerWhatsapp" placeholder="Enter WhatsApp number" required>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="partnerCity">City</label>
+                  <input type="text" id="partnerCity" placeholder="Your City" required>
+                </div>
+                <div class="form-group">
+                  <label for="partnerProfile">Your Profile</label>
+                  <select id="partnerProfile" required>
+                    <option value="">Select Profile</option>
+                    <option value="Student">Student</option>
+                    <option value="Teacher">Teacher</option>
+                    <option value="Cyber Cafe Owner">Cyber Cafe Owner</option>
+                    <option value="Business Owner">Business Owner</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" class="btn btn--primary btn--full" style="margin-top:10px" data-hover>Apply as Partner</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Contact Section -->
   <section class="section section--contact" id="contact">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag reveal-up">07 — Get in Touch</span>
+        <span class="section-tag reveal-up">08 — Get in Touch</span>
         <h2 class="section-title reveal-up">Let's connect.</h2>
       </div>
       <div class="contact-grid">
@@ -816,24 +905,16 @@
     <span class="wa-tooltip">Chat with us!</span>
   </a>
 
-  <!-- Live Social Proof Popup -->
-  <div id="socialProof" class="social-proof-popup">
-    <div class="sp-icon">🔔</div>
-    <div class="sp-text">
-      <strong id="spName">Rahul from Patna</strong>
-      <span id="spAction">just booked a seat in B.Tech</span>
-      <small id="spTime">2 mins ago</small>
-    </div>
-  </div>
+  <!-- Live Social Proof Popup has been removed -->
 
-  <script src="data.js?v=3.0"></script>
-  <script src="app.js?v=3.0"></script>
-  <script src="marketing.js?v=3.0"></script>
+  <script src="data.js?v=3.2"></script>
+  <script src="app.js?v=3.2"></script>
+  <script src="marketing.js?v=3.2"></script>
   <script>
     // ===== SERVICE WORKER — AUTO-UPDATE SYSTEM =====
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js?v=3.0').then(registration => {
+        navigator.serviceWorker.register('./sw.js?v=3.2').then(registration => {
 
           // Jab bhi naya SW install ho, turant activate karo
           registration.addEventListener('updatefound', () => {

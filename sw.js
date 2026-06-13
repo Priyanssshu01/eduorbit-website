@@ -5,7 +5,7 @@
 // Koi bhi cached file nahi serve hogi jab tak network available hai.
 // Jaise hi GitHub pe push hoga, SABKE phone pe update aa jayega.
 
-const CACHE_NAME = 'eduorbit-v3.0'; // Version bump = old cache deleted instantly
+const CACHE_NAME = 'eduorbit-v3.2'; // Version bump = old cache deleted instantly
 
 // --- 1. INSTALL: Skip waiting immediately ---
 self.addEventListener('install', event => {
@@ -20,7 +20,7 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cache => {
           // Koi bhi purana cache — delete!
-          console.log('[SW v3.0] Deleting old cache:', cache);
+          console.log('[SW v3.2] Deleting old cache:', cache);
           return caches.delete(cache);
         })
       );
@@ -31,7 +31,7 @@ self.addEventListener('activate', event => {
       // Sabko bolo page refresh karo
       return self.clients.matchAll({ type: 'window' }).then(clients => {
         clients.forEach(client => {
-          client.postMessage({ type: 'SW_UPDATED', version: '3.0' });
+          client.postMessage({ type: 'SW_UPDATED', version: '3.2' });
         });
       });
     })
