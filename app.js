@@ -2,6 +2,28 @@
 (function () {
   'use strict';
 
+  // --- UTM Tracker helper for Ads Management ---
+  function getUTMSourceInfo() {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const utmSource = urlParams.get('utm_source') || '';
+      const utmMedium = urlParams.get('utm_medium') || '';
+      const utmCampaign = urlParams.get('utm_campaign') || '';
+      if (utmSource || utmCampaign) {
+        return ` [Ads: ${utmSource} | Campaign: ${utmCampaign} | Medium: ${utmMedium}]`;
+      }
+      if (document.referrer) {
+        const refUrl = new URL(document.referrer);
+        if (refUrl.hostname.includes('google')) {
+          return ' [Ads: Google Organic]';
+        }
+      }
+    } catch (e) {
+      console.warn('Error reading UTM parameters:', e);
+    }
+    return ' [Ads: Direct / Unknown]';
+  }
+
   // --- Loader ---
   window.addEventListener('load', () => {
     setTimeout(() => {
@@ -457,10 +479,11 @@
     const phone = document.getElementById('formPhone').value.trim();
     const course = document.getElementById('formCourse').value;
     const message = document.getElementById('formMessage').value.trim();
+    const utmInfo = getUTMSourceInfo();
 
     // Save lead to localStorage for admin panel
     const leads = JSON.parse(localStorage.getItem('eo_leads') || '[]');
-    leads.push({ name, phone, course, message, date: new Date().toISOString() });
+    leads.push({ name, phone, course, message: message + utmInfo, date: new Date().toISOString() });
     localStorage.setItem('eo_leads', JSON.stringify(leads));
 
     // Report Conversion to Google Ads
@@ -532,7 +555,8 @@
 
     // Save lead
     const leads = JSON.parse(localStorage.getItem('eo_leads') || '[]');
-    leads.push({ name, phone, course: courseName, message: `Fee Receipt generated for ${colAbbr}`, date: new Date().toISOString(), stage: 'new' });
+    const utmInfo = getUTMSourceInfo();
+    leads.push({ name, phone, course: courseName, message: `Fee Receipt generated for ${colAbbr}` + utmInfo, date: new Date().toISOString(), stage: 'new' });
     localStorage.setItem('eo_leads', JSON.stringify(leads));
 
     // Populate Receipt
@@ -589,7 +613,8 @@
 
     // Save to localStorage for admin panel
     const leads = JSON.parse(localStorage.getItem('eo_leads') || '[]');
-    leads.push({ name, phone, course, message: 'Via Popup Lead Form', date: new Date().toISOString() });
+    const utmInfo = getUTMSourceInfo();
+    leads.push({ name, phone, course, message: 'Via Popup Lead Form' + utmInfo, date: new Date().toISOString() });
     localStorage.setItem('eo_leads', JSON.stringify(leads));
 
     // Report Conversion to Google Ads

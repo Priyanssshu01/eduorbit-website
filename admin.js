@@ -253,12 +253,12 @@ function openAddCourse(idx = null) {
             ${['btech','btech-lateral','diploma','mba','mca','bca','bba','engineering','management','computer_applications','science','arts_humanities','law','pharmacy_health','agriculture','education'].map(x=>`<option value="${x}" ${c.category===x?'selected':''}>${x}</option>`).join('')}
           </select>
         </div>
-        <div class="mf-field"><label>Duration (years) *</label><input id="cr-dur" type="number" value="${c.duration||\''}" placeholder="4"></div>
-        <div class="mf-field"><label>Total Fee (₹) *</label><input id="cr-fee" type="number" value="${c.totalFee||\''}" placeholder="360000"></div>
+        <div class="mf-field"><label>Duration (years) *</label><input id="cr-dur" type="number" value="${c.duration || ''}" placeholder="4"></div>
+        <div class="mf-field"><label>Total Fee (₹) *</label><input id="cr-fee" type="number" value="${c.totalFee || ''}" placeholder="360000"></div>
         <div class="mf-field"><label>🔒 Direct Admission Charge (₹)</label><input id="cr-dac" type="number" value="${c.admissionCharge||0}" placeholder="0" style="border-color:#e67e22"></div>
-        <div class="mf-field"><label>Hostel Boys (₹)</label><input id="cr-hb" value="${c.hostelBoys||\''}" placeholder="550000 or N/A"></div>
+        <div class="mf-field"><label>Hostel Boys (₹)</label><input id="cr-hb" value="${c.hostelBoys || ''}" placeholder="550000 or N/A"></div>
       </div>
-      <div class="mf-field"><label>Hostel Girls (₹)</label><input id="cr-hg" value="${c.hostelGirls||\''}" placeholder="530000 or N/A"></div>
+      <div class="mf-field"><label>Hostel Girls (₹)</label><input id="cr-hg" value="${c.hostelGirls || ''}" placeholder="530000 or N/A"></div>
       <div class="mf-field"><label>Colleges (hold Ctrl/Cmd to select multiple) *</label>
         <select id="cr-cols" multiple style="height:120px">${colOptions}</select>
       </div>

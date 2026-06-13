@@ -41,7 +41,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="index.css?v=3.3">
+  <link rel="stylesheet" href="index.css?v=3.5">
   
   <style>
     body {
@@ -358,6 +358,27 @@
       setTimeout(() => toast.classList.remove('active'), 3500);
     }
 
+    function getUTMSourceInfo() {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const utmSource = urlParams.get('utm_source') || '';
+        const utmMedium = urlParams.get('utm_medium') || '';
+        const utmCampaign = urlParams.get('utm_campaign') || '';
+        if (utmSource || utmCampaign) {
+          return ` [Ads: ${utmSource} | Campaign: ${utmCampaign} | Medium: ${utmMedium}]`;
+        }
+        if (document.referrer) {
+          const refUrl = new URL(document.referrer);
+          if (refUrl.hostname.includes('google')) {
+            return ' [Ads: Google Organic]';
+          }
+        }
+      } catch (e) {
+        console.warn('Error reading UTM parameters:', e);
+      }
+      return ' [Ads: Direct / Unknown]';
+    }
+
     document.getElementById('partnerForm').addEventListener('submit', function (e) {
       e.preventDefault();
       const name = document.getElementById('partnerName').value.trim();
@@ -365,7 +386,8 @@
       const whatsapp = document.getElementById('partnerWhatsapp').value.trim();
       const city = document.getElementById('partnerCity').value.trim();
       const profile = document.getElementById('partnerProfile').value;
-      const message = `WhatsApp: ${whatsapp} | City: ${city} | Profile: ${profile} | Direct Partner Application`;
+      const utmInfo = getUTMSourceInfo();
+      const message = `WhatsApp: ${whatsapp} | City: ${city} | Profile: ${profile} | Direct Partner Application` + utmInfo;
 
       // Save lead to localStorage
       try {
