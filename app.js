@@ -472,32 +472,7 @@
     e.target.reset();
   });
 
-  // --- Partner Form ---
-  const partnerForm = document.getElementById('partnerForm');
-  if (partnerForm) {
-    partnerForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('partnerName').value.trim();
-      const phone = document.getElementById('partnerPhone').value.trim();
-      const whatsapp = document.getElementById('partnerWhatsapp').value.trim();
-      const city = document.getElementById('partnerCity').value.trim();
-      const profile = document.getElementById('partnerProfile').value;
-      const message = `WhatsApp: ${whatsapp} | City: ${city} | Profile: ${profile} | Direct Partner Application`;
 
-      // Save lead to localStorage as "Partner App"
-      const leads = JSON.parse(localStorage.getItem('eo_leads') || '[]');
-      leads.push({ name, phone, course: 'Partner App', message, date: new Date().toISOString() });
-      localStorage.setItem('eo_leads', JSON.stringify(leads));
-
-      // Report Conversion to Google Ads
-      if (typeof gtag_report_conversion === 'function') {
-        gtag_report_conversion();
-      }
-
-      showToast(`✅ Application submitted! We will contact you soon.`);
-      e.target.reset();
-    });
-  }
 
   function showToast(message) {
     let toast = document.querySelector('.toast');

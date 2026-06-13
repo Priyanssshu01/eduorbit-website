@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) — Analytics: G-6NBETB27SC | Ads: AW-18168176994 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NBETB27SC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    // Google Analytics 4 — Fresh Property
+    gtag('config', 'G-6NBETB27SC');
+
+    // Google Ads Conversion Tag
+    gtag('config', 'AW-18168176994');
+
+    // Google Ads Lead Conversion Event
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      };
+      gtag('event', 'conversion', {
+          'send_to': 'AW-18168176994/85LtCOmyrK4cEOLCoddD',
+          'value': 1.0,
+          'currency': 'INR',
+          'event_callback': callback
+      });
+      return false;
+    }
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Earning Opportunity - Partner Program | EduOrbit</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1B4D8E">
+  <meta name="description" content="Join our zero investment earning opportunity. Partner with EduOrbit and earn up to ₹1,00,000 per admission. Apply now!">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css?v=3.3">
+  
+  <style>
+    body {
+      background: #fafbff;
+    }
+    .partner-page-wrap {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .partner-nav {
+      background: var(--white);
+      border-bottom: 1px solid rgba(0,0,0,.08);
+      padding: 16px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .partner-nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .back-btn {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--blue);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: 1.5px solid var(--blue);
+      border-radius: 100px;
+      transition: all 0.3s;
+    }
+    .back-btn:hover {
+      background: var(--blue);
+      color: var(--white);
+    }
+    
+    .partner-hero {
+      padding: 80px 40px;
+      background: linear-gradient(135deg, #060D1F 0%, #112240 100%);
+      color: var(--white);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .partner-hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      background: rgba(245, 197, 24, 0.08);
+      pointer-events: none;
+    }
+    .partner-hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .partner-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 16px;
+      background: rgba(245, 197, 24, 0.1);
+      padding: 6px 16px;
+      border-radius: 100px;
+    }
+    .partner-hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .partner-hero h1 em {
+      font-style: italic;
+      color: var(--yellow);
+    }
+    .partner-hero p {
+      font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .partner-main {
+      flex: 1;
+      padding: 60px 40px;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: pageReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes pageReveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .partner-success-box {
+      background: var(--white);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 60px 40px;
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      max-width: 600px;
+      margin: 40px auto;
+      display: none;
+    }
+    .success-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    .partner-success-box h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .partner-success-box p {
+      font-size: 0.95rem;
+      color: var(--gray);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    
+    @media (max-width: 768px) {
+      .partner-nav { padding: 14px 20px; }
+      .partner-hero { padding: 40px 20px; }
+      .partner-main { padding: 40px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="partner-page-wrap">
+    <!-- Navigation -->
+    <header class="partner-nav">
+      <div class="partner-nav-inner">
+        <a href="index.html" class="nav-logo">
+          <span class="logo-edu">EDU</span><span class="logo-orbit">ORBIT</span>
+        </a>
+        <a href="index.html" class="back-btn">← Back to Home</a>
+      </div>
+    </header>
+
+    <!-- Hero Header -->
+    <div class="partner-hero">
+      <div class="partner-hero-content">
+        <span class="partner-tag">Earning Opportunity</span>
+        <h1>Partner with Us & Earn <br>Up to <em>₹1,00,000</em></h1>
+        <p>Zero investment. Zero registration fees. Start earning today by referring students to top colleges.</p>
+      </div>
+    </div>
+
+    <!-- Success View -->
+    <div class="partner-success-box" id="partnerSuccess">
+      <div class="success-icon">🎉</div>
+      <h2>Application Submitted!</h2>
+      <p>Thank you for applying. Our team will contact you shortly on your provided WhatsApp number to explain the terms and assign your unique tracking code.</p>
+      <a href="index.html" class="btn btn--primary">Return to Homepage</a>
+    </div>
+
+    <!-- Main Content Grid -->
+    <main class="partner-main" id="partnerFormContainer">
+      <div class="earning-grid">
+        <div class="earning-info">
+          <div class="earning-card-feat">
+            <div class="feat-icon">💸</div>
+            <div class="feat-text">
+              <h3>Earn Up to ₹1,00,000</h3>
+              <p>Get generous commissions on every successful student admission. The payout amount is directly determined by the student's admission fee structure (*T&C Apply).</p>
+            </div>
+          </div>
+          
+          <div class="earning-card-feat">
+            <div class="feat-icon">🛡️</div>
+            <div class="feat-text">
+              <h3>Zero Investment</h3>
+              <p>Work completely risk-free without investing a single rupee. No signup charges, no monthly fees, and no targets.</p>
+            </div>
+          </div>
+
+          <div class="earning-card-feat">
+            <div class="feat-icon">🔑</div>
+            <div class="feat-text">
+              <h3>Unique Partner Code</h3>
+              <p>Get a unique referral code. Students using your code will get direct admissions guidance, and you will secure your referral commission.</p>
+            </div>
+          </div>
+
+          <div class="earning-card-feat">
+            <div class="feat-icon">📜</div>
+            <div class="feat-text">
+              <h3>Earning Opportunity (Not Agent)</h3>
+              <p>Become our independent partner. Work independently on your own terms, help students find the right college, and build a steady income stream.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="earning-form-wrapper">
+          <div class="partner-form-box">
+            <h3>Start Earning Today</h3>
+            <p>Fill out the application below. Our operations team will call you to complete onboarding and activate your code.</p>
+            
+            <form class="partner-form" id="partnerForm">
+              <div class="form-group">
+                <label for="partnerName">Full Name</label>
+                <input type="text" id="partnerName" placeholder="Enter your name" required>
+              </div>
+              <div class="form-group">
+                <label for="partnerPhone">Phone Number</label>
+                <input type="tel" id="partnerPhone" placeholder="Enter 10-digit mobile number" required pattern="[0-9]{10}">
+              </div>
+              <div class="form-group">
+                <label for="partnerWhatsapp">WhatsApp Number</label>
+                <input type="tel" id="partnerWhatsapp" placeholder="Enter WhatsApp number" required pattern="[0-9]{10}">
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="partnerCity">City</label>
+                  <input type="text" id="partnerCity" placeholder="Your City" required>
+                </div>
+                <div class="form-group">
+                  <label for="partnerProfile">Your Profile</label>
+                  <select id="partnerProfile" required>
+                    <option value="">Select Profile</option>
+                    <option value="Student">Student</option>
+                    <option value="Teacher">Teacher</option>
+                    <option value="Cyber Cafe Owner">Cyber Cafe Owner</option>
+                    <option value="Business Owner">Business Owner</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" class="btn btn--primary btn--full" style="margin-top:10px" data-hover>Apply as Partner</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="footer" style="margin-top: 40px;">
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <span class="logo-edu">EDU</span><span class="logo-orbit">ORBIT</span>
+            </div>
+            <p class="footer-tagline">Educational Counselling</p>
+            <p class="footer-desc">Your trusted partner for college admissions, career counseling, and education loan guidance.</p>
+          </div>
+          <div class="footer-links-group">
+            <h3>Quick Links</h3>
+            <a href="index.html#about">About Us</a>
+            <a href="index.html#colleges">Colleges</a>
+            <a href="index.html#fees">Fee Structure</a>
+            <a href="index.html#services">Services</a>
+            <a href="index.html#contact">Contact</a>
+          </div>
+          <div class="footer-links-group">
+            <h3>Courses</h3>
+            <a href="index.html#fees">Engineering</a>
+            <a href="index.html#fees">Management</a>
+            <a href="index.html#fees">Computer Apps</a>
+            <a href="index.html#fees">Pharmacy</a>
+            <a href="index.html#fees">Law</a>
+          </div>
+          <div class="footer-links-group">
+            <h3>Contact</h3>
+            <a href="tel:+919546201805">+91 9546201805</a>
+            <a href="mailto:eduorbit.admissions@gmail.com">Email Us</a>
+            <a href="https://wa.me/919546201805">WhatsApp</a>
+            <a href="https://www.eduorbit.in">Website</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2026 EduOrbit. All rights reserved. | T&C Apply</p>
+          <p>Free Counselling Call — <a href="tel:+919546201805">+91 9546201805</a></p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    function showToast(message) {
+      let toast = document.getElementById('toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.className = 'toast';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = message;
+      toast.classList.add('active');
+      setTimeout(() => toast.classList.remove('active'), 3500);
+    }
+
+    document.getElementById('partnerForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('partnerName').value.trim();
+      const phone = document.getElementById('partnerPhone').value.trim();
+      const whatsapp = document.getElementById('partnerWhatsapp').value.trim();
+      const city = document.getElementById('partnerCity').value.trim();
+      const profile = document.getElementById('partnerProfile').value;
+      const message = `WhatsApp: ${whatsapp} | City: ${city} | Profile: ${profile} | Direct Partner Application`;
+
+      // Save lead to localStorage
+      try {
+        const leads = JSON.parse(localStorage.getItem('eo_leads') || '[]');
+        leads.push({ name, phone, course: 'Partner App', message, date: new Date().toISOString() });
+        localStorage.setItem('eo_leads', JSON.stringify(leads));
+      } catch (e) {
+        console.error('Error saving lead:', e);
+      }
+
+      // Report Google Ads conversion
+      if (typeof gtag_report_conversion === 'function') {
+        gtag_report_conversion();
+      }
+
+      // Show success container and hide form container
+      document.getElementById('partnerFormContainer').style.display = 'none';
+      document.getElementById('partnerSuccess').style.display = 'block';
+      showToast('✅ Application submitted successfully!');
+    });
+  </script>
+</body>
+</html>
