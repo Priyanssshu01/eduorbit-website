@@ -88,7 +88,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--black);-web
 .tab-header h2{font-size:1.3rem;font-weight:800}
 
 /* DASHBOARD STATS */
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:28px}
 .stat-card{background:var(--white);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:8px;box-shadow:0 4px 16px rgba(0,0,0,.06);border-top:4px solid var(--c)}
 .stat-icon{font-size:1.6rem}
 .stat-val{font-size:2rem;font-weight:900;letter-spacing:-0.04em}

@@ -92,6 +92,7 @@
         <button class="nav-item" onclick="showTab('colleges',this)">🏫 Colleges</button>
         <button class="nav-item" onclick="showTab('courses',this)">📚 Courses</button>
         <button class="nav-item" onclick="showTab('leads',this)">👤 Student Leads</button>
+        <button class="nav-item" onclick="showTab('partners',this)">🤝 Partner Apps</button>
         <button class="nav-item" onclick="showTab('export',this)">💾 Export Data</button>
       </nav>
       <button class="logout-btn" onclick="doLogout()">🚪 Logout</button>
@@ -131,6 +132,11 @@
             <div class="stat-icon">📅</div>
             <div class="stat-val" id="statToday">0</div>
             <div class="stat-label">Today's Leads</div>
+          </div>
+          <div class="stat-card" style="--c:#8e44ad">
+            <div class="stat-icon">🤝</div>
+            <div class="stat-val" id="statPartners">0</div>
+            <div class="stat-label">Partner Apps</div>
           </div>
         </div>
         <div class="dashboard-grid">
@@ -198,6 +204,23 @@
           <table class="data-table">
             <thead><tr><th>#</th><th>Name</th><th>Phone</th><th>Course</th><th>Message</th><th>Date</th><th>Enquiry</th><th>Delete</th></tr></thead>
             <tbody id="leadsBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PARTNERS TAB -->
+      <div class="tab-content" id="tab-partners">
+        <div class="tab-header">
+          <h2>Partner Applications</h2>
+          <div class="lead-actions">
+            <button class="btn-outline" onclick="exportPartnersCSV()">📥 Export CSV</button>
+            <button class="btn-danger" onclick="clearPartners()">🗑 Clear All Partner Apps</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>#</th><th>Name</th><th>Phone</th><th>Profile</th><th>Details</th><th>Date</th><th>Enquiry</th><th>Delete</th></tr></thead>
+            <tbody id="partnersBody"></tbody>
           </table>
         </div>
       </div>
