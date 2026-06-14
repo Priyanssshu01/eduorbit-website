@@ -109,7 +109,7 @@
     const grid = document.getElementById('collegesGrid');
     if (!grid) return;
     grid.innerHTML = COLLEGES.map(c => `
-      <div class="college-card">
+      <div class="college-card" data-id="${c.id}" role="button" tabindex="0" aria-label="View ${c.name} profile">
         <span class="college-card-abbr">${c.abbr}</span>
         <div class="college-card-emoji">${c.img}</div>
         <div class="college-card-name">${c.name}</div>
@@ -118,6 +118,7 @@
           <span class="college-tag college-tag--est">Est. ${c.est}</span>
         </div>
         <div class="college-card-location">📍 ${c.location}</div>
+        ${c.insta ? `<div class="college-card-insta">📸 ${c.insta}</div>` : ''}
       </div>
     `).join('');
   }

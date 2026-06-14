@@ -1,0 +1,706 @@
+/* ===================================================================
+   COLLEGE PROFILE MODAL + BRANCH COMPARISON
+   EduOrbit — colleges.css
+   =================================================================== */
+
+/* ============================================================
+   CLICK HINT
+   ============================================================ */
+.colleges-click-hint {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--gray-light);
+  margin-top: 20px;
+  letter-spacing: 0.02em;
+  font-style: italic;
+}
+.college-card {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.college-card::after {
+  content: 'View Profile →';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(135deg, var(--blue), var(--blue-light));
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+.college-card:hover::after {
+  transform: translateY(0);
+}
+
+/* ============================================================
+   COLLEGE PROFILE OVERLAY
+   ============================================================ */
+.cp-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s cubic-bezier(0.16,1,0.3,1),
+              visibility 0.35s;
+}
+.cp-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ============================================================
+   COLLEGE PROFILE MODAL
+   ============================================================ */
+.cp-modal {
+  background: #fff;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  position: relative;
+  transform: translateY(40px) scale(0.96);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 0 40px 120px rgba(0,0,0,0.35),
+              0 0 0 1px rgba(27,77,142,0.06);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.1) transparent;
+}
+.cp-overlay.open .cp-modal {
+  transform: translateY(0) scale(1);
+}
+
+/* Close Button */
+.cp-close {
+  position: sticky;
+  top: 16px;
+  float: right;
+  margin: 16px 16px 0 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.07);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.2s, transform 0.2s;
+  line-height: 1;
+}
+.cp-close:hover {
+  background: rgba(0,0,0,0.15);
+  transform: scale(1.1) rotate(90deg);
+}
+
+/* ============================================================
+   BANNER
+   ============================================================ */
+.cp-banner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 32px 32px 24px;
+  background: linear-gradient(135deg, #0F172A 0%, #1e3a5f 100%);
+  border-radius: 24px 24px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+.cp-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 20%, rgba(245,197,24,0.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+.cp-banner-icon {
+  font-size: 3.5rem;
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.cp-abbr {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin-bottom: 4px;
+}
+.cp-name {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+.cp-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.cp-meta-chip {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.cp-meta-chip--est {
+  background: rgba(245,197,24,0.15);
+  color: var(--yellow);
+  border-color: rgba(245,197,24,0.3);
+}
+
+/* ============================================================
+   BODY
+   ============================================================ */
+.cp-body {
+  padding: 0 28px 28px;
+}
+
+/* Quick Stats */
+.cp-stats-row {
+  display: flex;
+  gap: 0;
+  background: #f8faff;
+  border: 1px solid rgba(27,77,142,0.08);
+  border-radius: 14px;
+  margin: 20px 0 0;
+  overflow: hidden;
+}
+.cp-stat {
+  flex: 1;
+  text-align: center;
+  padding: 16px 12px;
+  position: relative;
+}
+.cp-stat + .cp-stat {
+  border-left: 1px solid rgba(27,77,142,0.08);
+}
+.cp-stat-val {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--blue);
+  letter-spacing: -0.02em;
+}
+.cp-stat-label {
+  font-size: 0.68rem;
+  color: var(--gray-light);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+  display: block;
+}
+
+/* ============================================================
+   TABS
+   ============================================================ */
+.cp-tabs {
+  display: flex;
+  gap: 8px;
+  margin: 20px 0 0;
+  border-bottom: 2px solid rgba(0,0,0,0.06);
+  padding-bottom: 0;
+}
+.cp-tab {
+  padding: 10px 18px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border: none;
+  background: none;
+  color: var(--gray-light);
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+  border-radius: 8px 8px 0 0;
+}
+.cp-tab::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0; right: 0;
+  height: 2px;
+  background: var(--blue);
+  transform: scaleX(0);
+  transition: transform 0.25s cubic-bezier(0.16,1,0.3,1);
+}
+.cp-tab.active {
+  color: var(--blue);
+}
+.cp-tab.active::after {
+  transform: scaleX(1);
+}
+.cp-tab:hover {
+  color: var(--blue);
+  background: rgba(27,77,142,0.04);
+}
+
+.cp-tab-pane {
+  display: none;
+  padding-top: 20px;
+}
+.cp-tab-pane.active {
+  display: block;
+  animation: fadeTabIn 0.3s ease;
+}
+@keyframes fadeTabIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Overview */
+.cp-bio {
+  font-size: 0.9rem;
+  color: var(--gray);
+  line-height: 1.75;
+  margin-bottom: 16px;
+}
+.cp-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.cp-highlight-chip {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, rgba(27,77,142,0.06), rgba(37,99,235,0.04));
+  border: 1px solid rgba(27,77,142,0.1);
+  border-radius: 100px;
+  color: var(--blue);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cp-highlight-chip::before {
+  content: '✓';
+  width: 16px;
+  height: 16px;
+  background: var(--blue);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cp-links-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.cp-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 100px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.cp-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+.cp-link--insta {
+  background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+  color: #fff;
+}
+.cp-link--web {
+  background: var(--black);
+  color: #fff;
+}
+.cp-affil {
+  font-size: 0.82rem;
+  color: var(--gray);
+  margin-bottom: 8px;
+  padding: 10px 14px;
+  background: rgba(0,0,0,0.02);
+  border-radius: 8px;
+  border-left: 3px solid var(--blue);
+}
+.cp-location-row {
+  font-size: 0.82rem;
+  color: var(--gray-light);
+}
+
+/* Branches Tab */
+.cp-branch-intro {
+  font-size: 0.85rem;
+  color: var(--gray);
+  margin-bottom: 14px;
+}
+.cp-branch-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 340px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.cp-branch-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #f8faff;
+  border-radius: 10px;
+  border: 1px solid rgba(27,77,142,0.07);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.cp-branch-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--black);
+  flex: 1;
+}
+.cp-branch-type {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.cp-branch-fee {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--orange-dark);
+  white-space: nowrap;
+}
+
+/* Placement Tab */
+.cp-placement-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.cp-plc-card {
+  background: linear-gradient(135deg, #f0f4ff 0%, #fff 100%);
+  border: 1px solid rgba(27,77,142,0.1);
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+}
+.cp-plc-icon { font-size: 1.8rem; margin-bottom: 6px; }
+.cp-plc-label { font-size: 0.72rem; color: var(--gray-light); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+.cp-plc-val { font-size: 1.4rem; font-weight: 900; color: var(--blue); letter-spacing: -0.03em; margin-top: 4px; }
+
+.cp-companies-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gray-light);
+  margin-bottom: 10px;
+}
+.cp-companies-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.cp-company-chip {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  background: var(--black);
+  color: #fff;
+  border-radius: 100px;
+}
+.cp-cta-btn {
+  display: block;
+  text-align: center;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-light));
+  color: #fff;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.cp-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(27,77,142,0.35);
+}
+
+/* ============================================================
+   BRANCH COMPARISON SECTION
+   ============================================================ */
+.section--compare {
+  background: linear-gradient(180deg, #f0f4ff 0%, var(--white) 100%);
+}
+
+/* Picker */
+.cmp-picker {
+  background: var(--white);
+  border: 1px solid rgba(27,77,142,0.1);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 28px;
+}
+.cmp-picker-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray-light);
+  margin-bottom: 14px;
+}
+.cmp-picker-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.cmp-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 100px;
+  border: 1.5px solid rgba(27,77,142,0.14);
+  background: #f8faff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gray);
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16,1,0.3,1);
+  user-select: none;
+  white-space: nowrap;
+}
+.cmp-chip:hover {
+  background: rgba(27,77,142,0.05);
+  border-color: var(--blue);
+  color: var(--blue);
+}
+.cmp-chip.selected {
+  background: linear-gradient(135deg, var(--blue), var(--blue-light));
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(27,77,142,0.25);
+}
+.cmp-chip-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+.cmp-chip.selected .cmp-chip-dot {
+  opacity: 1;
+  background: var(--yellow);
+}
+.cmp-compare-btn {
+  padding: 12px 28px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-light));
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 0 4px 16px rgba(27,77,142,0.25);
+}
+.cmp-compare-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(27,77,142,0.35);
+}
+.cmp-compare-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Table Wrap */
+.cmp-table-wrap {
+  animation: fadeTabIn 0.4s ease;
+}
+.cmp-scroll {
+  overflow-x: auto;
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(27,77,142,0.08);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(27,77,142,0.2) transparent;
+}
+
+/* Table */
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  background: #fff;
+}
+.cmp-table thead tr {
+  background: linear-gradient(135deg, #0F172A 0%, #1e3a5f 100%);
+}
+.cmp-table thead th {
+  padding: 18px 20px;
+  text-align: left;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.cmp-table thead th:first-child {
+  width: 180px;
+  border-radius: 16px 0 0 0;
+}
+.cmp-table thead th:last-child {
+  border-radius: 0 16px 0 0;
+}
+.cmp-table .cmp-th-college {
+  text-align: center;
+}
+.cmp-table .cmp-th-abbr {
+  display: block;
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--yellow);
+  margin-bottom: 2px;
+}
+.cmp-table .cmp-th-naac {
+  font-size: 0.65rem;
+  background: rgba(255,255,255,0.12);
+  padding: 2px 8px;
+  border-radius: 100px;
+  display: inline-block;
+  margin-top: 4px;
+}
+
+/* Row Styles */
+.cmp-table tbody tr:nth-child(even) {
+  background: #f8faff;
+}
+.cmp-table tbody tr:hover {
+  background: rgba(27,77,142,0.04);
+}
+.cmp-table tbody td {
+  padding: 14px 20px;
+  color: var(--gray);
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  vertical-align: middle;
+}
+.cmp-table tbody td:first-child {
+  font-weight: 700;
+  color: var(--black);
+  font-size: 0.8rem;
+  letter-spacing: 0.01em;
+  border-right: 2px solid rgba(27,77,142,0.06);
+  background: #f0f4ff;
+  white-space: nowrap;
+}
+/* Section header rows */
+.cmp-table .cmp-row-section td {
+  background: linear-gradient(135deg, rgba(27,77,142,0.06), rgba(37,99,235,0.03));
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--blue);
+  padding: 10px 20px;
+  border-top: 2px solid rgba(27,77,142,0.1);
+}
+/* Fee cells */
+.cmp-fee {
+  font-weight: 700;
+  color: var(--orange-dark);
+}
+.cmp-na {
+  color: var(--gray-light);
+  font-style: italic;
+  font-size: 0.78rem;
+}
+.cmp-yes {
+  color: #059669;
+  font-weight: 700;
+}
+.cmp-best {
+  background: linear-gradient(135deg, rgba(5,150,105,0.08), rgba(5,150,105,0.04));
+  border: 1px solid rgba(5,150,105,0.2);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-weight: 800;
+  color: #059669;
+  white-space: nowrap;
+}
+
+/* Reset Button */
+.cmp-reset-btn {
+  display: block;
+  margin: 16px auto 0;
+  padding: 10px 24px;
+  background: none;
+  border: 1.5px solid rgba(0,0,0,0.12);
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gray);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cmp-reset-btn:hover {
+  background: rgba(0,0,0,0.04);
+  border-color: rgba(0,0,0,0.2);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  .cp-banner { padding: 20px; flex-direction: column; align-items: flex-start; }
+  .cp-body { padding: 0 16px 20px; }
+  .cp-stats-row { flex-direction: column; }
+  .cp-stat + .cp-stat { border-left: none; border-top: 1px solid rgba(27,77,142,0.08); }
+  .cp-placement-cards { grid-template-columns: 1fr; }
+  .cp-links-row { flex-direction: column; }
+  .cp-link { justify-content: center; }
+  .cp-tabs { overflow-x: auto; gap: 4px; }
+  .cp-tab { padding: 8px 12px; font-size: 0.75rem; white-space: nowrap; }
+
+  .cmp-picker-chips { gap: 6px; }
+  .cmp-chip { font-size: 0.74rem; padding: 7px 14px; }
+  .cmp-table { font-size: 0.78rem; }
+  .cmp-table thead th, .cmp-table tbody td { padding: 10px 12px; }
+}
