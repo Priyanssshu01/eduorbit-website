@@ -69,6 +69,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&family=Source+Sans+3:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index.css?v=3.6">
+  <link rel="stylesheet" href="animations.css?v=1.0">
   <link rel="stylesheet" href="marketing.css?v=1.0">
 </head>
 <body>
@@ -131,9 +132,9 @@
         Admissions Open — Session 2026-27
       </div>
       <h1 class="hero-title">
-        <span class="title-line reveal-up" style="--delay: 0.1s">Your Path to the</span>
+        <span class="title-line reveal-up split-chars" style="--delay: 0.1s">Your Path to the</span>
         <span class="title-line title-line--accent reveal-up" style="--delay: 0.2s">Right College</span>
-        <span class="title-line reveal-up" style="--delay: 0.3s">Starts Here.</span>
+        <span class="title-line reveal-up split-chars" style="--delay: 0.3s">Starts Here.</span>
       </h1>
       <p class="hero-sub reveal-up" style="--delay: 0.4s">
         Direct private college admissions, expert career counseling, and 100% free education loan guidance — all under one roof.
@@ -167,31 +168,31 @@
   <section class="section section--about" id="about">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag reveal-up">01 — About Us</span>
-        <h2 class="section-title reveal-up">We bridge the gap between <em>students</em> and their <em>dream colleges.</em></h2>
+        <span class="section-tag" data-anim="up-sm">01 — About Us</span>
+        <h2 class="section-title" data-anim="up">We bridge the gap between <em>students</em> and their <em>dream colleges.</em></h2>
       </div>
       <div class="about-grid">
-        <div class="about-text reveal-up">
+        <div class="about-text" data-anim="left">
           <p>EduOrbit is an educational counselling platform that simplifies the college admission process. We partner directly with top-tier institutions to offer transparent fee structures, seamless admissions, and personalized career guidance.</p>
           <p>Whether you're looking for B.Tech, MBA, BBA, BCA, Diploma, or MCA programs — we've got you covered with verified information and dedicated support throughout your journey.</p>
         </div>
-        <div class="about-features">
-          <div class="feature-card reveal-up" style="--delay: 0.1s">
+        <div class="about-features" data-stagger>
+          <div class="feature-card">
             <div class="feature-icon">→</div>
             <h3>Direct Admissions</h3>
             <p>No middlemen. Direct tie-ups with top colleges ensure transparent and hassle-free admissions.</p>
           </div>
-          <div class="feature-card reveal-up" style="--delay: 0.2s">
+          <div class="feature-card">
             <div class="feature-icon">→</div>
             <h3>Career Counseling</h3>
             <p>Expert guidance to help you choose the right course and college based on your goals.</p>
           </div>
-          <div class="feature-card reveal-up" style="--delay: 0.3s">
+          <div class="feature-card">
             <div class="feature-icon">→</div>
             <h3>100% Free Loan Guidance</h3>
             <p>Complete assistance with education loan applications under Bihar Student Credit Card Scheme.</p>
           </div>
-          <div class="feature-card reveal-up" style="--delay: 0.4s">
+          <div class="feature-card">
             <div class="feature-icon">→</div>
             <h3>Pan India Service</h3>
             <p>Serving students across India with reliable college information and admission support.</p>
@@ -225,11 +226,11 @@
   <section class="section section--colleges" id="colleges">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag reveal-up">02 — Partner Colleges</span>
-        <h2 class="section-title reveal-up">Top Colleges & <em>Universities</em></h2>
-        <p class="section-sub reveal-up">Explore premium institutions approved under student credit card schemes.</p>
+        <span class="section-tag" data-anim="up-sm">02 — Partner Colleges</span>
+        <h2 class="section-title" data-anim="up">Top Colleges & <em>Universities</em></h2>
+        <p class="section-sub" data-anim="up" style="--anim-delay: 0.1s">Explore premium institutions approved under student credit card schemes.</p>
       </div>
-      <div class="colleges-grid" id="collegesGrid">
+      <div class="colleges-grid" id="collegesGrid" data-stagger="fast">
         <!-- Populated by JS -->
       </div>
     </div>
@@ -239,12 +240,12 @@
   <section class="section section--eligibility" id="eligibility">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag reveal-up">03 — Eligibility Checker</span>
-        <h2 class="section-title reveal-up">Check Your <em>Admission Eligibility</em></h2>
-        <p class="section-sub reveal-up">Enter your exam scores and find out which colleges & courses you qualify for — instantly.</p>
+        <span class="section-tag" data-anim="up-sm">03 — Eligibility Checker</span>
+        <h2 class="section-title" data-anim="up">Check Your <em>Admission Eligibility</em></h2>
+        <p class="section-sub" data-anim="up" style="--anim-delay: 0.1s">Enter your exam scores and find out which colleges & courses you qualify for — instantly.</p>
       </div>
 
-      <div class="elig-checker reveal-up">
+      <div class="elig-checker" data-anim="flip">
         <div class="elig-form">
           <div class="elig-form-grid">
             <div class="elig-field">
@@ -313,13 +314,13 @@
   <section class="section section--fees" id="fees">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag reveal-up">04 — Admission 2026 | Fee Structure</span>
-        <h2 class="section-title reveal-up">Transparent <em>Fee Details</em></h2>
-        <p class="section-sub reveal-up">Complete branch-wise fee structure with hostel charges</p>
+        <span class="section-tag" data-anim="up-sm">04 — Admission 2026 | Fee Structure</span>
+        <h2 class="section-title" data-anim="up">Transparent <em>Fee Details</em></h2>
+        <p class="section-sub" data-anim="up" style="--anim-delay: 0.1s">Complete branch-wise fee structure with hostel charges</p>
       </div>
 
       <!-- Filters -->
-      <div class="fee-filters reveal-up">
+      <div class="fee-filters" data-anim="up" style="--anim-delay: 0.2s">
         <div class="filter-group">
           <label class="filter-label" for="categoryFilterSelect">Course Category</label>
           <select class="filter-select" id="categoryFilterSelect">
@@ -365,7 +366,7 @@
       </div>
 
       <!-- Fee Table -->
-      <div class="fee-table-wrapper reveal-up">
+      <div class="fee-table-wrapper" data-anim="up" style="--anim-delay: 0.1s">
         <div class="fee-count" id="feeCount"></div>
         <div class="fee-table-scroll">
           <table class="fee-table" id="feeTable">
@@ -397,12 +398,12 @@
   <section class="section section--loans" id="loans">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag reveal-up">05 — Financial Assistance</span>
-        <h2 class="section-title reveal-up">Education <em>Loans & Scholarships</em></h2>
-        <p class="section-sub reveal-up">State-wise student credit card schemes and university scholarships.</p>
+        <span class="section-tag" data-anim="up-sm">05 — Financial Assistance</span>
+        <h2 class="section-title" data-anim="up">Education <em>Loans & Scholarships</em></h2>
+        <p class="section-sub" data-anim="up" style="--anim-delay: 0.1s">State-wise student credit card schemes and university scholarships.</p>
       </div>
 
-      <div class="loans-wrapper reveal-up">
+      <div class="loans-wrapper" data-anim="up" style="--anim-delay: 0.15s">
         <div class="loan-tabs">
           <button class="loan-tab active" data-target="drcc">Bihar DRCC</button>
           <button class="loan-tab" data-target="guruji">Jharkhand Guruji</button>
@@ -560,29 +561,29 @@
   <section class="section section--services" id="services">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag reveal-up">06 — Our Services</span>
-        <h2 class="section-title reveal-up">Everything you need for a <em>smooth admission.</em></h2>
+        <span class="section-tag" data-anim="up-sm">06 — Our Services</span>
+        <h2 class="section-title" data-anim="up">Everything you need for a <em>smooth admission.</em></h2>
       </div>
-      <div class="services-grid">
-        <div class="service-card reveal-up" style="--delay: 0.1s">
+      <div class="services-grid" data-stagger>
+        <div class="service-card">
           <div class="service-num">01</div>
           <h3>Direct Private College Admissions</h3>
           <p>Skip the complexity. We have direct tie-ups with top colleges, making your admission process smooth and transparent.</p>
           <div class="service-arrow">↗</div>
         </div>
-        <div class="service-card reveal-up" style="--delay: 0.2s">
+        <div class="service-card">
           <div class="service-num">02</div>
           <h3>Expert Career Counseling</h3>
           <p>Not sure which course to choose? Our experienced counselors analyze your interests, aptitude, and goals to recommend the best path.</p>
           <div class="service-arrow">↗</div>
         </div>
-        <div class="service-card reveal-up" style="--delay: 0.3s">
+        <div class="service-card">
           <div class="service-num">03</div>
           <h3>100% Free Education Loan Guidance</h3>
           <p>Complete support for Bihar Student Credit Card Scheme and other education loan options — absolutely free of charge.</p>
           <div class="service-arrow">↗</div>
         </div>
-        <div class="service-card reveal-up" style="--delay: 0.4s">
+        <div class="service-card">
           <div class="service-num">04</div>
           <h3>College Comparison & Analysis</h3>
           <p>Compare colleges, courses, fees, placements, and infrastructure to make an informed decision about your future.</p>
@@ -596,9 +597,9 @@
   <section class="section section--cta" id="cta">
     <div class="container">
       <div class="cta-content">
-        <h2 class="cta-title reveal-up">Ready to start your <em>journey?</em></h2>
-        <p class="cta-sub reveal-up">Book a free counselling call with our experts and take the first step towards your dream college.</p>
-        <a href="tel:+919546201805" class="btn btn--primary btn--large reveal-up" data-hover>
+        <h2 class="cta-title" data-anim="up">Ready to start your <em>journey?</em></h2>
+        <p class="cta-sub" data-anim="up" style="--anim-delay: 0.15s">Book a free counselling call with our experts and take the first step towards your dream college.</p>
+        <a href="tel:+919546201805" class="btn btn--primary btn--large" data-anim="pop" style="--anim-delay: 0.3s">
           Call Now — +91 9546201805
         </a>
       </div>
@@ -610,11 +611,11 @@
   <section class="section section--contact" id="contact">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag reveal-up">07 — Get in Touch</span>
-        <h2 class="section-title reveal-up">Let's connect.</h2>
+        <span class="section-tag" data-anim="up-sm">07 — Get in Touch</span>
+        <h2 class="section-title" data-anim="up">Let's connect.</h2>
       </div>
       <div class="contact-grid">
-        <div class="contact-info reveal-up">
+        <div class="contact-info" data-anim="left">
           <div class="contact-item">
             <span class="contact-label">Phone</span>
             <a href="tel:+919546201805" class="contact-value" data-hover>+91 9546201805</a>
@@ -632,7 +633,7 @@
             <a href="https://wa.me/919546201805" class="contact-value" data-hover>Chat with us →</a>
           </div>
         </div>
-        <form class="contact-form reveal-up" id="contactForm">
+        <form class="contact-form" data-anim="right" id="contactForm">
           <div class="form-row">
             <div class="form-group">
               <label for="formName">Full Name</label>
@@ -830,6 +831,7 @@
   <script src="data.js?v=3.6"></script>
   <script src="app.js?v=3.6"></script>
   <script src="marketing.js?v=3.6"></script>
+  <script src="animations.js?v=1.0"></script>
   <script>
     // ===== SERVICE WORKER — AUTO-UPDATE SYSTEM =====
     if ('serviceWorker' in navigator) {
