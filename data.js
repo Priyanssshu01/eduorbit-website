@@ -5,29 +5,29 @@ const COLLEGES = [
   {
     id: 'jisce', name: 'JIS College of Engineering', abbr: 'JISCE', est: 2000, naac: 'A',
     location: 'Kalyani (60 KM from Kolkata)', img: '🏛️',
-    insta: '@jiscollegeofengineering', instaUrl: 'https://www.instagram.com/jiscollegeofengineering/',
+    insta: '@jiscollege', instaUrl: 'https://www.instagram.com/jiscollege/',
     website: 'https://www.jisce.ac.in', affiliation: 'MAKAUT (Maulana Abul Kalam Azad University of Technology)',
     bio: 'JIS College of Engineering is one of the premier NAAC-A accredited engineering colleges in West Bengal under the JIS Group. It offers a wide range of B.Tech, MBA, MCA, BCA, BBA and Diploma programs. With excellent infrastructure, experienced faculty, and strong industry placement network, JISCE is a top choice for students from Bihar, Jharkhand, UP, and across India.',
-    highlights: ['NAAC "A" Accredited', 'NBA Accredited Programs', 'Bihar DRCC / Student Credit Card Approved', 'On-campus Hostels for Boys & Girls', 'Strong Placement Cell — 300+ Recruiters', 'International Collaboration Programs'],
-    placement: { avg: '4.5 LPA', highest: '18 LPA', companies: ['TCS', 'Infosys', 'Wipro', 'Cognizant', 'HCL', 'Capgemini'] },
+    highlights: ['NAAC "A" Accredited', 'NBA Accredited Programs', 'Bihar DRCC / Student Credit Card Approved', 'On-campus Hostels for Boys & Girls', 'Highest Package 33.75 LPA — Amazon', 'International Collaboration Programs'],
+    placement: { avg: '4.5 LPA', highest: '33.75 LPA (Amazon)', companies: ['Amazon', 'TCS', 'Infosys', 'Wipro', 'Cognizant', 'HCL', 'Capgemini'] },
     top_branches: ['CSE', 'ECE', 'IT', 'Mechanical', 'Civil', 'MBA', 'MCA'],
     color: '#1B4D8E'
   },
   {
     id: 'nit', name: 'Narula Institute of Technology', abbr: 'NIT', est: 2001, naac: 'A',
     location: 'Agarpara, Kolkata', img: '🏫',
-    insta: '@narula.institute', instaUrl: 'https://www.instagram.com/narula.institute/',
+    insta: '@nitnarula', instaUrl: 'https://www.instagram.com/nitnarula/',
     website: 'https://www.nit.ac.in', affiliation: 'MAKAUT',
     bio: 'Narula Institute of Technology, under the JIS Group, is a NAAC-A accredited engineering college located in Agarpara, Kolkata. Known for its vibrant campus life, well-equipped labs, and strong alumni network, NIT offers B.Tech, Diploma, and PG courses. Bihar Student Credit Card Scheme approved.',
-    highlights: ['NAAC "A" Accredited', 'Bihar DRCC Approved', 'Smart Classrooms & Advanced Labs', 'Active Training & Placement Cell', 'Sports & Cultural Activities', 'Separate Boys & Girls Hostel'],
-    placement: { avg: '4.2 LPA', highest: '15 LPA', companies: ['TCS', 'Wipro', 'Infosys', 'Tech Mahindra', 'L&T'] },
+    highlights: ['NAAC "A" Accredited', 'Bihar DRCC Approved', 'Smart Classrooms & Advanced Labs', 'Highest Package 33.75 LPA — Amazon', 'Sports & Cultural Activities', 'Separate Boys & Girls Hostel'],
+    placement: { avg: '4.2 LPA', highest: '33.75 LPA (Amazon)', companies: ['Amazon', 'TCS', 'Wipro', 'Infosys', 'Tech Mahindra', 'L&T'] },
     top_branches: ['CSE', 'ECE', 'Mechanical', 'Civil', 'Electrical', 'Diploma'],
     color: '#2563EB'
   },
   {
     id: 'gnit', name: 'Guru Nanak Institute of Technology', abbr: 'GNIT', est: 2003, naac: 'A+',
     location: 'Sodepur, Kolkata', img: '🎓',
-    insta: '@gnit_kolkata', instaUrl: 'https://www.instagram.com/gnit_kolkata/',
+    insta: '@gnit_official_', instaUrl: 'https://www.instagram.com/gnit_official_/',
     website: 'https://www.gnit.ac.in', affiliation: 'MAKAUT',
     bio: 'Guru Nanak Institute of Technology is a NAAC A+ rated institution — one of the highest ratings among private engineering colleges in West Bengal. It offers B.Tech in multiple streams, Diploma programs, and is known for outstanding academic culture, research facilities, and exceptional placement record.',
     highlights: ['NAAC "A+" Accredited — Highest Rating', 'Bihar DRCC Approved', 'ISO 9001:2015 Certified', 'Research & Innovation Centre', '95%+ Placement Rate', 'International Exchange Programs'],
@@ -38,7 +38,7 @@ const COLLEGES = [
   {
     id: 'surtech', name: 'Dr Sudhir Chandra Sur Institute of Technology', abbr: 'Sur Tech', est: 2009, naac: 'A',
     location: 'Dumdum, Kolkata', img: '🏢',
-    insta: '@surtech_official', instaUrl: 'https://www.instagram.com/surtech_official/',
+    insta: '@surtechcollege', instaUrl: 'https://www.instagram.com/surtechcollege/',
     website: 'https://www.surtech.edu.in', affiliation: 'MAKAUT',
     bio: 'Sur Tech (Dr Sudhir Chandra Sur Institute of Technology) is a NAAC-A accredited engineering college in Dum Dum, Kolkata. It is known for its CSE specializations in AI/ML, Cyber Security, and Data Science. Bihar Student Credit Card Scheme approved with affordable fees and strong campus placement.',
     highlights: ['NAAC "A" Accredited', 'Bihar DRCC / Jharkhand Guruji Approved', 'Specializations in AI/ML, Cyber Security', 'City Campus — Near Dum Dum Metro', 'Active Industry Internship Programs', 'Girls & Boys Hostel Available'],
@@ -49,7 +49,7 @@ const COLLEGES = [
   {
     id: 'aec', name: 'Asansol Engineering College', abbr: 'AEC', est: 1998, naac: 'A',
     location: 'Asansol, West Bengal', img: '🏗️',
-    insta: '@asansolengineeringcollege', instaUrl: 'https://www.instagram.com/asansolengineeringcollege/',
+    insta: '@asansol_engineering_college', instaUrl: 'https://www.instagram.com/asansol_engineering_college/',
     website: 'https://www.aecwb.edu.in', affiliation: 'MAKAUT',
     bio: 'Asansol Engineering College is one of the oldest and most reputed engineering institutions in West Bengal with over 25 years of academic excellence. NAAC-A accredited and Bihar DRCC approved. Offers a comprehensive range of B.Tech, Diploma, and IT programs at highly competitive fees.',
     highlights: ['NAAC "A" Accredited', '25+ Years of Excellence', 'Bihar DRCC / Student Credit Card Approved', 'Affordable Fees in the Region', 'Well-Equipped Workshops & Labs', 'Strong Alumni Network'],
@@ -60,7 +60,7 @@ const COLLEGES = [
   {
     id: 'bwu', name: 'Brainware University', abbr: 'BWU', est: 2016, naac: 'UGC',
     location: 'Barasat, Kolkata', img: '🎓',
-    insta: '@brainwareuniversity', instaUrl: 'https://www.instagram.com/brainwareuniversity/',
+    insta: '@brainware_university_kolkata', instaUrl: 'https://www.instagram.com/brainware_university_kolkata/',
     website: 'https://www.brainwareuniversity.ac.in', affiliation: 'UGC Approved University',
     bio: 'Brainware University is a UGC-approved private university in Barasat offering B.Tech, BCA, MBA and other programs. Known for technology-integrated learning, industry tie-ups, and modern infrastructure. The university also offers the prestigious Medhabritti scholarship for meritorious students.',
     highlights: ['UGC Recognized University', 'Medhabritti Scholarship Available', 'Smart Campus with Digital Infrastructure', 'Industry-Integrated Curriculum', 'Multiple Specializations in CSE', 'Active Entrepreneurship Cell'],
@@ -71,7 +71,7 @@ const COLLEGES = [
   {
     id: 'adamas', name: 'Adamas University', abbr: 'ADAMAS', est: 2014, naac: 'A',
     location: 'Barasat, Kolkata', img: '🏫',
-    insta: '@adamas_university', instaUrl: 'https://www.instagram.com/adamas_university/',
+    insta: '@adamasuniversity', instaUrl: 'https://www.instagram.com/adamasuniversity/',
     website: 'https://www.adamasuniversity.ac.in', affiliation: 'UGC / WBSCT&VE&SD',
     bio: 'Adamas University is a multi-disciplinary private university offering 80+ programs across Engineering, Law, Pharmacy, Science, Management, and Arts. NAAC-A accredited with a sprawling green campus. One of the most diverse universities in Eastern India with strong research output and placement networks.',
     highlights: ['NAAC "A" Accredited', '80+ Academic Programs', 'UGC Recognized University', 'Separate Law, Pharmacy & Medical Schools', 'International Faculty & Collaborations', 'State-of-the-Art Research Labs'],
@@ -93,8 +93,8 @@ const COLLEGES = [
   {
     id: 'svu', name: 'Swami Vivekananda University', abbr: 'SVU', est: 2019, naac: 'WBCER',
     location: 'Barrackpore, West Bengal', img: '🏫',
-    insta: '@svu_barrackpore', instaUrl: 'https://www.instagram.com/svu_barrackpore/',
-    website: 'https://www.svu.ac.in', affiliation: 'WBCER Approved',
+    insta: '@swamivivekananda_university', instaUrl: 'https://www.instagram.com/swamivivekananda_university/',
+    website: 'https://www.swamivivekanandauniversity.ac.in', affiliation: 'WBCER Approved',
     bio: 'Swami Vivekananda University is a relatively new private university located in Barrackpore, West Bengal. It offers UG and PG programs across multiple disciplines with modern facilities. Known for its affordable fee structure and approachable administration, ideal for students seeking quality education in a calm environment.',
     highlights: ['WBCER Approved University', 'Modern Campus Infrastructure', 'Affordable Fee Structure', 'Close to Kolkata City', 'Focus on Holistic Development', 'Bihar DRCC Guidance Available'],
     placement: { avg: '3.2 LPA', highest: '8 LPA', companies: ['Wipro', 'HCL', 'Tech Mahindra', 'Infosys'] },
@@ -104,7 +104,7 @@ const COLLEGES = [
   {
     id: 'nshm_dgp', name: 'NSHM Knowledge Campus', abbr: 'NSHM', est: 2006, naac: 'B++',
     location: 'Durgapur, West Bengal', img: '🏫',
-    insta: '@nshm_durgapur', instaUrl: 'https://www.instagram.com/nshm_durgapur/',
+    insta: '@nshmkc', instaUrl: 'https://www.instagram.com/nshmkc/',
     website: 'https://www.nshm.com', affiliation: 'MAKAUT / UGC',
     bio: 'NSHM Knowledge Campus Durgapur is a NAAC B++ accredited institution known for its excellence in Healthcare Management, Hospital Administration, MBA, and allied health programs. Strategically located in Durgapur — a growing industrial hub of West Bengal with excellent placement outcomes.',
     highlights: ['NAAC "B++" Accredited', 'Speciality in Healthcare Management', 'Medhabritti Scholarship Available', 'Strong Hospital/Healthcare Placement', 'Industry-Integrated Programs', 'Durgapur Industrial Hub Location'],
@@ -115,8 +115,8 @@ const COLLEGES = [
   {
     id: 'iem', name: 'Institute of Engineering & Management', abbr: 'IEM', est: 1989, naac: 'A+',
     location: 'Salt Lake, Sector-5, Kolkata', img: '🏛️',
-    insta: '@iem_kolkata', instaUrl: 'https://www.instagram.com/iem_kolkata/',
-    website: 'https://www.iemcal.com', affiliation: 'MAKAUT',
+    insta: '@iemgroup_', instaUrl: 'https://www.instagram.com/iemgroup_/',
+    website: 'https://www.iem.edu.in', affiliation: 'MAKAUT',
     bio: 'IEM Kolkata is one of the oldest and most prestigious private engineering colleges in West Bengal, established in 1989. NAAC A+ accredited with a legacy of over 35 years, it is located in the heart of IT hub Sector-5, Salt Lake. Strong corporate connect with TCS, Infosys, Wipro, and 500+ companies visiting annually.',
     highlights: ['NAAC "A+" — Oldest Premium College (Est. 1989)', '35+ Years of Excellence', 'Located in Sector-5 IT Hub', '500+ Placement Partners', 'International Partnerships', 'Research Centers & Innovation Labs'],
     placement: { avg: '6.0 LPA', highest: '28 LPA', companies: ['Amazon', 'Google', 'Microsoft', 'TCS', 'Infosys', 'Wipro', 'IBM'] },
@@ -126,7 +126,7 @@ const COLLEGES = [
   {
     id: 'hit', name: 'Heritage Institute of Technology', abbr: 'HIT', est: 2001, naac: 'A',
     location: 'Anandapur, Kolkata', img: '🎓',
-    insta: '@heritage_institute_kolkata', instaUrl: 'https://www.instagram.com/heritage_institute_kolkata/',
+    insta: '@hitkollege', instaUrl: 'https://www.instagram.com/hitkollege/',
     website: 'https://www.heritageit.edu', affiliation: 'MAKAUT',
     bio: 'Heritage Institute of Technology is a NAAC-A accredited engineering college located in the quiet and green locality of Anandapur, Kolkata. Known for its disciplined academic environment, research culture, and strong placement network. Offers B.Tech in multiple branches with excellent hostel facilities.',
     highlights: ['NAAC "A" Accredited', 'Green & Peaceful Campus', 'Strong Research Output', 'Bihar DRCC Guidance Available', 'Well-Maintained Hostels', 'Active Placement Cell'],
@@ -148,7 +148,7 @@ const COLLEGES = [
   {
     id: 'haldia', name: 'Haldia Institute of Technology', abbr: 'HIT (Haldia)', est: 1996, naac: 'A',
     location: 'Haldia, West Bengal', img: '🏭',
-    insta: '@haldia_institute', instaUrl: 'https://www.instagram.com/haldia_institute/',
+    insta: '@hithaldiaofficial', instaUrl: 'https://www.instagram.com/hithaldiaofficial/',
     website: 'https://www.hithaldia.ac.in', affiliation: 'MAKAUT',
     bio: 'Haldia Institute of Technology is one of the largest and most recognized engineering colleges in West Bengal, established in 1996. NAAC-A accredited with vast campus, multiple B.Tech branches, and strong industrial placement network in the Haldia petrochemical belt.',
     highlights: ['NAAC "A" Accredited', '25+ Years of Excellence', 'Large Campus with Full Facilities', 'Industrial Belt Placement Advantage', 'Bihar DRCC Approved', 'Research & Development Focus'],
@@ -159,7 +159,7 @@ const COLLEGES = [
   {
     id: 'nsec', name: 'Netaji Subhash Engineering College', abbr: 'NSEC', est: 1997, naac: 'A',
     location: 'Garia, Kolkata', img: '🏢',
-    insta: '@nsec_kolkata', instaUrl: 'https://www.instagram.com/nsec_kolkata/',
+    insta: '@nseckolkata', instaUrl: 'https://www.instagram.com/nseckolkata/',
     website: 'https://www.nsec.ac.in', affiliation: 'MAKAUT',
     bio: 'Netaji Subhash Engineering College (NSEC), established in 1997, is a NAAC-A accredited engineering college located in Garia, South Kolkata. It is well-known for its strong academic discipline, experienced faculty pool, and consistent placement record. Bihar DRCC scheme is available.',
     highlights: ['NAAC "A" Accredited', 'South Kolkata — Well Connected Location', 'Experienced Faculty Pool', 'Bihar DRCC Approved', 'Strong Alumni Network', 'Active Technical Clubs'],
@@ -170,8 +170,8 @@ const COLLEGES = [
   {
     id: 'msit', name: 'Meghnad Saha Institute of Technology', abbr: 'MSIT', est: 2001, naac: 'A',
     location: 'Anandapur, Kolkata', img: '🏗️',
-    insta: '@msit_kolkata', instaUrl: 'https://www.instagram.com/msit_kolkata/',
-    website: 'https://www.msit.ac.in', affiliation: 'MAKAUT',
+    insta: '@msitkolkata', instaUrl: 'https://www.instagram.com/msitkolkata/',
+    website: 'https://www.msit.edu.in', affiliation: 'MAKAUT',
     bio: 'Meghnad Saha Institute of Technology is a NAAC-A accredited engineering college in Anandapur, Kolkata. Named after the legendary physicist Meghnad Saha, it upholds a tradition of scientific inquiry and technical excellence. Offers B.Tech in multiple streams with a focused placement training program.',
     highlights: ['NAAC "A" Accredited', 'Named After Legendary Physicist Meghnad Saha', 'Strong Research Orientation', 'Bihar DRCC Guidance Available', 'Hostel Facilities', 'Dedicated Soft Skills & Placement Training'],
     placement: { avg: '4.2 LPA', highest: '14 LPA', companies: ['TCS', 'Wipro', 'Infosys', 'Capgemini', 'HCL'] },
