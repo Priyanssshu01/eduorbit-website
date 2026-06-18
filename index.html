@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) — Analytics: G-SWV41KQ2TB | Ads: AW-18168176994 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SWV41KQ2TB"></script>
+  <!-- Google tag (gtag.js) — ⚠️ UPDATE GA ID BELOW with your new G-XXXXXXXXXX -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLACEHOLDER"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    // Google Analytics 4 — Fresh Property
-    gtag('config', 'G-SWV41KQ2TB');
+    // Google Analytics 4 — UPDATE THIS with your new Measurement ID
+    gtag('config', 'G-PLACEHOLDER'); // ← Replace G-PLACEHOLDER with your new G-XXXXXXXXXX
 
     // Google Ads Conversion Tag
     gtag('config', 'AW-18168176994');
@@ -68,10 +68,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&family=Source+Sans+3:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="index.css?v=3.6">
-  <link rel="stylesheet" href="animations.css?v=1.0">
-  <link rel="stylesheet" href="colleges.css?v=1.0">
-  <link rel="stylesheet" href="marketing.css?v=1.0">
+  <link rel="stylesheet" href="index.css?v=3.8">
+  <link rel="stylesheet" href="animations.css?v=1.1">
+  <link rel="stylesheet" href="colleges.css?v=1.1">
+  <link rel="stylesheet" href="marketing.css?v=3.7">
+  <link rel="stylesheet" href="mobile.css?v=1.0">
 </head>
 <body>
 
@@ -116,6 +117,29 @@
       <a href="partner.html" class="mobile-link">Earning Opportunity</a>
       <a href="#contact" class="mobile-link">Free Counselling</a>
     </div>
+    <!-- Call CTA inside mobile menu -->
+    <div class="mobile-menu-cta">
+      <a href="tel:+919546201805" class="mobile-menu-call-btn">📞 Call Now — Free Counselling</a>
+      <a href="https://wa.me/919546201805" class="mobile-menu-wa-btn" target="_blank" rel="noopener">💬 WhatsApp Us</a>
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Bar (phones only) -->
+  <div class="mobile-sticky-bar" id="mobileStickyBar">
+    <a href="tel:+919546201805" class="msb-call">
+      <span class="msb-icon">📞</span>
+      <span class="msb-text">Call Now</span>
+    </a>
+    <a href="https://wa.me/919546201805" class="msb-whatsapp" target="_blank" rel="noopener">
+      <span class="msb-icon">💬</span>
+      <span class="msb-text">WhatsApp</span>
+    </a>
+    <a href="#eligibility" class="msb-check">
+      <span class="msb-icon">✅</span>
+      <span class="msb-text">Check Eligibility</span>
+    </a>
+  </div>
+
   </div>
 
   <main id="mainContent">

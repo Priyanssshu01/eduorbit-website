@@ -1,0 +1,901 @@
+/* ===================================================================
+   EDUORBIT — MOBILE.CSS
+   Complete Mobile Responsiveness Fix
+   Covers: 320px → 768px (phones) + 768px → 1024px (tablets)
+   =================================================================== */
+
+/* ============================================================
+   BASE MOBILE RESETS
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+img, video, iframe, embed {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ============================================================
+   TYPOGRAPHY — FLUID SCALING
+   ============================================================ */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+    max-width: 100%;
+  }
+  .section-sub {
+    font-size: 0.9rem;
+    max-width: 100%;
+  }
+  .section-header {
+    margin-bottom: 36px;
+  }
+}
+
+/* ============================================================
+   NAVIGATION — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .nav {
+    padding: 14px 18px;
+  }
+  .nav-logo {
+    font-size: 1.2rem;
+  }
+  .nav-cta {
+    display: none; /* hide desktop CTA, show in mobile menu */
+  }
+}
+
+/* ============================================================
+   HERO — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .hero {
+    padding: 100px 20px 60px;
+    min-height: 100svh; /* use small viewport height on mobile */
+  }
+  .hero-title .title-line {
+    font-size: clamp(2rem, 8vw, 3rem);
+    letter-spacing: -0.03em;
+  }
+  .hero-sub {
+    font-size: 0.92rem;
+    padding: 0 8px;
+  }
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .hero-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .hero-stats {
+    gap: 20px;
+  }
+  .stat-divider {
+    display: none;
+  }
+  .stat-num {
+    font-size: 1.6rem;
+  }
+  .hero-scroll {
+    display: none;
+  }
+  .hero-bg-text {
+    font-size: 5rem;
+    opacity: 0.4;
+  }
+  .orb-1 { width: 200px; height: 200px; }
+  .orb-2 { width: 180px; height: 180px; }
+  .orb-3 { width: 150px; height: 150px; }
+}
+
+@media (max-width: 400px) {
+  .hero-title .title-line {
+    font-size: 1.8rem;
+  }
+  .hero-stats {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+/* ============================================================
+   ABOUT SECTION — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .about-text p {
+    font-size: 0.9rem;
+  }
+}
+
+/* ============================================================
+   COLLEGES GRID — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .colleges-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .college-card {
+    padding: 20px 16px;
+  }
+  .college-card-emoji {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  .college-card-name {
+    font-size: 0.85rem;
+  }
+  .college-card-meta {
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  .college-tag {
+    font-size: 0.62rem;
+    padding: 3px 8px;
+  }
+  .college-card-location {
+    font-size: 0.72rem;
+  }
+  .college-card-insta {
+    font-size: 0.68rem;
+  }
+  .college-card-abbr {
+    font-size: 0.6rem;
+    top: 12px;
+    right: 12px;
+  }
+  .colleges-click-hint {
+    font-size: 0.75rem;
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .colleges-grid {
+    grid-template-columns: 1fr;
+  }
+  .college-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-direction: row;
+  }
+  .college-card-emoji {
+    font-size: 2rem;
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+}
+
+/* ============================================================
+   COMPARE SECTION — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .cmp-picker {
+    padding: 18px 16px;
+  }
+  .cmp-picker-chips {
+    gap: 6px;
+  }
+  .cmp-chip {
+    font-size: 0.72rem;
+    padding: 7px 12px;
+  }
+  .cmp-compare-btn {
+    width: 100%;
+    text-align: center;
+  }
+  .cmp-table thead th,
+  .cmp-table tbody td {
+    padding: 10px 10px;
+    font-size: 0.75rem;
+  }
+  .cmp-table thead th:first-child {
+    width: 110px;
+  }
+}
+
+/* ============================================================
+   FEE STRUCTURE — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .fee-filters {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 20px 16px;
+    margin-bottom: 24px;
+  }
+  .fee-table-scroll {
+    -webkit-overflow-scrolling: touch;
+  }
+  .fee-table {
+    min-width: 680px; /* allow horizontal scroll */
+  }
+  .filter-pills {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+  .filter-pills::-webkit-scrollbar { display: none; }
+  .pill {
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 7px 14px;
+    font-size: 0.75rem;
+  }
+  .fee-detail-btn {
+    padding: 5px 10px;
+    font-size: 0.65rem;
+  }
+  .fee-load-more { padding: 20px 0 0; }
+  .fee-more-btn { padding: 12px 28px; font-size: 0.82rem; }
+}
+
+/* ============================================================
+   SERVICES SECTION — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .service-card {
+    padding: 28px 24px;
+  }
+  .service-num {
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+  }
+  .service-card h3 {
+    font-size: 1rem;
+  }
+}
+
+/* ============================================================
+   ELIGIBILITY CHECKER — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .elig-form {
+    padding: 24px 18px;
+  }
+  .elig-form-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .elig-cards {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .elig-card {
+    padding: 18px 16px;
+  }
+  .elig-card-name {
+    font-size: 0.92rem;
+  }
+}
+
+/* ============================================================
+   LOANS & SCHOLARSHIPS — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .loan-tabs {
+    gap: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .loan-tab {
+    font-size: 0.78rem;
+    padding: 10px 16px;
+  }
+  .loan-details {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .loan-box {
+    padding: 20px 16px;
+  }
+  .medhabritti-tables {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .loan-pane h3 {
+    font-size: 1.15rem;
+  }
+  .loan-pane p {
+    font-size: 0.85rem;
+  }
+}
+
+/* ============================================================
+   CTA SECTION — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .cta-title {
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+  }
+  .section--cta {
+    padding: 60px 20px;
+  }
+  .section--cta .btn {
+    width: 100%;
+    max-width: 340px;
+  }
+}
+
+/* ============================================================
+   CONTACT SECTION — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .contact-form {
+    gap: 14px;
+  }
+  .contact-value {
+    font-size: 0.95rem;
+  }
+}
+
+/* ============================================================
+   FOOTER — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .footer {
+    padding: 48px 20px 28px;
+  }
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 36px;
+  }
+  .footer-links-group h4 {
+    font-size: 0.65rem;
+  }
+  .footer-links-group a {
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 400px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   COLLEGE PROFILE MODAL — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .cp-overlay {
+    padding: 10px;
+    align-items: flex-end; /* slide up from bottom on mobile */
+  }
+  .cp-modal {
+    border-radius: 20px 20px 16px 16px;
+    max-height: 92vh;
+  }
+  .cp-banner {
+    padding: 20px 18px;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+  }
+  .cp-banner-icon {
+    width: 52px;
+    height: 52px;
+    font-size: 2rem;
+    border-radius: 14px;
+    flex-shrink: 0;
+  }
+  .cp-name {
+    font-size: 0.95rem;
+  }
+  .cp-body {
+    padding: 0 16px 20px;
+  }
+  .cp-stats-row {
+    flex-direction: row; /* keep row on mobile, just smaller */
+  }
+  .cp-stat {
+    padding: 12px 8px;
+  }
+  .cp-stat-val {
+    font-size: 0.92rem;
+  }
+  .cp-stat-label {
+    font-size: 0.6rem;
+  }
+  .cp-tabs {
+    gap: 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .cp-tabs::-webkit-scrollbar { display: none; }
+  .cp-tab {
+    font-size: 0.75rem;
+    padding: 9px 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .cp-links-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .cp-link {
+    width: 100%;
+    justify-content: center;
+    padding: 12px;
+  }
+  .cp-placement-cards {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .cp-plc-val {
+    font-size: 1.1rem;
+  }
+}
+
+/* ============================================================
+   MODALS (Year-wise detail) — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .modal {
+    padding: 28px 20px;
+    max-height: 90vh;
+    border-radius: 16px;
+  }
+  .modal-overlay {
+    padding: 12px;
+    align-items: flex-end;
+  }
+  .modal-table th, .modal-table td {
+    padding: 8px 10px;
+    font-size: 0.78rem;
+  }
+}
+
+/* ============================================================
+   RECEIPT MODAL — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .receipt-modal {
+    padding: 24px 18px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 20px;
+  }
+  .receipt-overlay {
+    padding: 10px;
+    align-items: flex-end;
+  }
+}
+
+/* ============================================================
+   LEAD POPUP — MOBILE
+   ============================================================ */
+@media (max-width: 480px) {
+  .lead-popup {
+    padding: 28px 18px;
+    margin: 10px;
+    border-radius: 20px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .lead-popup-title {
+    font-size: 1.2rem;
+  }
+  .lead-popup-sub {
+    font-size: 0.85rem;
+  }
+  .lead-popup-btn {
+    font-size: 0.88rem;
+    padding: 14px;
+  }
+}
+
+/* ============================================================
+   WHATSAPP FLOATING BUTTON — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .whatsapp-float {
+    bottom: 16px;
+    right: 16px;
+    width: 52px;
+    height: 52px;
+  }
+  .whatsapp-float svg,
+  .whatsapp-float img {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+/* ============================================================
+   PARTNER / EARNING SECTION — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .earning-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .partner-form-box {
+    padding: 24px 18px;
+  }
+}
+
+/* ============================================================
+   MARKETING SECTIONS — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Admission popup */
+  #admissionBanner {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 18px;
+  }
+  /* Any floating CTA buttons */
+  .floating-cta {
+    font-size: 0.78rem;
+    padding: 10px 18px;
+  }
+}
+
+/* ============================================================
+   BUTTONS — TOUCH FRIENDLY
+   ============================================================ */
+@media (max-width: 768px) {
+  .btn {
+    padding: 13px 28px;
+    font-size: 0.875rem;
+    min-height: 44px; /* Apple's recommended touch target */
+  }
+  .btn--large {
+    padding: 15px 32px;
+  }
+  /* Increase tap targets for small buttons */
+  .fee-detail-btn,
+  .pill,
+  .loan-tab,
+  .cmp-chip {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* ============================================================
+   SCROLL PROGRESS BAR — Hide on mobile for performance
+   ============================================================ */
+@media (max-width: 480px) {
+  #scrollProgress {
+    height: 2px;
+  }
+}
+
+/* ============================================================
+   MARQUEE — MOBILE (Slow down slightly)
+   ============================================================ */
+@media (max-width: 768px) {
+  .marquee-track {
+    animation-duration: 15s;
+    gap: 24px;
+  }
+  .marquee-track span {
+    font-size: 1rem;
+  }
+}
+
+/* ============================================================
+   SECTION PADDING — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .section {
+    padding: 56px 18px;
+  }
+  .container {
+    padding: 0;
+    max-width: 100%;
+  }
+}
+
+/* ============================================================
+   ANIMATIONS — REDUCE ON MOBILE FOR PERFORMANCE
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Simpler entrance on mobile */
+  [data-anim] {
+    --anim-duration: 0.4s;
+    --anim-distance: 20px;
+  }
+  /* Disable 3D tilt on touch devices */
+  .college-card,
+  .service-card,
+  .elig-card {
+    transform: none !important;
+  }
+  /* Disable particle trail on mobile */
+  .particle-trail {
+    display: none !important;
+  }
+}
+
+/* ============================================================
+   ABOUT FEATURES LIST — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  .feature-card {
+    padding: 18px 0;
+    gap: 12px;
+  }
+  .feature-card h3 {
+    font-size: 0.88rem;
+  }
+  .feature-card p {
+    font-size: 0.78rem;
+  }
+}
+
+/* ============================================================
+   SAFE AREA — iPhone X+ Notch/Home Bar
+   ============================================================ */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .nav {
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+  }
+  .footer {
+    padding-bottom: max(40px, env(safe-area-inset-bottom));
+  }
+  .whatsapp-float {
+    bottom: max(20px, calc(env(safe-area-inset-bottom) + 16px));
+    right: max(20px, env(safe-area-inset-right));
+  }
+}
+
+/* ============================================================
+   TABLET — 768px → 1024px
+   ============================================================ */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .section {
+    padding: 80px 32px;
+  }
+  .hero {
+    padding: 110px 40px 70px;
+  }
+  .colleges-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .about-grid {
+    gap: 40px;
+  }
+  .services-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .footer-top {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .contact-grid {
+    gap: 40px;
+  }
+  .cmp-table thead th,
+  .cmp-table tbody td {
+    padding: 12px 14px;
+    font-size: 0.8rem;
+  }
+}
+
+/* ============================================================
+   LANDSCAPE PHONE — Special fixes
+   ============================================================ */
+@media (max-height: 500px) and (max-width: 900px) {
+  .hero {
+    min-height: auto;
+    padding: 80px 20px 40px;
+  }
+  .mobile-menu {
+    overflow-y: auto;
+  }
+  .mobile-menu-links {
+    padding: 60px 0 20px;
+  }
+  .mobile-link {
+    font-size: 1.4rem;
+  }
+}
+
+/* ============================================================
+   TOUCH INTERACTION IMPROVEMENTS
+   ============================================================ */
+@media (hover: none) {
+  /* Remove hover states that don't work on touch */
+  .college-card::after {
+    display: none;
+  }
+  .btn:hover {
+    transform: none;
+  }
+  /* Make clickable elements more obvious */
+  .college-card {
+    border: 1.5px solid rgba(27,77,142,0.12);
+  }
+  .college-card:active {
+    transform: scale(0.97);
+    transition: transform 0.1s;
+  }
+  .btn:active {
+    transform: scale(0.97);
+    opacity: 0.9;
+  }
+}
+
+/* ============================================================
+   MOBILE STICKY BOTTOM CALL BAR
+   (Only visible on phones ≤ 768px)
+   ============================================================ */
+.mobile-sticky-bar {
+  display: none; /* Hidden by default on desktop */
+}
+
+@media (max-width: 768px) {
+  .mobile-sticky-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 4000;
+    background: #0F172A;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.25);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .msb-call,
+  .msb-whatsapp,
+  .msb-check {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 6px;
+    text-decoration: none;
+    gap: 3px;
+    transition: background 0.2s;
+    min-height: 56px;
+  }
+
+  .msb-call {
+    background: linear-gradient(135deg, #1B4D8E, #2563EB);
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+  .msb-call:active { background: #1B4D8E; }
+
+  .msb-whatsapp {
+    background: linear-gradient(135deg, #075E54, #25D366);
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+  .msb-whatsapp:active { background: #075E54; }
+
+  .msb-check {
+    background: linear-gradient(135deg, #D97706, #F59E0B);
+  }
+  .msb-check:active { background: #D97706; }
+
+  .msb-icon {
+    font-size: 1.3rem;
+    line-height: 1;
+  }
+  .msb-text {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  /* Prevent content being hidden behind sticky bar */
+  main, footer {
+    padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+  }
+  footer {
+    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* ============================================================
+   MOBILE MENU — CTA BUTTONS
+   ============================================================ */
+.mobile-menu-cta {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu {
+    padding-bottom: 80px;
+    justify-content: space-between;
+    flex-direction: column;
+    padding-top: 80px;
+  }
+  .mobile-menu-links {
+    gap: 18px;
+  }
+  .mobile-link {
+    font-size: clamp(1.3rem, 5vw, 2rem);
+  }
+  .mobile-menu-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 32px 20px;
+    width: 100%;
+  }
+  .mobile-menu-call-btn,
+  .mobile-menu-wa-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 24px;
+    border-radius: 100px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    width: 100%;
+    gap: 8px;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .mobile-menu-call-btn:active,
+  .mobile-menu-wa-btn:active {
+    transform: scale(0.97);
+    opacity: 0.85;
+  }
+  .mobile-menu-call-btn {
+    background: linear-gradient(135deg, #1B4D8E, #2563EB);
+    color: #fff;
+  }
+  .mobile-menu-wa-btn {
+    background: linear-gradient(135deg, #075E54, #25D366);
+    color: #fff;
+  }
+}
