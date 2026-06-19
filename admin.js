@@ -3,6 +3,9 @@
 const ADMIN_USER = 'eduorbit';
 const ADMIN_PASS = 'admin@2026';
 
+// Cache-busting hash tracking for auto-syncing tabs & devices
+let lastAdminDataHash = '';
+
 // ===== AUTH =====
 function doLogin() {
   const u = (document.getElementById('loginUser').value || '').trim();
@@ -63,6 +66,12 @@ function saveLeads(data) {
 
 // ===== INIT =====
 function initAdmin() {
+  // Set initial cache hash
+  const leads = localStorage.getItem('eo_leads') || '[]';
+  const colleges = localStorage.getItem('eo_colleges') || '[]';
+  const courses = localStorage.getItem('eo_courses') || '[]';
+  lastAdminDataHash = leads + colleges + courses;
+
   updateDashboard();
   renderCollegesTable();
   renderCoursesTable();
@@ -526,3 +535,56 @@ window.saveAdminLead = function(lead) {
   leads.push({ ...lead, date: new Date().toISOString() });
   saveLeads(leads);
 };
+
+// ===== AUTO-SYNC & REAL-TIME REFRESH SYSTEM =====
+// Automatically fetches data and updates the UI if localStorage changes on focus/visibility or interval
+function checkAndAutoSync(force = false) {
+  // Only sync if the user is logged in
+  if (sessionStorage.getItem('eo_admin') !== 'true') return;
+
+  const leads = localStorage.getItem('eo_leads') || '[]';
+  const colleges = localStorage.getItem('eo_colleges') || '[]';
+  const courses = localStorage.getItem('eo_courses') || '[]';
+  const currentHash = leads + colleges + courses;
+
+  if (force || lastAdminDataHash !== currentHash) {
+    lastAdminDataHash = currentHash;
+
+    // Check if any edit modal is open to avoid resetting form inputs during typing
+    const modal = document.getElementById('modalOverlay');
+    const isModalOpen = modal && modal.classList.contains('open');
+
+    // Safe dashboards and leads are always updated in real-time
+    updateDashboard();
+    renderLeadsTable();
+    renderPartnersTable();
+
+    // If no modal is open, we can safely refresh colleges & courses lists too
+    if (!isModalOpen) {
+      renderCollegesTable();
+      renderCoursesTable();
+      populateCollegeFilter();
+      updateExportPreview();
+    }
+  }
+}
+
+// 1. Poll localStorage changes every 1.5 seconds (for instant tab updates)
+setInterval(() => checkAndAutoSync(false), 1500);
+
+// 2. Immediate update when storage changes in another tab/window
+window.addEventListener('storage', () => {
+  checkAndAutoSync(false);
+});
+
+// 3. Immediate update when user returns/focuses the tab (prevents mobile tab freeze)
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    checkAndAutoSync(true);
+  }
+});
+
+// 4. Force update when page is shown (handles mobile app switching)
+window.addEventListener('pageshow', () => {
+  checkAndAutoSync(true);
+});

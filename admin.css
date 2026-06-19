@@ -161,6 +161,28 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--black);-web
 .close-sidebar{display:none;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:1.5rem;width:32px;height:32px;border-radius:8px;cursor:pointer;align-items:center;justify-content:center;transition:all .2s;}
 .close-sidebar:hover{background:var(--red, #dc2626);}
 
+/* Scrollbar styling for tables */
+.table-wrap::-webkit-scrollbar {
+  height: 6px;
+}
+.table-wrap::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+.table-wrap::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+.table-wrap::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Make quick actions grid wrap intelligently */
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+}
+
 @media(max-width:900px){
   .stats-grid{grid-template-columns:1fr 1fr}
   .dashboard-grid{grid-template-columns:1fr}
@@ -174,6 +196,12 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--black);-web
   .menu-toggle{display:block}
   .stats-grid{grid-template-columns:1fr 1fr}
   .modal-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .lead-actions{flex-direction:column;width:100%;gap:8px}
+  .lead-actions button, .lead-actions a{width:100%;text-align:center;justify-content:center}
+  .courses-search{flex-direction:column;gap:8px}
+  .courses-search input, .courses-search select{width:100%}
 }
 @media(max-width:480px){
   .stats-grid{grid-template-columns:1fr}

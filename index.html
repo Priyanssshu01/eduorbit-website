@@ -990,7 +990,7 @@
     // ===== SERVICE WORKER — AUTO-UPDATE SYSTEM =====
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js?v=3.6').then(registration => {
+        navigator.serviceWorker.register('./sw.js?v=4.2').then(registration => {
 
           // Jab bhi naya SW install ho, turant activate karo
           registration.addEventListener('updatefound', () => {
