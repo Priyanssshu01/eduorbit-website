@@ -434,20 +434,44 @@
 
     resultsDiv.style.display = 'block';
 
-    if (results.length === 0) {
-      titleEl.textContent = 'No Matching Courses Found';
-      subEl.textContent = 'Try adjusting your percentage or stream to see more options.';
-      cardsEl.innerHTML = `
-        <div class="elig-no-results">
-          <h3>😔 No courses match your criteria</h3>
-          <p>Don't worry! Contact our counsellors for personalized guidance.</p>
+    let promoHtml = '';
+    if (exam === 'wbjee') {
+      promoHtml = `
+        <div class="elig-card elig-card--promo animate-fade-in" style="grid-column: 1 / -1; background: linear-gradient(135deg, var(--navy) 0%, #112f56 100%); color: var(--white); border: none; box-shadow: var(--shadow-card-hover); position: relative; overflow: hidden; padding: 28px;">
+          <div class="promo-badge" style="position: absolute; top: 12px; right: 12px; background: var(--yellow); color: var(--navy); font-size: 0.72rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">Dedicated Tool</div>
+          <div class="elig-card-name" style="color: var(--white); font-size: 1.25rem; margin-bottom: 8px; font-weight: 800; padding-left: 0;">🎯 WBJEE College Predictor 2026</div>
+          <div class="elig-card-type" style="color: var(--yellow); font-size: 0.8rem; margin-bottom: 12px; padding-left: 0; font-weight: 700;">Check Your College Participation</div>
+          <p style="font-size: 0.88rem; line-height: 1.5; color: rgba(255,255,255,0.8); margin-bottom: 20px; font-weight: 500;">
+            Since you selected <strong>WBJEE</strong> as your entrance exam, you can predict exactly which engineering colleges and branches you qualify for based on your actual WBJEE rank!
+          </p>
+          <a href="wbjee-predictor.html" class="btn btn--primary" style="display: inline-flex; align-items: center; justify-content: center; background: var(--yellow); color: var(--navy); font-weight: 700; border: none; padding: 12px 24px; border-radius: 8px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 12px rgba(245,197,24,0.3); font-size: 0.9rem;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(245,197,24,0.4)';" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 12px rgba(245,197,24,0.3)';">
+            🔮 Open Predictor & Check Colleges &rarr;
+          </a>
+          <div class="promo-bg-glow" style="position: absolute; bottom: -50px; right: -50px; width: 150px; height: 150px; background: rgba(245,197,24,0.15); filter: blur(60px); border-radius: 50%;"></div>
         </div>
       `;
+    }
+
+    if (results.length === 0) {
+      if (exam === 'wbjee') {
+        titleEl.textContent = '🎯 WBJEE Rank Predictor Options';
+        subEl.textContent = 'Use the dedicated predictor tool to check college participation.';
+        cardsEl.innerHTML = promoHtml;
+      } else {
+        titleEl.textContent = 'No Matching Courses Found';
+        subEl.textContent = 'Try adjusting your percentage or stream to see more options.';
+        cardsEl.innerHTML = `
+          <div class="elig-no-results">
+            <h3>😔 No courses match your criteria</h3>
+            <p>Don't worry! Contact our counsellors for personalized guidance.</p>
+          </div>
+        `;
+      }
     } else {
       titleEl.textContent = `✅ ${results.length} Course${results.length > 1 ? 's' : ''} Found!`;
       subEl.textContent = `Based on your ${percent}% marks — here are the courses you may be eligible for:`;
 
-      cardsEl.innerHTML = results.map(c => {
+      const courseCardsHtml = results.map(c => {
         const collegeNames = c.colleges.map(abbr => {
           const col = COLLEGES.find(cl => cl.abbr === abbr);
           return col ? col.name : abbr;
@@ -467,6 +491,8 @@
           </div>
         `;
       }).join('');
+
+      cardsEl.innerHTML = promoHtml + courseCardsHtml;
     }
 
     // Scroll to results

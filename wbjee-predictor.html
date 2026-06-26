@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WBJEE Rank Predictor | EduOrbit</title>
+  <meta name="description" content="Check which WBJEE colleges and branches you can get based on your rank and category. 92 colleges, estimated closing ranks." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&family=Source+Sans+3:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="index.css?v=4.2">
+  <link rel="stylesheet" href="animations.css?v=1.1">
+  <link rel="stylesheet" href="mobile.css?v=1.0">
+
+  <style>
+    :root {
+      --navy: var(--blue, #1B4D8E);
+      --navy-deep: var(--footer-bg, #0F172A);
+      --amber: var(--yellow, #F5C518);
+      --amber-deep: var(--yellow-dark, #D97706);
+      --bg: var(--bg, #FAFBFC);
+      --cream: var(--white, #ffffff);
+      --line: rgba(0, 0, 0, 0.06);
+      --ink: var(--black, #0F172A);
+      --ink-soft: var(--gray, #475569);
+    }
+    
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      background: linear-gradient(135deg, #0F172A 0%, #1B4D8E 100%);
+      color: #fff;
+      padding: 150px 20px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(245, 197, 24, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .15em;
+      color: var(--amber);
+      font-weight: 700;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.15;
+      margin: 0 0 16px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+    .hero p {
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.75);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ---------- DISCLAIMER ---------- */
+    .disclaimer {
+      max-width: 880px;
+      margin: -24px auto 0;
+      background: rgba(245, 197, 24, 0.08);
+      border: 1px solid rgba(245, 197, 24, 0.3);
+      border-radius: 10px;
+      padding: 14px 40px 14px 16px;
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: #6b521d;
+      display: flex;
+      gap: 10px;
+      position: relative;
+      z-index: 3;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+      backdrop-filter: blur(10px);
+    }
+    .disclaimer button {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #6b521d;
+      font-size: 18px;
+      padding: 4px 8px;
+      line-height: 1;
+    }
+
+    /* ---------- FORM ---------- */
+    .form-card {
+      max-width: 880px;
+      margin: 26px auto 0;
+      background: var(--cream);
+      border: 1px solid rgba(27, 77, 142, 0.06);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: var(--shadow-card);
+    }
+    .form-row {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1 1 180px;
+    }
+    .field label {
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--navy);
+      text-transform: uppercase;
+    }
+    #rankInput, #collegeSearch, #browseSearch {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1.5px solid rgba(0, 0, 0, 0.1);
+      background: #fff;
+      color: var(--navy);
+      width: 100%;
+      outline: none;
+      transition: all 0.2s;
+    }
+    #rankInput {
+      font-size: 20px;
+    }
+    #rankInput:focus, #collegeSearch:focus, #browseSearch:focus, select:focus {
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(27, 77, 142, 0.1);
+      outline: none;
+    }
+    .filter-row input {
+      font-size: 14px !important;
+      padding: 10px 12px !important;
+      font-weight: 500 !important;
+    }
+    .standalone-search {
+      margin-top: 20px;
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+    }
+    .standalone-search .field {
+      flex: 1;
+    }
+    #browseResultsWrap {
+      margin-top: 16px;
+    }
+    select {
+      width: 100%;
+      font-size: 15px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1.5px solid rgba(0, 0, 0, 0.1);
+      background: #fff;
+      color: var(--ink);
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='%235a5a52' viewBox='0 0 16 16'><path d='M8 11L3 6h10z'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      outline: none;
+      transition: all 0.2s;
+    }
+    #checkBtn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 14px 28px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      flex: 0 0 auto;
+      font-family: inherit;
+      transition: all 0.3s var(--ease);
+    }
+    #checkBtn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+    #checkBtn:hover:not(:disabled) {
+      background: var(--blue-light);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(27, 77, 142, 0.2);
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px dashed rgba(0, 0, 0, 0.1);
+    }
+    .filter-row .field {
+      flex: 1 1 160px;
+    }
+    .filter-row label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-soft);
+    }
+    .filter-row select {
+      font-size: 13.5px;
+      padding: 9px 30px 9px 11px;
+      border-radius: 7px;
+      border: 1.5px solid rgba(0, 0, 0, 0.1);
+    }
+    .hidden {
+      display: none !important;
+    }
+
+    /* ---------- RESULTS ---------- */
+    .results {
+      max-width: 880px;
+      margin: 30px auto 0;
+      padding: 0 20px 40px;
+    }
+    .summary {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .stat {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .stat .num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .stat .lbl {
+      font-size: 12.5px;
+      color: var(--ink-soft);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+    .divider {
+      width: 1px;
+      height: 32px;
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .empty {
+      text-align: center;
+      padding: 50px 20px;
+      background: var(--cream);
+      border-radius: 16px;
+      border: 1px solid rgba(27, 77, 142, 0.06);
+      box-shadow: var(--shadow-card);
+    }
+    .empty .icon {
+      font-size: 32px;
+      opacity: .4;
+      margin-bottom: 10px;
+    }
+    .empty .title {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0 0 6px;
+      color: var(--navy);
+    }
+    .empty .hint {
+      font-size: 14px;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .table-wrap {
+      background: var(--cream);
+      border-radius: 16px;
+      border: 1px solid rgba(27, 77, 142, 0.06);
+      overflow: hidden;
+      overflow-x: auto;
+      box-shadow: var(--shadow-card);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      min-width: 560px;
+    }
+    th {
+      text-align: left;
+      padding: 14px 16px;
+      background: var(--navy);
+      color: #fff;
+      font-size: 11px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    td {
+      padding: 14px 16px;
+      vertical-align: middle;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    .college-name {
+      font-weight: 700;
+      font-size: 14.5px;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .college-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11.5px;
+      color: var(--ink-soft);
+      flex-wrap: wrap;
+      font-weight: 500;
+    }
+    .tier-tag {
+      margin-left: 4px;
+      color: #fff;
+      font-size: 9.5px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 700;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .rank-cell {
+      text-align: right;
+      font-weight: 700;
+      color: var(--navy);
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+      font-size: 15px;
+    }
+    .chance-cell {
+      text-align: center;
+    }
+    
+    .chance-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+      display: inline-block;
+      border: 1px solid;
+    }
+    .chance-strong {
+      background: #dcfce7;
+      color: #15803d;
+      border-color: #bbf7d0;
+    }
+    .chance-good {
+      background: #fef9c3;
+      color: #a16207;
+      border-color: #fef08a;
+    }
+    .chance-tight {
+      background: #fee2e2;
+      color: #b91c1c;
+      border-color: #fecaca;
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        padding: 130px 16px 60px;
+      }
+      .disclaimer {
+        margin: -20px 16px 0;
+        padding: 12px;
+      }
+      .form-card {
+        margin: 22px 16px 0;
+        padding: 20px;
+      }
+      .results {
+        padding: 0 16px 40px;
+      }
+      .form-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      #checkBtn {
+        width: 100%;
+      }
+    }
+    
+    /* Scrollbar styling for tables */
+    .table-wrap::-webkit-scrollbar {
+      height: 6px;
+    }
+    .table-wrap::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .table-wrap::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    .table-wrap::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" id="navLogo">
+        <span class="logo-edu">EDU</span><span class="logo-orbit">ORBIT</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html#about" class="nav-link">About</a>
+        <a href="index.html#colleges" class="nav-link">Colleges</a>
+        <a href="index.html#fees" class="nav-link">Fees</a>
+        <a href="index.html#loans" class="nav-link">Loans</a>
+        <a href="wbjee-predictor.html" class="nav-link active" style="color: var(--blue-light); font-weight: 700;">WBJEE Predictor</a>
+        <a href="index.html#contact" class="nav-link nav-link--cta">Get Started</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-links">
+      <a href="index.html#about" class="mobile-link">About</a>
+      <a href="index.html#colleges" class="mobile-link">Colleges</a>
+      <a href="index.html#fees" class="mobile-link">Fees</a>
+      <a href="index.html#loans" class="mobile-link">Loans</a>
+      <a href="wbjee-predictor.html" class="mobile-link">WBJEE Predictor</a>
+      <a href="index.html#contact" class="mobile-link">Contact</a>
+    </div>
+  </div>
+
+  <main class="main">
+    <header class="hero">
+      <div class="hero-inner">
+        <div class="kicker">WBJEE Rank Predictor &middot; West Bengal</div>
+        <h1>Apna rank daalo.<br>Apna college dekho.</h1>
+        <p>92 WBJEE colleges, 400+ branch combinations — estimated closing ranks based on 2023–2025 counselling trends. Filter by category and branch to see what's realistically yours.</p>
+      </div>
+    </header>
+
+    <div class="disclaimer" id="disclaimer">
+      <span>⚠️</span>
+      <span>
+        <strong>Estimated data, official nahi.</strong> Ye closing ranks 2023–25 ke trends se estimate kiye gaye hain — actual cutoff har round/year alag ho sakta hai. Final decision lene se pehle <strong>wbjeeb.nic.in</strong> ka official OR-CR PDF zaroor check karo, ya EduOrbit counsellor se baat karo.
+      </span>
+      <button onclick="document.getElementById('disclaimer').style.display='none'" aria-label="Dismiss">✕</button>
+    </div>
+
+    <form class="form-card" id="predictorForm">
+      <div class="form-row">
+        <div class="field">
+          <label for="rankInput">Tumhara WBJEE Rank (GMR)</label>
+          <input type="number" id="rankInput" inputmode="numeric" placeholder="e.g. 4500" min="1" />
+        </div>
+        <div class="field">
+          <label for="categorySelect">Category</label>
+          <select id="categorySelect">
+            <option value="GEN">General (GEN)</option>
+            <option value="EWS">EWS</option>
+            <option value="OBC-A">OBC-A</option>
+            <option value="OBC-B">OBC-B</option>
+            <option value="SC">SC</option>
+            <option value="ST">ST</option>
+            <option value="PWD">PwD</option>
+            <option value="TFW">TFW</option>
+          </select>
+        </div>
+        <button type="submit" id="checkBtn">🔍 Check Karo</button>
+      </div>
+
+      <div class="filter-row hidden" id="filterRow">
+        <div class="field" style="flex:1 1 220px;">
+          <label for="collegeSearch">Search College</label>
+          <input type="text" id="collegeSearch" placeholder="e.g. Jadavpur, Heritage, KGEC..." autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="branchSelect">Branch</label>
+          <select id="branchSelect"></select>
+        </div>
+        <div class="field">
+          <label for="typeSelect">College Type</label>
+          <select id="typeSelect"></select>
+        </div>
+      </div>
+    </form>
+
+    <div class="form-card standalone-search" id="standaloneSearchCard">
+      <div class="field">
+        <label for="browseSearch">Ya seedha college dhoondo (bina rank daale)</label>
+        <input type="text" id="browseSearch" placeholder="College ka naam type karo... e.g. Heritage, Techno, JU" autocomplete="off" />
+      </div>
+    </div>
+
+    <section class="results hidden" id="browseSection" style="margin-top:0;">
+      <div class="table-wrap hidden" id="browseTableWrap">
+        <table>
+          <thead>
+            <tr>
+              <th>College</th>
+              <th>Branch</th>
+              <th style="text-align:right">Est. Closing Rank (GEN)</th>
+            </tr>
+          </thead>
+          <tbody id="browseResultsBody"></tbody>
+        </table>
+      </div>
+      <div id="browseEmptyState" class="empty hidden">
+        <div class="icon">🔍</div>
+        <p class="title">Koi college nahi mila.</p>
+        <p class="hint">Spelling check karo, ya college ka short form try karo (e.g. "IEM", "KGEC").</p>
+      </div>
+    </section>
+
+    <section class="results hidden" id="resultsSection">
+      <div class="summary">
+        <div class="stat"><span class="num" id="totalCount">0</span><span class="lbl">options mile</span></div>
+        <div class="divider"></div>
+        <div class="stat"><span class="num" id="safeCount" style="color:var(--green)">0</span><span class="lbl">safe zone</span></div>
+        <div class="divider"></div>
+        <div class="stat"><span class="num" id="tightCount" style="color:var(--amber-deep)">0</span><span class="lbl">tight / borderline</span></div>
+      </div>
+
+      <div id="emptyState" class="empty hidden">
+        <div class="icon">🎓</div>
+        <p class="title">Is rank/category/filter combination ke liye kuch nahi mila.</p>
+        <p class="hint">Branch ya college-type filter "All" karke dekho — ya category check karo.</p>
+      </div>
+
+      <div class="table-wrap hidden" id="tableWrap">
+        <table>
+          <thead>
+            <tr>
+              <th>College</th>
+              <th>Branch</th>
+              <th style="text-align:right">Est. Closing Rank</th>
+              <th style="text-align:center">Chance</th>
+            </tr>
+          </thead>
+          <tbody id="resultsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="footer" style="margin-top: 60px;">
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <span class="logo-edu">EDU</span><span class="logo-orbit">ORBIT</span>
+            </div>
+            <p class="footer-tagline">Educational Counselling</p>
+            <p class="footer-desc">Your trusted partner for college admissions, career counseling, and education loan guidance.</p>
+          </div>
+          <div class="footer-links-group">
+            <h3>Quick Links</h3>
+            <a href="index.html#about">About Us</a>
+            <a href="index.html#colleges">Colleges</a>
+            <a href="index.html#fees">Fee Structure</a>
+            <a href="index.html#services">Services</a>
+            <a href="index.html#contact">Contact</a>
+          </div>
+          <div class="footer-links-group">
+            <h3>Courses</h3>
+            <a href="index.html#fees">Engineering</a>
+            <a href="index.html#fees">Management</a>
+            <a href="index.html#fees">Computer Apps</a>
+            <a href="index.html#fees">Pharmacy</a>
+            <a href="index.html#fees">Law</a>
+          </div>
+          <div class="footer-links-group">
+            <h3>Contact</h3>
+            <a href="tel:+919546201805">+91 9546201805</a>
+            <a href="mailto:eduorbit.admissions@gmail.com">Email Us</a>
+            <a href="https://wa.me/919546201805">WhatsApp</a>
+            <a href="https://www.eduorbit.in">Website</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2026 EduOrbit. All rights reserved. | T&C Apply</p>
+          <p>Free Counselling Call — <a href="tel:+919546201805">+91 9546201805</a></p>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+<script>
+/* =========================================================
+   DATA
+   ========================================================= */
+const RAW_DATA = {"rows":[{"college":"Jadavpur University","city":"Kolkata","type":"University","tier":1,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":150},{"college":"Jadavpur University","city":"Kolkata","type":"University","tier":1,"branchCode":"AIML","branchName":"Artificial Intelligence & Machine Learning","closingRankGen":158},{"college":"Jadavpur University","city":"Kolkata","type":"University","tier":1,"branchCode":"IT","branchName":"Information Technology","closingRankGen":173},{"college":"Jadavpur University","city":"Kolkata","type":"University","tier":1,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":210},{"college":"Jadavpur University","city":"Kolkata","type":"University","tier":1,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":300},{"college":"Jadavpur University","city":"Kolkata","type":"University","tier":1,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":390},{"college":"Jadavpur University","city":"Kolkata","type":"University","tier":1,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":480},{"college":"Jadavpur University","city":"Kolkata","type":"University","tier":1,"branchCode":"CHE","branchName":"Chemical Engineering","closingRankGen":420},{"college":"Jadavpur University","city":"Kolkata","type":"University","tier":1,"branchCode":"MET","branchName":"Metallurgy & Materials Engineering","closingRankGen":450},{"college":"Jadavpur University","city":"Kolkata","type":"University","tier":1,"branchCode":"PT","branchName":"Power Engineering","closingRankGen":390},{"college":"University of Calcutta (College of Science, Tech. & Agriculture)","city":"Kolkata","type":"University","tier":2,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":1200},{"college":"University of Calcutta (College of Science, Tech. & Agriculture)","city":"Kolkata","type":"University","tier":2,"branchCode":"IT","branchName":"Information Technology","closingRankGen":1380},{"college":"University of Calcutta (College of Science, Tech. & Agriculture)","city":"Kolkata","type":"University","tier":2,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":1680},{"college":"University of Calcutta (College of Science, Tech. & Agriculture)","city":"Kolkata","type":"University","tier":2,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":2400},{"college":"University of Calcutta (College of Science, Tech. & Agriculture)","city":"Kolkata","type":"University","tier":2,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":3120},{"college":"University of Calcutta (College of Science, Tech. & Agriculture)","city":"Kolkata","type":"University","tier":2,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":3840},{"college":"Maulana Abul Kalam Azad University of Technology, WB (MAKAUT)","city":"Haringhata, Nadia","type":"University","tier":4,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":9000},{"college":"Maulana Abul Kalam Azad University of Technology, WB (MAKAUT)","city":"Haringhata, Nadia","type":"University","tier":4,"branchCode":"IT","branchName":"Information Technology","closingRankGen":10350},{"college":"Maulana Abul Kalam Azad University of Technology, WB (MAKAUT)","city":"Haringhata, Nadia","type":"University","tier":4,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":12600},{"college":"Maulana Abul Kalam Azad University of Technology, WB (MAKAUT)","city":"Haringhata, Nadia","type":"University","tier":4,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":18000},{"college":"Maulana Abul Kalam Azad University of Technology, WB (MAKAUT)","city":"Haringhata, Nadia","type":"University","tier":4,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":23400},{"college":"Maulana Abul Kalam Azad University of Technology, WB (MAKAUT)","city":"Haringhata, Nadia","type":"University","tier":4,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":28800},{"college":"Maulana Abul Kalam Azad University of Technology, WB (MAKAUT)","city":"Haringhata, Nadia","type":"University","tier":4,"branchCode":"CSBS","branchName":"Computer Science & Business Systems","closingRankGen":11700},{"college":"Aliah University","city":"New Town, Kolkata","type":"University","tier":4,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":9900},{"college":"Aliah University","city":"New Town, Kolkata","type":"University","tier":4,"branchCode":"IT","branchName":"Information Technology","closingRankGen":11385},{"college":"Aliah University","city":"New Town, Kolkata","type":"University","tier":4,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":13860},{"college":"Aliah University","city":"New Town, Kolkata","type":"University","tier":4,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":19800},{"college":"Aliah University","city":"New Town, Kolkata","type":"University","tier":4,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":31680},{"college":"Kazi Nazrul University","city":"Asansol","type":"University","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":20000},{"college":"Kazi Nazrul University","city":"Asansol","type":"University","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":28000},{"college":"Kazi Nazrul University","city":"Asansol","type":"University","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":52000},{"college":"Kazi Nazrul University","city":"Asansol","type":"University","tier":5,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":64000},{"college":"University Institute of Technology, Burdwan University","city":"Burdwan","type":"University","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":20000},{"college":"University Institute of Technology, Burdwan University","city":"Burdwan","type":"University","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":23000},{"college":"University Institute of Technology, Burdwan University","city":"Burdwan","type":"University","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":28000},{"college":"University Institute of Technology, Burdwan University","city":"Burdwan","type":"University","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":40000},{"college":"University Institute of Technology, Burdwan University","city":"Burdwan","type":"University","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":52000},{"college":"University of Kalyani, Science Instrumentation Centre","city":"Kalyani","type":"University","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":30800},{"college":"University of Kalyani, Science Instrumentation Centre","city":"Kalyani","type":"University","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":44000},{"college":"Bidhan Chandra Krishi Viswavidyalaya","city":"Mohanpur, Nadia","type":"University","tier":5,"branchCode":"FT","branchName":"Food Technology","closingRankGen":61200},{"college":"Bidhan Chandra Krishi Viswavidyalaya","city":"Mohanpur, Nadia","type":"University","tier":5,"branchCode":"BT","branchName":"Biotechnology","closingRankGen":54000},{"college":"Dept. of Jute & Fibre Technology, Calcutta University","city":"Kolkata","type":"University Dept.","tier":4,"branchCode":"JFT","branchName":"Jute & Fibre Technology","closingRankGen":25200},{"college":"Faculty of Technology, Uttar Banga Krishi Viswavidyalaya","city":"Cooch Behar","type":"University","tier":6,"branchCode":"FT","branchName":"Food Technology","closingRankGen":122400},{"college":"Faculty of Technology, Uttar Banga Krishi Viswavidyalaya","city":"Cooch Behar","type":"University","tier":6,"branchCode":"BT","branchName":"Biotechnology","closingRankGen":108000},{"college":"Faculty of Dairy Technology, WB Univ. of Animal & Fishery Sciences","city":"Kolkata","type":"University","tier":5,"branchCode":"FT","branchName":"Food Technology","closingRankGen":54400},{"college":"Jalpaiguri Government Engineering College (JGEC)","city":"Jalpaiguri","type":"Govt Engg College","tier":3,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":4000},{"college":"Jalpaiguri Government Engineering College (JGEC)","city":"Jalpaiguri","type":"Govt Engg College","tier":3,"branchCode":"IT","branchName":"Information Technology","closingRankGen":4600},{"college":"Jalpaiguri Government Engineering College (JGEC)","city":"Jalpaiguri","type":"Govt Engg College","tier":3,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":5600},{"college":"Jalpaiguri Government Engineering College (JGEC)","city":"Jalpaiguri","type":"Govt Engg College","tier":3,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":8000},{"college":"Jalpaiguri Government Engineering College (JGEC)","city":"Jalpaiguri","type":"Govt Engg College","tier":3,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":10400},{"college":"Jalpaiguri Government Engineering College (JGEC)","city":"Jalpaiguri","type":"Govt Engg College","tier":3,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":12800},{"college":"Kalyani Government Engineering College (KGEC)","city":"Kalyani, Nadia","type":"Govt Engg College","tier":3,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":3800},{"college":"Kalyani Government Engineering College (KGEC)","city":"Kalyani, Nadia","type":"Govt Engg College","tier":3,"branchCode":"IT","branchName":"Information Technology","closingRankGen":4370},{"college":"Kalyani Government Engineering College (KGEC)","city":"Kalyani, Nadia","type":"Govt Engg College","tier":3,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":5320},{"college":"Kalyani Government Engineering College (KGEC)","city":"Kalyani, Nadia","type":"Govt Engg College","tier":3,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":7600},{"college":"Kalyani Government Engineering College (KGEC)","city":"Kalyani, Nadia","type":"Govt Engg College","tier":3,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":9880},{"college":"Government College of Engineering & Leather Technology (GCELT)","city":"Kolkata","type":"Govt Engg College","tier":4,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":9000},{"college":"Government College of Engineering & Leather Technology (GCELT)","city":"Kolkata","type":"Govt Engg College","tier":4,"branchCode":"IT","branchName":"Information Technology","closingRankGen":10350},{"college":"Government College of Engineering & Leather Technology (GCELT)","city":"Kolkata","type":"Govt Engg College","tier":4,"branchCode":"LT","branchName":"Leather Technology","closingRankGen":32400},{"college":"Govt. College of Engineering & Ceramic Technology","city":"Kolkata","type":"Govt Engg College","tier":4,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":9000},{"college":"Govt. College of Engineering & Ceramic Technology","city":"Kolkata","type":"Govt Engg College","tier":4,"branchCode":"CT","branchName":"Ceramic Technology","closingRankGen":34200},{"college":"Govt. College of Engineering & Ceramic Technology","city":"Kolkata","type":"Govt Engg College","tier":4,"branchCode":"MET","branchName":"Metallurgy & Materials Engineering","closingRankGen":27000},{"college":"Govt. College of Engineering & Textile Technology, Serampore","city":"Serampore, Hooghly","type":"Govt Engg College","tier":4,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":10350},{"college":"Govt. College of Engineering & Textile Technology, Serampore","city":"Serampore, Hooghly","type":"Govt Engg College","tier":4,"branchCode":"IT","branchName":"Information Technology","closingRankGen":11902},{"college":"Govt. College of Engineering & Textile Technology, Serampore","city":"Serampore, Hooghly","type":"Govt Engg College","tier":4,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":14490},{"college":"Govt. College of Engg. & Textile Technology, Berhampore","city":"Berhampore, Murshidabad","type":"Govt Engg College","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":17000},{"college":"Govt. College of Engg. & Textile Technology, Berhampore","city":"Berhampore, Murshidabad","type":"Govt Engg College","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":23800},{"college":"Govt. College of Engg. & Textile Technology, Berhampore","city":"Berhampore, Murshidabad","type":"Govt Engg College","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":44200},{"college":"Cooch Behar Government Engineering College","city":"Cooch Behar","type":"Govt Engg College","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":18000},{"college":"Cooch Behar Government Engineering College","city":"Cooch Behar","type":"Govt Engg College","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":20700},{"college":"Cooch Behar Government Engineering College","city":"Cooch Behar","type":"Govt Engg College","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":25200},{"college":"Cooch Behar Government Engineering College","city":"Cooch Behar","type":"Govt Engg College","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":36000},{"college":"Cooch Behar Government Engineering College","city":"Cooch Behar","type":"Govt Engg College","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":46800},{"college":"Cooch Behar Government Engineering College","city":"Cooch Behar","type":"Govt Engg College","tier":5,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":57600},{"college":"Ramkrishna Mahato Government Engineering College","city":"Purulia","type":"Govt Engg College","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":19000},{"college":"Ramkrishna Mahato Government Engineering College","city":"Purulia","type":"Govt Engg College","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":26600},{"college":"Ramkrishna Mahato Government Engineering College","city":"Purulia","type":"Govt Engg College","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":38000},{"college":"Ramkrishna Mahato Government Engineering College","city":"Purulia","type":"Govt Engg College","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":49400},{"college":"Ramkrishna Mahato Government Engineering College","city":"Purulia","type":"Govt Engg College","tier":5,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":60800},{"college":"Alipurduar Government Engineering and Management College","city":"Alipurduar","type":"Govt Engg College","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":33750},{"college":"Alipurduar Government Engineering and Management College","city":"Alipurduar","type":"Govt Engg College","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":47250},{"college":"Alipurduar Government Engineering and Management College","city":"Alipurduar","type":"Govt Engg College","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":87750},{"college":"Alipurduar Government Engineering and Management College","city":"Alipurduar","type":"Govt Engg College","tier":6,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":108000},{"college":"Ghani Khan Choudhury Institute of Engineering & Technology (GKCIET)","city":"Malda","type":"Central Govt College","tier":4,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":9450},{"college":"Ghani Khan Choudhury Institute of Engineering & Technology (GKCIET)","city":"Malda","type":"Central Govt College","tier":4,"branchCode":"IT","branchName":"Information Technology","closingRankGen":10868},{"college":"Ghani Khan Choudhury Institute of Engineering & Technology (GKCIET)","city":"Malda","type":"Central Govt College","tier":4,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":13230},{"college":"Ghani Khan Choudhury Institute of Engineering & Technology (GKCIET)","city":"Malda","type":"Central Govt College","tier":4,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":18900},{"college":"Ghani Khan Choudhury Institute of Engineering & Technology (GKCIET)","city":"Malda","type":"Central Govt College","tier":4,"branchCode":"FT","branchName":"Food Technology","closingRankGen":32130},{"college":"Institute of Engineering and Management (IEM), Kolkata (UEM)","city":"Kolkata","type":"Private University","tier":4,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":7650},{"college":"Institute of Engineering and Management (IEM), Kolkata (UEM)","city":"Kolkata","type":"Private University","tier":4,"branchCode":"AIML","branchName":"Artificial Intelligence & Machine Learning","closingRankGen":8033},{"college":"Institute of Engineering and Management (IEM), Kolkata (UEM)","city":"Kolkata","type":"Private University","tier":4,"branchCode":"IT","branchName":"Information Technology","closingRankGen":8798},{"college":"Institute of Engineering and Management (IEM), Kolkata (UEM)","city":"Kolkata","type":"Private University","tier":4,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":10710},{"college":"Institute of Engineering and Management (IEM), Kolkata (UEM)","city":"Kolkata","type":"Private University","tier":4,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":15300},{"college":"Institute of Engineering and Management (IEM), Kolkata (UEM)","city":"Kolkata","type":"Private University","tier":4,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":19890},{"college":"Institute of Engineering and Management (IEM), Kolkata (UEM)","city":"Kolkata","type":"Private University","tier":4,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":24480},{"college":"Institute of Engineering and Management (IEM), Kolkata (UEM)","city":"Kolkata","type":"Private University","tier":4,"branchCode":"CSBS","branchName":"Computer Science & Business Systems","closingRankGen":9945},{"college":"Techno India University","city":"Salt Lake, Kolkata","type":"Private University","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":17000},{"college":"Techno India University","city":"Salt Lake, Kolkata","type":"Private University","tier":5,"branchCode":"AIML","branchName":"Artificial Intelligence & Machine Learning","closingRankGen":17850},{"college":"Techno India University","city":"Salt Lake, Kolkata","type":"Private University","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":19550},{"college":"Techno India University","city":"Salt Lake, Kolkata","type":"Private University","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":23800},{"college":"Techno India University","city":"Salt Lake, Kolkata","type":"Private University","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":34000},{"college":"Techno India University","city":"Salt Lake, Kolkata","type":"Private University","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":44200},{"college":"Techno India University","city":"Salt Lake, Kolkata","type":"Private University","tier":5,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":54400},{"college":"Adamas University","city":"Barasat","type":"Private University","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":18000},{"college":"Adamas University","city":"Barasat","type":"Private University","tier":5,"branchCode":"AIML","branchName":"Artificial Intelligence & Machine Learning","closingRankGen":18900},{"college":"Adamas University","city":"Barasat","type":"Private University","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":20700},{"college":"Adamas University","city":"Barasat","type":"Private University","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":25200},{"college":"Adamas University","city":"Barasat","type":"Private University","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":36000},{"college":"Adamas University","city":"Barasat","type":"Private University","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":46800},{"college":"Adamas University","city":"Barasat","type":"Private University","tier":5,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":57600},{"college":"JIS University","city":"Agarpara","type":"Private University","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":19000},{"college":"JIS University","city":"Agarpara","type":"Private University","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":21850},{"college":"JIS University","city":"Agarpara","type":"Private University","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":26600},{"college":"JIS University","city":"Agarpara","type":"Private University","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":49400},{"college":"JIS University","city":"Agarpara","type":"Private University","tier":5,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":60800},{"college":"Sister Nivedita University","city":"New Town","type":"Private University","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":45000},{"college":"Sister Nivedita University","city":"New Town","type":"Private University","tier":6,"branchCode":"IT","branchName":"Information Technology","closingRankGen":51750},{"college":"Sister Nivedita University","city":"New Town","type":"Private University","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":63000},{"college":"Sister Nivedita University","city":"New Town","type":"Private University","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":117000},{"college":"Swami Vivekananda University","city":"Barrackpore","type":"Private University","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":45000},{"college":"Swami Vivekananda University","city":"Barrackpore","type":"Private University","tier":6,"branchCode":"IT","branchName":"Information Technology","closingRankGen":51750},{"college":"Swami Vivekananda University","city":"Barrackpore","type":"Private University","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":63000},{"college":"Swami Vivekananda University","city":"Barrackpore","type":"Private University","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":117000},{"college":"Swami Vivekananda University","city":"Barrackpore","type":"Private University","tier":6,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":144000},{"college":"Seacom Skills University","city":"Bolpur","type":"Private University","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Seacom Skills University","city":"Bolpur","type":"Private University","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Seacom Skills University","city":"Bolpur","type":"Private University","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Techno India University (School of Pharmacy)","city":"Salt Lake","type":"Private University","tier":5,"branchCode":"PHARM","branchName":"Pharmaceutical Engineering / Tech","closingRankGen":44000},{"college":"Heritage Institute of Technology","city":"Kolkata","type":"Private Engg College","tier":4,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":9000},{"college":"Heritage Institute of Technology","city":"Kolkata","type":"Private Engg College","tier":4,"branchCode":"AIML","branchName":"Artificial Intelligence & Machine Learning","closingRankGen":9450},{"college":"Heritage Institute of Technology","city":"Kolkata","type":"Private Engg College","tier":4,"branchCode":"IT","branchName":"Information Technology","closingRankGen":10350},{"college":"Heritage Institute of Technology","city":"Kolkata","type":"Private Engg College","tier":4,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":12600},{"college":"Heritage Institute of Technology","city":"Kolkata","type":"Private Engg College","tier":4,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":18000},{"college":"Heritage Institute of Technology","city":"Kolkata","type":"Private Engg College","tier":4,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":23400},{"college":"Heritage Institute of Technology","city":"Kolkata","type":"Private Engg College","tier":4,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":28800},{"college":"RCC Institute of Information Technology","city":"Kolkata","type":"Private Engg College","tier":4,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":9900},{"college":"RCC Institute of Information Technology","city":"Kolkata","type":"Private Engg College","tier":4,"branchCode":"IT","branchName":"Information Technology","closingRankGen":11385},{"college":"RCC Institute of Information Technology","city":"Kolkata","type":"Private Engg College","tier":4,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":13860},{"college":"RCC Institute of Information Technology","city":"Kolkata","type":"Private Engg College","tier":4,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":19800},{"college":"Narula Institute of Technology","city":"Agarpara, Kolkata","type":"Private Engg College","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":20000},{"college":"Narula Institute of Technology","city":"Agarpara, Kolkata","type":"Private Engg College","tier":5,"branchCode":"AIML","branchName":"Artificial Intelligence & Machine Learning","closingRankGen":21000},{"college":"Narula Institute of Technology","city":"Agarpara, Kolkata","type":"Private Engg College","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":23000},{"college":"Narula Institute of Technology","city":"Agarpara, Kolkata","type":"Private Engg College","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":28000},{"college":"Narula Institute of Technology","city":"Agarpara, Kolkata","type":"Private Engg College","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":40000},{"college":"Narula Institute of Technology","city":"Agarpara, Kolkata","type":"Private Engg College","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":52000},{"college":"Narula Institute of Technology","city":"Agarpara, Kolkata","type":"Private Engg College","tier":5,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":64000},{"college":"Netaji Subhas Engineering College","city":"Garia, Kolkata","type":"Private Engg College","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":20000},{"college":"Netaji Subhas Engineering College","city":"Garia, Kolkata","type":"Private Engg College","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":23000},{"college":"Netaji Subhas Engineering College","city":"Garia, Kolkata","type":"Private Engg College","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":28000},{"college":"Netaji Subhas Engineering College","city":"Garia, Kolkata","type":"Private Engg College","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":40000},{"college":"Netaji Subhas Engineering College","city":"Garia, Kolkata","type":"Private Engg College","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":52000},{"college":"Netaji Subhas Engineering College","city":"Garia, Kolkata","type":"Private Engg College","tier":5,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":64000},{"college":"Techno Main Salt Lake","city":"Salt Lake, Kolkata","type":"Private Engg College","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":19000},{"college":"Techno Main Salt Lake","city":"Salt Lake, Kolkata","type":"Private Engg College","tier":5,"branchCode":"AIML","branchName":"Artificial Intelligence & Machine Learning","closingRankGen":19950},{"college":"Techno Main Salt Lake","city":"Salt Lake, Kolkata","type":"Private Engg College","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":21850},{"college":"Techno Main Salt Lake","city":"Salt Lake, Kolkata","type":"Private Engg College","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":26600},{"college":"Techno Main Salt Lake","city":"Salt Lake, Kolkata","type":"Private Engg College","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":38000},{"college":"Techno Main Salt Lake","city":"Salt Lake, Kolkata","type":"Private Engg College","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":49400},{"college":"Techno International New Town","city":"New Town, Kolkata","type":"Private Engg College","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":21000},{"college":"Techno International New Town","city":"New Town, Kolkata","type":"Private Engg College","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":24150},{"college":"Techno International New Town","city":"New Town, Kolkata","type":"Private Engg College","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":29400},{"college":"Techno International New Town","city":"New Town, Kolkata","type":"Private Engg College","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":54600},{"college":"Techno International New Town","city":"New Town, Kolkata","type":"Private Engg College","tier":5,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":67200},{"college":"Techno International Batanagar","city":"Batanagar","type":"Private Engg College","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":40500},{"college":"Techno International Batanagar","city":"Batanagar","type":"Private Engg College","tier":6,"branchCode":"IT","branchName":"Information Technology","closingRankGen":46575},{"college":"Techno International Batanagar","city":"Batanagar","type":"Private Engg College","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":56700},{"college":"Techno International Batanagar","city":"Batanagar","type":"Private Engg College","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":105300},{"college":"Techno International Batanagar","city":"Batanagar","type":"Private Engg College","tier":6,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":129600},{"college":"JIS College of Engineering","city":"Kalyani, Nadia","type":"Private Engg College","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":19000},{"college":"JIS College of Engineering","city":"Kalyani, Nadia","type":"Private Engg College","tier":5,"branchCode":"AIML","branchName":"Artificial Intelligence & Machine Learning","closingRankGen":19950},{"college":"JIS College of Engineering","city":"Kalyani, Nadia","type":"Private Engg College","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":21850},{"college":"JIS College of Engineering","city":"Kalyani, Nadia","type":"Private Engg College","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":26600},{"college":"JIS College of Engineering","city":"Kalyani, Nadia","type":"Private Engg College","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":38000},{"college":"JIS College of Engineering","city":"Kalyani, Nadia","type":"Private Engg College","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":49400},{"college":"JIS College of Engineering","city":"Kalyani, Nadia","type":"Private Engg College","tier":5,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":60800},{"college":"MCKV Institute of Engineering","city":"Liluah, Howrah","type":"Private Engg College","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":21000},{"college":"MCKV Institute of Engineering","city":"Liluah, Howrah","type":"Private Engg College","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":24150},{"college":"MCKV Institute of Engineering","city":"Liluah, Howrah","type":"Private Engg College","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":29400},{"college":"MCKV Institute of Engineering","city":"Liluah, Howrah","type":"Private Engg College","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":42000},{"college":"MCKV Institute of Engineering","city":"Liluah, Howrah","type":"Private Engg College","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":54600},{"college":"B.P. Poddar Institute of Management & Technology","city":"Kolkata","type":"Private Engg College","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":20000},{"college":"B.P. Poddar Institute of Management & Technology","city":"Kolkata","type":"Private Engg College","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":23000},{"college":"B.P. Poddar Institute of Management & Technology","city":"Kolkata","type":"Private Engg College","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":28000},{"college":"B.P. Poddar Institute of Management & Technology","city":"Kolkata","type":"Private Engg College","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":40000},{"college":"B.P. Poddar Institute of Management & Technology","city":"Kolkata","type":"Private Engg College","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":52000},{"college":"Calcutta Institute of Engineering & Management","city":"Tollygunge, Kolkata","type":"Private Engg College","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":20000},{"college":"Calcutta Institute of Engineering & Management","city":"Tollygunge, Kolkata","type":"Private Engg College","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":23000},{"college":"Calcutta Institute of Engineering & Management","city":"Tollygunge, Kolkata","type":"Private Engg College","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":28000},{"college":"Calcutta Institute of Engineering & Management","city":"Tollygunge, Kolkata","type":"Private Engg College","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":40000},{"college":"Calcutta Institute of Engineering & Management","city":"Tollygunge, Kolkata","type":"Private Engg College","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":52000},{"college":"Guru Nanak Institute of Technology","city":"Panihati, Sodepur","type":"Private Engg College","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":19000},{"college":"Guru Nanak Institute of Technology","city":"Panihati, Sodepur","type":"Private Engg College","tier":5,"branchCode":"AIML","branchName":"Artificial Intelligence & Machine Learning","closingRankGen":19950},{"college":"Guru Nanak Institute of Technology","city":"Panihati, Sodepur","type":"Private Engg College","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":21850},{"college":"Guru Nanak Institute of Technology","city":"Panihati, Sodepur","type":"Private Engg College","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":26600},{"college":"Guru Nanak Institute of Technology","city":"Panihati, Sodepur","type":"Private Engg College","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":38000},{"college":"Guru Nanak Institute of Technology","city":"Panihati, Sodepur","type":"Private Engg College","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":49400},{"college":"Guru Nanak Institute of Technology","city":"Panihati, Sodepur","type":"Private Engg College","tier":5,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":60800},{"college":"Meghnad Saha Institute of Technology","city":"Kolkata","type":"Private Engg College","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":20000},{"college":"Meghnad Saha Institute of Technology","city":"Kolkata","type":"Private Engg College","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":23000},{"college":"Meghnad Saha Institute of Technology","city":"Kolkata","type":"Private Engg College","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":28000},{"college":"Meghnad Saha Institute of Technology","city":"Kolkata","type":"Private Engg College","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":40000},{"college":"Meghnad Saha Institute of Technology","city":"Kolkata","type":"Private Engg College","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":52000},{"college":"Future Institute of Engineering & Management","city":"Sonarpur","type":"Private Engg College","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":21000},{"college":"Future Institute of Engineering & Management","city":"Sonarpur","type":"Private Engg College","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":24150},{"college":"Future Institute of Engineering & Management","city":"Sonarpur","type":"Private Engg College","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":29400},{"college":"Future Institute of Engineering & Management","city":"Sonarpur","type":"Private Engg College","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":42000},{"college":"Future Institute of Engineering & Management","city":"Sonarpur","type":"Private Engg College","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":54600},{"college":"Future Institute of Technology","city":"Boral, Garia","type":"Private Engg College","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":42750},{"college":"Future Institute of Technology","city":"Boral, Garia","type":"Private Engg College","tier":6,"branchCode":"IT","branchName":"Information Technology","closingRankGen":49162},{"college":"Future Institute of Technology","city":"Boral, Garia","type":"Private Engg College","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":59850},{"college":"Future Institute of Technology","city":"Boral, Garia","type":"Private Engg College","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":111150},{"college":"Dr. Sudhir Chandra Sur Institute of Technology & Sports Complex","city":"Dum Dum","type":"Private Engg College","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":21000},{"college":"Dr. Sudhir Chandra Sur Institute of Technology & Sports Complex","city":"Dum Dum","type":"Private Engg College","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":24150},{"college":"Dr. Sudhir Chandra Sur Institute of Technology & Sports Complex","city":"Dum Dum","type":"Private Engg College","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":29400},{"college":"Dr. Sudhir Chandra Sur Institute of Technology & Sports Complex","city":"Dum Dum","type":"Private Engg College","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":42000},{"college":"Dr. Sudhir Chandra Sur Institute of Technology & Sports Complex","city":"Dum Dum","type":"Private Engg College","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":54600},{"college":"Dr. B.C. Roy Engineering College","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":45000},{"college":"Dr. B.C. Roy Engineering College","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"IT","branchName":"Information Technology","closingRankGen":51750},{"college":"Dr. B.C. Roy Engineering College","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":63000},{"college":"Dr. B.C. Roy Engineering College","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":90000},{"college":"Dr. B.C. Roy Engineering College","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":117000},{"college":"Dr. B.C. Roy Engineering College","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":144000},{"college":"Bengal Institute of Technology & Management","city":"Santiniketan","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Bengal Institute of Technology & Management","city":"Santiniketan","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Bengal Institute of Technology & Management","city":"Santiniketan","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Bengal Institute of Technology & Management","city":"Santiniketan","type":"Private Engg College","tier":7,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":256000},{"college":"Bengal College of Engineering & Technology","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":42750},{"college":"Bengal College of Engineering & Technology","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"IT","branchName":"Information Technology","closingRankGen":49162},{"college":"Bengal College of Engineering & Technology","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":59850},{"college":"Bengal College of Engineering & Technology","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":111150},{"college":"Bengal College of Engineering & Technology","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":136800},{"college":"Asansol Engineering College","city":"Asansol","type":"Private Engg College","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":45000},{"college":"Asansol Engineering College","city":"Asansol","type":"Private Engg College","tier":6,"branchCode":"IT","branchName":"Information Technology","closingRankGen":51750},{"college":"Asansol Engineering College","city":"Asansol","type":"Private Engg College","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":63000},{"college":"Asansol Engineering College","city":"Asansol","type":"Private Engg College","tier":6,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":90000},{"college":"Asansol Engineering College","city":"Asansol","type":"Private Engg College","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":117000},{"college":"Asansol Engineering College","city":"Asansol","type":"Private Engg College","tier":6,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":144000},{"college":"Dumkal Institute of Engineering & Technology","city":"Dumkal, Murshidabad","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Dumkal Institute of Engineering & Technology","city":"Dumkal, Murshidabad","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Dumkal Institute of Engineering & Technology","city":"Dumkal, Murshidabad","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Dumkal Institute of Engineering & Technology","city":"Dumkal, Murshidabad","type":"Private Engg College","tier":7,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":256000},{"college":"Haldia Institute of Technology","city":"Haldia, Purba Medinipur","type":"Private Engg College","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":20000},{"college":"Haldia Institute of Technology","city":"Haldia, Purba Medinipur","type":"Private Engg College","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":23000},{"college":"Haldia Institute of Technology","city":"Haldia, Purba Medinipur","type":"Private Engg College","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":28000},{"college":"Haldia Institute of Technology","city":"Haldia, Purba Medinipur","type":"Private Engg College","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":40000},{"college":"Haldia Institute of Technology","city":"Haldia, Purba Medinipur","type":"Private Engg College","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":52000},{"college":"Haldia Institute of Technology","city":"Haldia, Purba Medinipur","type":"Private Engg College","tier":5,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":64000},{"college":"Haldia Institute of Technology","city":"Haldia, Purba Medinipur","type":"Private Engg College","tier":5,"branchCode":"CHE","branchName":"Chemical Engineering","closingRankGen":56000},{"college":"Birbhum Institute of Engineering & Technology","city":"Suri, Birbhum","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Birbhum Institute of Engineering & Technology","city":"Suri, Birbhum","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Birbhum Institute of Engineering & Technology","city":"Suri, Birbhum","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Birbhum Institute of Engineering & Technology","city":"Suri, Birbhum","type":"Private Engg College","tier":7,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":256000},{"college":"Budge Budge Institute of Technology","city":"Budge Budge","type":"Private Engg College","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":47250},{"college":"Budge Budge Institute of Technology","city":"Budge Budge","type":"Private Engg College","tier":6,"branchCode":"IT","branchName":"Information Technology","closingRankGen":54337},{"college":"Budge Budge Institute of Technology","city":"Budge Budge","type":"Private Engg College","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":66150},{"college":"Budge Budge Institute of Technology","city":"Budge Budge","type":"Private Engg College","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":122850},{"college":"Calcutta Institute of Technology","city":"Uluberia, Howrah","type":"Private Engg College","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":45000},{"college":"Calcutta Institute of Technology","city":"Uluberia, Howrah","type":"Private Engg College","tier":6,"branchCode":"IT","branchName":"Information Technology","closingRankGen":51750},{"college":"Calcutta Institute of Technology","city":"Uluberia, Howrah","type":"Private Engg College","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":63000},{"college":"Calcutta Institute of Technology","city":"Uluberia, Howrah","type":"Private Engg College","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":117000},{"college":"Calcutta Institute of Technology","city":"Uluberia, Howrah","type":"Private Engg College","tier":6,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":144000},{"college":"Camellia Institute of Engineering & Technology","city":"Bud Bud, Burdwan","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Camellia Institute of Engineering & Technology","city":"Bud Bud, Burdwan","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Camellia Institute of Engineering & Technology","city":"Bud Bud, Burdwan","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Camellia Institute of Technology & Management","city":"Bainchi, Hooghly","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Camellia Institute of Technology & Management","city":"Bainchi, Hooghly","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Camellia Institute of Technology & Management","city":"Bainchi, Hooghly","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Camellia Institute of Technology","city":"Madhyamgram","type":"Private Engg College","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":45000},{"college":"Camellia Institute of Technology","city":"Madhyamgram","type":"Private Engg College","tier":6,"branchCode":"IT","branchName":"Information Technology","closingRankGen":51750},{"college":"Camellia Institute of Technology","city":"Madhyamgram","type":"Private Engg College","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":63000},{"college":"Camellia Institute of Technology","city":"Madhyamgram","type":"Private Engg College","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":117000},{"college":"Camellia School of Engineering & Technology","city":"Barasat","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Camellia School of Engineering & Technology","city":"Barasat","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Camellia School of Engineering & Technology","city":"Barasat","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"College of Engineering and Management, Kolaghat","city":"Kolaghat","type":"Private Engg College","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":45000},{"college":"College of Engineering and Management, Kolaghat","city":"Kolaghat","type":"Private Engg College","tier":6,"branchCode":"IT","branchName":"Information Technology","closingRankGen":51750},{"college":"College of Engineering and Management, Kolaghat","city":"Kolaghat","type":"Private Engg College","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":63000},{"college":"College of Engineering and Management, Kolaghat","city":"Kolaghat","type":"Private Engg College","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":117000},{"college":"College of Engineering and Management, Kolaghat","city":"Kolaghat","type":"Private Engg College","tier":6,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":144000},{"college":"Dream Institute of Technology","city":"Bishnupur, S 24 Pgs","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Dream Institute of Technology","city":"Bishnupur, S 24 Pgs","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Dream Institute of Technology","city":"Bishnupur, S 24 Pgs","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Durgapur Institute of Advanced Technology & Management","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":45000},{"college":"Durgapur Institute of Advanced Technology & Management","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"IT","branchName":"Information Technology","closingRankGen":51750},{"college":"Durgapur Institute of Advanced Technology & Management","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":63000},{"college":"Durgapur Institute of Advanced Technology & Management","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":117000},{"college":"Durgapur Institute of Advanced Technology & Management","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":144000},{"college":"Elitte College of Engineering","city":"Sodepur","type":"Private Engg College","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":47250},{"college":"Elitte College of Engineering","city":"Sodepur","type":"Private Engg College","tier":6,"branchCode":"IT","branchName":"Information Technology","closingRankGen":54337},{"college":"Elitte College of Engineering","city":"Sodepur","type":"Private Engg College","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":66150},{"college":"Elitte College of Engineering","city":"Sodepur","type":"Private Engg College","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":122850},{"college":"Gargi Memorial Institute of Technology","city":"Baruipur, Kolkata","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Gargi Memorial Institute of Technology","city":"Baruipur, Kolkata","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Gargi Memorial Institute of Technology","city":"Baruipur, Kolkata","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Global Institute of Management & Technology","city":"Krishnanagar, Nadia","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Global Institute of Management & Technology","city":"Krishnanagar, Nadia","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Global Institute of Management & Technology","city":"Krishnanagar, Nadia","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Global Institute of Management & Technology","city":"Krishnanagar, Nadia","type":"Private Engg College","tier":7,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":256000},{"college":"Greater Kolkata College of Engineering & Management","city":"Baruipur","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Greater Kolkata College of Engineering & Management","city":"Baruipur","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Greater Kolkata College of Engineering & Management","city":"Baruipur","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Hooghly Engineering & Technology College","city":"Hooghly","type":"Private Engg College","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":45000},{"college":"Hooghly Engineering & Technology College","city":"Hooghly","type":"Private Engg College","tier":6,"branchCode":"IT","branchName":"Information Technology","closingRankGen":51750},{"college":"Hooghly Engineering & Technology College","city":"Hooghly","type":"Private Engg College","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":63000},{"college":"Hooghly Engineering & Technology College","city":"Hooghly","type":"Private Engg College","tier":6,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":90000},{"college":"Hooghly Engineering & Technology College","city":"Hooghly","type":"Private Engg College","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":117000},{"college":"Hooghly Engineering & Technology College","city":"Hooghly","type":"Private Engg College","tier":6,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":144000},{"college":"Ideal Institute of Engineering","city":"Kalyani","type":"Private Engg College","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":42750},{"college":"Ideal Institute of Engineering","city":"Kalyani","type":"Private Engg College","tier":6,"branchCode":"IT","branchName":"Information Technology","closingRankGen":49162},{"college":"Ideal Institute of Engineering","city":"Kalyani","type":"Private Engg College","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":59850},{"college":"Ideal Institute of Engineering","city":"Kalyani","type":"Private Engg College","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":111150},{"college":"Ideal Institute of Engineering","city":"Kalyani","type":"Private Engg College","tier":6,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":136800},{"college":"IMPS College of Engineering & Technology","city":"Malda","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"IMPS College of Engineering & Technology","city":"Malda","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"IMPS College of Engineering & Technology","city":"Malda","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"IMPS College of Engineering & Technology","city":"Malda","type":"Private Engg College","tier":7,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":256000},{"college":"Institute of Science and Technology","city":"Paschim Medinipur","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Institute of Science and Technology","city":"Paschim Medinipur","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Institute of Science and Technology","city":"Paschim Medinipur","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"JLD Engineering and Management College","city":"Baruipur","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"JLD Engineering and Management College","city":"Baruipur","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"JLD Engineering and Management College","city":"Baruipur","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Kanad Institute of Engineering & Management","city":"Mankar, Burdwan","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Kanad Institute of Engineering & Management","city":"Mankar, Burdwan","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Kanad Institute of Engineering & Management","city":"Mankar, Burdwan","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Mallabhum Institute of Technology","city":"Bishnupur, Bankura","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Mallabhum Institute of Technology","city":"Bishnupur, Bankura","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Mallabhum Institute of Technology","city":"Bishnupur, Bankura","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Mallabhum Institute of Technology","city":"Bishnupur, Bankura","type":"Private Engg College","tier":7,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":256000},{"college":"Modern Institute of Engineering & Technology","city":"Bandel, Hooghly","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Modern Institute of Engineering & Technology","city":"Bandel, Hooghly","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Modern Institute of Engineering & Technology","city":"Bandel, Hooghly","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Murshidabad College of Engineering & Technology","city":"Murshidabad","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Murshidabad College of Engineering & Technology","city":"Murshidabad","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Murshidabad College of Engineering & Technology","city":"Murshidabad","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Murshidabad College of Engineering & Technology","city":"Murshidabad","type":"Private Engg College","tier":7,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":256000},{"college":"NSHM Knowledge Campus, Durgapur","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":45000},{"college":"NSHM Knowledge Campus, Durgapur","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"IT","branchName":"Information Technology","closingRankGen":51750},{"college":"NSHM Knowledge Campus, Durgapur","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":63000},{"college":"NSHM Knowledge Campus, Durgapur","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":117000},{"college":"NSHM Knowledge Campus, Durgapur","city":"Durgapur","type":"Private Engg College","tier":6,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":144000},{"college":"Om Dayal Group of Institutions","city":"Uluberia, Howrah","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Om Dayal Group of Institutions","city":"Uluberia, Howrah","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Om Dayal Group of Institutions","city":"Uluberia, Howrah","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Om Dayal Group of Institutions","city":"Uluberia, Howrah","type":"Private Engg College","tier":7,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":256000},{"college":"Pailan College of Management & Technology","city":"Pailan","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Pailan College of Management & Technology","city":"Pailan","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Pailan College of Management & Technology","city":"Pailan","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Regent Education and Research Foundation","city":"Barasat, Kolkata","type":"Private Engg College","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":45000},{"college":"Regent Education and Research Foundation","city":"Barasat, Kolkata","type":"Private Engg College","tier":6,"branchCode":"IT","branchName":"Information Technology","closingRankGen":51750},{"college":"Regent Education and Research Foundation","city":"Barasat, Kolkata","type":"Private Engg College","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":63000},{"college":"Regent Education and Research Foundation","city":"Barasat, Kolkata","type":"Private Engg College","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":117000},{"college":"Regent Education and Research Foundation","city":"Barasat, Kolkata","type":"Private Engg College","tier":6,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":144000},{"college":"Sanaka Education Trust's Group of Institutions","city":"Durgapur","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Sanaka Education Trust's Group of Institutions","city":"Durgapur","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Sanaka Education Trust's Group of Institutions","city":"Durgapur","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Seacom Engineering College","city":"Sankrail, Howrah","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Seacom Engineering College","city":"Sankrail, Howrah","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Seacom Engineering College","city":"Sankrail, Howrah","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Siliguri Institute of Technology","city":"Siliguri","type":"Private Engg College","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":19000},{"college":"Siliguri Institute of Technology","city":"Siliguri","type":"Private Engg College","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":21850},{"college":"Siliguri Institute of Technology","city":"Siliguri","type":"Private Engg College","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":26600},{"college":"Siliguri Institute of Technology","city":"Siliguri","type":"Private Engg College","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":38000},{"college":"Siliguri Institute of Technology","city":"Siliguri","type":"Private Engg College","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":49400},{"college":"Siliguri Institute of Technology","city":"Siliguri","type":"Private Engg College","tier":5,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":60800},{"college":"St. Mary's Technical Campus","city":"Barasat","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"St. Mary's Technical Campus","city":"Barasat","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"St. Mary's Technical Campus","city":"Barasat","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"St. Thomas' College of Engineering & Technology","city":"Khidirpur, Kolkata","type":"Private Engg College","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":45000},{"college":"St. Thomas' College of Engineering & Technology","city":"Khidirpur, Kolkata","type":"Private Engg College","tier":6,"branchCode":"IT","branchName":"Information Technology","closingRankGen":51750},{"college":"St. Thomas' College of Engineering & Technology","city":"Khidirpur, Kolkata","type":"Private Engg College","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":63000},{"college":"St. Thomas' College of Engineering & Technology","city":"Khidirpur, Kolkata","type":"Private Engg College","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":117000},{"college":"St. Thomas' College of Engineering & Technology","city":"Khidirpur, Kolkata","type":"Private Engg College","tier":6,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":144000},{"college":"Supreme Knowledge Foundation Group of Institutions","city":"Mankundu, Hooghly","type":"Private Engg College","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":45000},{"college":"Supreme Knowledge Foundation Group of Institutions","city":"Mankundu, Hooghly","type":"Private Engg College","tier":6,"branchCode":"IT","branchName":"Information Technology","closingRankGen":51750},{"college":"Supreme Knowledge Foundation Group of Institutions","city":"Mankundu, Hooghly","type":"Private Engg College","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":63000},{"college":"Supreme Knowledge Foundation Group of Institutions","city":"Mankundu, Hooghly","type":"Private Engg College","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":117000},{"college":"Swami Vivekananda Institute of Science & Technology","city":"Sonarpur","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Swami Vivekananda Institute of Science & Technology","city":"Sonarpur","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Swami Vivekananda Institute of Science & Technology","city":"Sonarpur","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Techno Bengal Institute of Technology","city":"Dhapa, Kolkata","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Techno Bengal Institute of Technology","city":"Dhapa, Kolkata","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Techno Bengal Institute of Technology","city":"Dhapa, Kolkata","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Techno Engineering College Banipur","city":"24 Pgs (N)","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Techno Engineering College Banipur","city":"24 Pgs (N)","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Techno Engineering College Banipur","city":"24 Pgs (N)","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Abacus Institute of Engineering & Management","city":"Mogra, Hooghly","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Abacus Institute of Engineering & Management","city":"Mogra, Hooghly","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Abacus Institute of Engineering & Management","city":"Mogra, Hooghly","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Academy of Technology","city":"Adisaptagram, Hooghly","type":"Private Engg College","tier":5,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":20000},{"college":"Academy of Technology","city":"Adisaptagram, Hooghly","type":"Private Engg College","tier":5,"branchCode":"IT","branchName":"Information Technology","closingRankGen":23000},{"college":"Academy of Technology","city":"Adisaptagram, Hooghly","type":"Private Engg College","tier":5,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":28000},{"college":"Academy of Technology","city":"Adisaptagram, Hooghly","type":"Private Engg College","tier":5,"branchCode":"EE","branchName":"Electrical Engineering","closingRankGen":40000},{"college":"Academy of Technology","city":"Adisaptagram, Hooghly","type":"Private Engg College","tier":5,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":52000},{"college":"Academy of Technology","city":"Adisaptagram, Hooghly","type":"Private Engg College","tier":5,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":64000},{"college":"Bankura Unnayani Institute of Engineering","city":"Bankura","type":"Private Engg College","tier":6,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":45000},{"college":"Bankura Unnayani Institute of Engineering","city":"Bankura","type":"Private Engg College","tier":6,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":63000},{"college":"Bankura Unnayani Institute of Engineering","city":"Bankura","type":"Private Engg College","tier":6,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":117000},{"college":"Bankura Unnayani Institute of Engineering","city":"Bankura","type":"Private Engg College","tier":6,"branchCode":"CE","branchName":"Civil Engineering","closingRankGen":144000},{"college":"Gupta College of Technological Sciences","city":"Asansol","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Gupta College of Technological Sciences","city":"Asansol","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Gupta College of Technological Sciences","city":"Asansol","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000},{"college":"Hemnalini Memorial College of Engineering","city":"Haringhata","type":"Private Engg College","tier":7,"branchCode":"CSE","branchName":"Computer Science & Engineering","closingRankGen":80000},{"college":"Hemnalini Memorial College of Engineering","city":"Haringhata","type":"Private Engg College","tier":7,"branchCode":"ECE","branchName":"Electronics & Communication Engineering","closingRankGen":112000},{"college":"Hemnalini Memorial College of Engineering","city":"Haringhata","type":"Private Engg College","tier":7,"branchCode":"ME","branchName":"Mechanical Engineering","closingRankGen":208000}],"branches":[{"code":"CSE","name":"Computer Science & Engineering","demand":1},{"code":"AIML","name":"Artificial Intelligence & Machine Learning","demand":1.05},{"code":"IT","name":"Information Technology","demand":1.15},{"code":"ECE","name":"Electronics & Communication Engineering","demand":1.4},{"code":"EE","name":"Electrical Engineering","demand":2},{"code":"EEE","name":"Electrical & Electronics Engineering","demand":2},{"code":"ME","name":"Mechanical Engineering","demand":2.6},{"code":"CE","name":"Civil Engineering","demand":3.2},{"code":"CHE","name":"Chemical Engineering","demand":2.8},{"code":"BT","name":"Biotechnology","demand":3},{"code":"FT","name":"Food Technology","demand":3.4},{"code":"LT","name":"Leather Technology","demand":3.6},{"code":"CT","name":"Ceramic Technology","demand":3.8},{"code":"MIN","name":"Mining Engineering","demand":2.4},{"code":"MET","name":"Metallurgy & Materials Engineering","demand":3},{"code":"JFT","name":"Jute & Fibre Technology","demand":4},{"code":"PHARM","name":"Pharmaceutical Engineering / Tech","demand":2.2},{"code":"PT","name":"Power Engineering","demand":2.6},{"code":"AERO","name":"Aeronautical/Aerospace Engineering","demand":1.6},{"code":"AUTO","name":"Automobile Engineering","demand":2.3},{"code":"CSBS","name":"Computer Science & Business Systems","demand":1.3},{"code":"ROBO","name":"Robotics Engineering","demand":1.5}],"categoryMultipliers":{"GEN":1,"EWS":1.3,"OBC-A":1.6,"OBC-B":1.9,"SC":5.5,"ST":11,"PWD":8,"TFW":1.2}};
+
+const ALL_ROWS = RAW_DATA.rows;
+const BRANCH_DEFS = RAW_DATA.branches;
+const CAT_MULT = RAW_DATA.categoryMultipliers;
+
+function tierLabel(tier){
+  if(tier===1) return "Elite";
+  if(tier===2) return "Top Govt/University";
+  if(tier===3) return "Strong Govt";
+  if(tier===4) return "Govt / Top Private";
+  if(tier===5) return "Mid Private";
+  if(tier===6) return "Lower-Mid Private";
+  return "Open Category Safe";
+}
+function tierColor(tier){
+  if(tier<=2) return "#1b3a5c";
+  if(tier<=4) return "#a8651a";
+  if(tier<=5) return "#5c6b1b";
+  return "#7a7a7a";
+}
+
+/* ---------- Populate filter dropdowns ---------- */
+const branchSelect = document.getElementById('branchSelect');
+const typeSelect = document.getElementById('typeSelect');
+
+const branchOpts = [{code:"ALL",name:"All Branches"}].concat(BRANCH_DEFS);
+branchOpts.forEach(b=>{
+  const opt=document.createElement('option');
+  opt.value=b.code; opt.textContent=b.name;
+  branchSelect.appendChild(opt);
+});
+
+const typeSet = new Set(ALL_ROWS.map(r=>r.type));
+const typeOpts = ["ALL"].concat(Array.from(typeSet));
+typeOpts.forEach(t=>{
+  const opt=document.createElement('option');
+  opt.value=t; opt.textContent = t==="ALL" ? "All Types" : t;
+  typeSelect.appendChild(opt);
+});
+
+/* ---------- Elements ---------- */
+const form = document.getElementById('predictorForm');
+const rankInput = document.getElementById('rankInput');
+const categorySelect = document.getElementById('categorySelect');
+const filterRow = document.getElementById('filterRow');
+const collegeSearch = document.getElementById('collegeSearch');
+const resultsSection = document.getElementById('resultsSection');
+const resultsBody = document.getElementById('resultsBody');
+const emptyState = document.getElementById('emptyState');
+const tableWrap = document.getElementById('tableWrap');
+const totalCountEl = document.getElementById('totalCount');
+const safeCountEl = document.getElementById('safeCount');
+const tightCountEl = document.getElementById('tightCount');
+
+function runPrediction(){
+  const numericRank = parseInt(rankInput.value, 10);
+  if(isNaN(numericRank) || numericRank <= 0) return;
+
+  const category = categorySelect.value;
+  const branchFilter = branchSelect.value;
+  const typeFilter = typeSelect.value;
+  const searchTerm = collegeSearch.value.trim().toLowerCase();
+  const mult = CAT_MULT[category] ?? 1;
+
+  let results = ALL_ROWS.map(r=>{
+    return Object.assign({}, r, { estimatedClosing: Math.round(r.closingRankGen * mult) });
+  }).filter(r => r.estimatedClosing >= numericRank);
+
+  if(branchFilter !== "ALL"){
+    results = results.filter(r=>r.branchCode === branchFilter);
+  }
+  if(typeFilter !== "ALL"){
+    results = results.filter(r=>r.type === typeFilter);
+  }
+  if(searchTerm){
+    results = results.filter(r=>r.college.toLowerCase().includes(searchTerm));
+  }
+
+  results.sort((a,b)=>a.estimatedClosing - b.estimatedClosing);
+
+  const safeCount = results.filter(r=>r.estimatedClosing >= numericRank*1.15).length;
+  const tightCount = results.length - safeCount;
+
+  totalCountEl.textContent = results.length;
+  safeCountEl.textContent = safeCount;
+  tightCountEl.textContent = tightCount;
+
+  resultsBody.innerHTML = "";
+
+  if(results.length === 0){
+    emptyState.classList.remove('hidden');
+    tableWrap.classList.add('hidden');
+  } else {
+    emptyState.classList.add('hidden');
+    tableWrap.classList.remove('hidden');
+
+    results.forEach(r=>{
+      const margin = r.estimatedClosing / numericRank;
+      let chance, chanceClass;
+      if(margin >= 1.3){ chance="Strong"; chanceClass="chance-strong"; }
+      else if(margin >= 1.05){ chance="Good"; chanceClass="chance-good"; }
+      else { chance="Tight"; chanceClass="chance-tight"; }
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>
+          <div class="college-name">${escapeHtml(r.college)}</div>
+          <div class="college-meta">
+            📍 ${escapeHtml(r.city)}
+            <span class="tier-tag" style="background:${tierColor(r.tier)}">${tierLabel(r.tier)}</span>
+          </div>
+        </td>
+        <td>${escapeHtml(r.branchName)}</td>
+        <td class="rank-cell">${r.estimatedClosing.toLocaleString('en-IN')}</td>
+        <td class="chance-cell"><span class="chance-pill ${chanceClass}">${chance}</span></td>
+      `;
+      resultsBody.appendChild(tr);
+    });
+  }
+
+  filterRow.classList.remove('hidden');
+  resultsSection.classList.remove('hidden');
+}
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+  runPrediction();
+});
+
+document.getElementById('checkBtn').addEventListener('click', function(e){
+  e.preventDefault();
+  runPrediction();
+});
+
+rankInput.addEventListener('keydown', function(e){
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    runPrediction();
+  }
+});
+
+branchSelect.addEventListener('change', function(){
+  if(!resultsSection.classList.contains('hidden')) runPrediction();
+});
+typeSelect.addEventListener('change', function(){
+  if(!resultsSection.classList.contains('hidden')) runPrediction();
+});
+categorySelect.addEventListener('change', function(){
+  if(!resultsSection.classList.contains('hidden')) runPrediction();
+});
+collegeSearch.addEventListener('input', function(){
+  if(!resultsSection.classList.contains('hidden')) runPrediction();
+});
+
+/* =========================================================
+   STANDALONE BROWSE SEARCH — search colleges without a rank
+   ========================================================= */
+const browseSearch = document.getElementById('browseSearch');
+const browseSection = document.getElementById('browseSection');
+const browseTableWrap = document.getElementById('browseTableWrap');
+const browseResultsBody = document.getElementById('browseResultsBody');
+const browseEmptyState = document.getElementById('browseEmptyState');
+
+let browseDebounce;
+browseSearch.addEventListener('input', function(){
+  clearTimeout(browseDebounce);
+  browseDebounce = setTimeout(runBrowseSearch, 150);
+});
+
+function runBrowseSearch(){
+  const term = browseSearch.value.trim().toLowerCase();
+
+  if(!term){
+    browseSection.classList.add('hidden');
+    return;
+  }
+
+  const results = ALL_ROWS
+    .filter(r => r.college.toLowerCase().includes(term))
+    .sort((a,b)=> a.college.localeCompare(b.college) || a.closingRankGen - b.closingRankGen);
+
+  browseSection.classList.remove('hidden');
+  browseResultsBody.innerHTML = "";
+
+  if(results.length === 0){
+    browseEmptyState.classList.remove('hidden');
+    browseTableWrap.classList.add('hidden');
+    return;
+  }
+
+  browseEmptyState.classList.add('hidden');
+  browseTableWrap.classList.remove('hidden');
+
+  results.forEach(r=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>
+        <div class="college-name">${escapeHtml(r.college)}</div>
+        <div class="college-meta">
+          📍 ${escapeHtml(r.city)}
+          <span class="tier-tag" style="background:${tierColor(r.tier)}">${tierLabel(r.tier)}</span>
+        </div>
+      </td>
+      <td>${escapeHtml(r.branchName)}</td>
+      <td class="rank-cell">${r.closingRankGen.toLocaleString('en-IN')}</td>
+    `;
+    browseResultsBody.appendChild(tr);
+  });
+}
+
+// --- Nav Scroll & Mobile Menu ---
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.getElementById('nav');
+  if (nav) {
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+  }
+
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (navToggle && mobileMenu) {
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+  }
+
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      if (navToggle && mobileMenu) {
+        navToggle.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>
