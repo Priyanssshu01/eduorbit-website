@@ -5,6 +5,20 @@
 (function () {
   'use strict';
 
+  let COLLEGES = window.COLLEGES;
+  let COURSES = window.COURSES;
+
+  if (typeof localStorage !== 'undefined') {
+    const localColleges = localStorage.getItem('eo_colleges');
+    if (localColleges) {
+      try { COLLEGES = JSON.parse(localColleges); } catch (e) {}
+    }
+    const localCourses = localStorage.getItem('eo_courses');
+    if (localCourses) {
+      try { COURSES = JSON.parse(localCourses); } catch (e) {}
+    }
+  }
+
   // ============================================================
   // COLLEGE PROFILE MODAL
   // ============================================================

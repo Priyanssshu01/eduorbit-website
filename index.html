@@ -985,14 +985,14 @@
 
   <script src="data.js?v=3.7"></script>
   <script src="app.js?v=4.3"></script>
-  <script src="colleges.js?v=1.0"></script>
+  <script src="colleges.js?v=1.1"></script>
   <script src="marketing.js?v=3.6"></script>
   <script src="animations.js?v=1.0"></script>
   <script>
     // ===== SERVICE WORKER — AUTO-UPDATE SYSTEM =====
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js?v=4.3').then(registration => {
+        navigator.serviceWorker.register('./sw.js?v=4.4').then(registration => {
 
           // Jab bhi naya SW install ho, turant activate karo
           registration.addEventListener('updatefound', () => {

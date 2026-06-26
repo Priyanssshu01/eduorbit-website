@@ -12,7 +12,7 @@ function doLogin() {
   const p = (document.getElementById('loginPass').value || '').trim();
   const err = document.getElementById('loginError');
   if (u === ADMIN_USER && p === ADMIN_PASS) {
-    sessionStorage.setItem('eo_admin', 'true');
+    localStorage.setItem('eo_admin', 'true');
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('adminWrap').style.display = 'flex';
     initAdmin();
@@ -23,13 +23,13 @@ function doLogin() {
 }
 
 function doLogout() {
-  sessionStorage.removeItem('eo_admin');
+  localStorage.removeItem('eo_admin');
   location.reload();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   // Always show login first — only skip if session active in same browser tab
-  if (sessionStorage.getItem('eo_admin') === 'true') {
+  if (localStorage.getItem('eo_admin') === 'true') {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('adminWrap').style.display = 'flex';
     initAdmin();
@@ -540,14 +540,23 @@ window.saveAdminLead = function(lead) {
 // Automatically fetches data and updates the UI if localStorage changes on focus/visibility or interval
 function checkAndAutoSync(force = false) {
   // Only sync if the user is logged in
-  if (sessionStorage.getItem('eo_admin') !== 'true') return;
+  if (localStorage.getItem('eo_admin') !== 'true') return;
 
   const leads = localStorage.getItem('eo_leads') || '[]';
   const colleges = localStorage.getItem('eo_colleges') || '[]';
   const courses = localStorage.getItem('eo_courses') || '[]';
   const currentHash = leads + colleges + courses;
 
+  const syncStatus = document.getElementById('syncStatus');
+
   if (force || lastAdminDataHash !== currentHash) {
+    // Show visual indicator that sync is running
+    if (syncStatus) {
+      syncStatus.innerHTML = '<span style="width:6px; height:6px; background:#f5c518; border-radius:50%; display:inline-block; animation: pulse 1.5s infinite;"></span>Syncing...';
+      syncStatus.style.color = '#e67e22';
+      syncStatus.style.background = 'rgba(230,126,34,0.1)';
+    }
+
     lastAdminDataHash = currentHash;
 
     // Check if any edit modal is open to avoid resetting form inputs during typing
@@ -566,11 +575,20 @@ function checkAndAutoSync(force = false) {
       populateCollegeFilter();
       updateExportPreview();
     }
+
+    // Restore visual indicator after a short delay
+    setTimeout(() => {
+      if (syncStatus) {
+        syncStatus.innerHTML = '<span style="width:6px; height:6px; background:#10b981; border-radius:50%; display:inline-block; animation: pulse 1.5s infinite;"></span>Auto-Synced';
+        syncStatus.style.color = '#10b981';
+        syncStatus.style.background = 'rgba(16,185,129,0.1)';
+      }
+    }, 600);
   }
 }
 
-// 1. Poll localStorage changes every 1.5 seconds (for instant tab updates)
-setInterval(() => checkAndAutoSync(false), 1500);
+// 1. Poll localStorage changes every 1.0 second (faster real-time)
+setInterval(() => checkAndAutoSync(false), 1000);
 
 // 2. Immediate update when storage changes in another tab/window
 window.addEventListener('storage', () => {
@@ -588,3 +606,17 @@ document.addEventListener('visibilitychange', () => {
 window.addEventListener('pageshow', () => {
   checkAndAutoSync(true);
 });
+
+// 5. Force update on window focus (handles mobile and desktop refocusing)
+window.addEventListener('focus', () => {
+  checkAndAutoSync(true);
+});
+
+// 6. Force update on touch/tap anywhere (wakes up JS immediately if mobile froze timers)
+document.addEventListener('touchstart', () => {
+  checkAndAutoSync(false);
+}, { passive: true });
+
+document.addEventListener('click', () => {
+  checkAndAutoSync(false);
+}, { passive: true });

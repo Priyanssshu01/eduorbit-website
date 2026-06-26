@@ -105,8 +105,15 @@
       <div class="topbar">
         <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
         <h1 class="page-title" id="pageTitle">Dashboard</h1>
-        <div class="topbar-right">
-          <span class="admin-name">👤 Admin</span>
+        <div class="topbar-right" style="display:flex; align-items:center; gap:12px;">
+          <span id="syncStatus" style="font-size:0.75rem; color:#10b981; background:rgba(16,185,129,0.1); padding:4px 10px; border-radius:100px; display:inline-flex; align-items:center; gap:6px; font-weight:600;">
+            <span style="width:6px; height:6px; background:#10b981; border-radius:50%; display:inline-block; animation: pulse 1.5s infinite;"></span>
+            Auto-Synced
+          </span>
+          <button class="btn-sm btn-edit" onclick="checkAndAutoSync(true)" style="padding: 6px 10px; font-size: 0.72rem; display: flex; align-items: center; gap: 4px;" title="Sync Database Now">
+            🔄 Sync
+          </button>
+          <span class="admin-name" style="margin-left: 4px;">👤 Admin</span>
         </div>
       </div>
 
@@ -263,6 +270,6 @@
   <div class="toast" id="toast"></div>
 
   <script src="data.js?v=3.6"></script>
-  <script src="admin.js?v=4.2"></script>
+  <script src="admin.js?v=4.3"></script>
 </body>
 </html>
