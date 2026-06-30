@@ -5,7 +5,7 @@
 // Koi bhi cached file nahi serve hogi jab tak network available hai.
 // Jaise hi GitHub pe push hoga, SABKE phone pe update aa jayega.
 
-const CACHE_NAME = 'eduorbit-v4.4'; // Version bump = old cache deleted instantly
+const CACHE_NAME = 'eduorbit-v4.5'; // Version bump = old cache deleted instantly
 
 // --- 1. INSTALL: Skip waiting immediately ---
 self.addEventListener('install', event => {
@@ -31,7 +31,7 @@ self.addEventListener('activate', event => {
       // Sabko bolo page refresh karo
       return self.clients.matchAll({ type: 'window' }).then(clients => {
         clients.forEach(client => {
-          client.postMessage({ type: 'SW_UPDATED', version: '4.4' });
+          client.postMessage({ type: 'SW_UPDATED', version: '4.5' });
         });
       });
     })

@@ -551,3 +551,48 @@ section.in-view .section-title::after {
     filter: none !important;
   }
 }
+
+/* ============================================================
+   BACKGROUND FLOATING ICONS (Engineering & Medico theme)
+   ============================================================ */
+.bg-floating-icons {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  will-change: transform;
+}
+.floating-icon {
+  position: absolute;
+  opacity: 0.04;
+  color: var(--blue);
+  animation: floatAround var(--float-dur) ease-in-out var(--float-delay) infinite alternate;
+  will-change: transform;
+}
+.floating-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.floating-icon:nth-child(3n+1) {
+  color: var(--yellow);
+  opacity: 0.03;
+}
+.floating-icon:nth-child(3n+2) {
+  color: var(--blue-l);
+  opacity: 0.05;
+}
+
+@keyframes floatAround {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(var(--float-x), var(--float-y), 0) rotate(180deg);
+  }
+  100% {
+    transform: translate3d(calc(var(--float-x) * -1), calc(var(--float-y) * -1), 0) rotate(360deg);
+  }
+}
+

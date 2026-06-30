@@ -38,6 +38,21 @@
     return ' [Ads: Direct / Unknown]';
   }
 
+  // --- Email Query sender via FormSubmit.co ---
+  function sendEmailQuery(payload) {
+    fetch("https://formsubmit.co/ajax/eduorbit.admissions@gmail.com", {
+      method: "POST",
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then(data => console.log('Query email sent successfully:', data))
+    .catch(err => console.error('Error sending query email:', err));
+  }
+
   // --- Loader ---
   window.addEventListener('load', () => {
     setTimeout(() => {
@@ -527,6 +542,16 @@
     leads.push({ name, phone, course, message: message + utmInfo, date: new Date().toISOString() });
     localStorage.setItem('eo_leads', JSON.stringify(leads));
 
+    // Send email query to owner
+    sendEmailQuery({
+      _subject: `New Student Lead - ${name} (${course})`,
+      Name: name,
+      Phone: phone,
+      Course: course,
+      Message: message + utmInfo,
+      _replyto: phone
+    });
+
     // Report Conversion to Google Ads
     if (typeof gtag_report_conversion === 'function') {
       gtag_report_conversion();
@@ -600,6 +625,17 @@
     leads.push({ name, phone, course: courseName, message: `Fee Receipt generated for ${colAbbr}` + utmInfo, date: new Date().toISOString(), stage: 'new' });
     localStorage.setItem('eo_leads', JSON.stringify(leads));
 
+    // Send email query to owner
+    sendEmailQuery({
+      _subject: `Fee Receipt Generated - ${name} (${courseName})`,
+      Name: name,
+      Phone: phone,
+      College: `${college.name} (${college.abbr})`,
+      Course: courseName,
+      TotalFee: `INR ${course.totalFee.toLocaleString('en-IN')}`,
+      Source: `Fee Receipt generated for ${colAbbr}` + utmInfo
+    });
+
     // Populate Receipt
     document.getElementById('tName').textContent = name;
     document.getElementById('tCollege').textContent = college.abbr;
@@ -657,6 +693,15 @@
     const utmInfo = getUTMSourceInfo();
     leads.push({ name, phone, course, message: 'Via Popup Lead Form' + utmInfo, date: new Date().toISOString() });
     localStorage.setItem('eo_leads', JSON.stringify(leads));
+
+    // Send email query to owner
+    sendEmailQuery({
+      _subject: `Popup Lead - ${name} (${course})`,
+      Name: name,
+      Phone: phone,
+      Course: course,
+      Source: 'Via Popup Lead Form' + utmInfo
+    });
 
     // Report Conversion to Google Ads
     if (typeof gtag_report_conversion === 'function') {
