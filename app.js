@@ -53,6 +53,25 @@
     .catch(err => console.error('Error sending query email:', err));
   }
 
+  // --- Cloud Database Lead Saver via ExtendsClass ---
+  function saveLeadToCloud(lead) {
+    const dbUrl = "https://extendsclass.com/api/json-storage/bin/caacdce";
+    fetch(dbUrl)
+      .then(res => res.json())
+      .then(data => {
+        const currentLeads = Array.isArray(data) ? data : [];
+        currentLeads.push(lead);
+        return fetch(dbUrl, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(currentLeads)
+        });
+      })
+      .then(res => res.json())
+      .then(result => console.log('Lead successfully synced to cloud database:', result))
+      .catch(err => console.error('Cloud database sync error:', err));
+  }
+
   // --- Loader ---
   window.addEventListener('load', () => {
     setTimeout(() => {
@@ -539,8 +558,10 @@
 
     // Save lead to localStorage for admin panel
     const leads = JSON.parse(localStorage.getItem('eo_leads') || '[]');
-    leads.push({ name, phone, course, message: message + utmInfo, date: new Date().toISOString() });
+    const lead = { name, phone, course, message: message + utmInfo, date: new Date().toISOString() };
+    leads.push(lead);
     localStorage.setItem('eo_leads', JSON.stringify(leads));
+    saveLeadToCloud(lead);
 
     // Send email query to owner
     sendEmailQuery({
@@ -622,8 +643,10 @@
     // Save lead
     const leads = JSON.parse(localStorage.getItem('eo_leads') || '[]');
     const utmInfo = getUTMSourceInfo();
-    leads.push({ name, phone, course: courseName, message: `Fee Receipt generated for ${colAbbr}` + utmInfo, date: new Date().toISOString(), stage: 'new' });
+    const lead = { name, phone, course: courseName, message: `Fee Receipt generated for ${colAbbr}` + utmInfo, date: new Date().toISOString(), stage: 'new' };
+    leads.push(lead);
     localStorage.setItem('eo_leads', JSON.stringify(leads));
+    saveLeadToCloud(lead);
 
     // Send email query to owner
     sendEmailQuery({
@@ -691,8 +714,10 @@
     // Save to localStorage for admin panel
     const leads = JSON.parse(localStorage.getItem('eo_leads') || '[]');
     const utmInfo = getUTMSourceInfo();
-    leads.push({ name, phone, course, message: 'Via Popup Lead Form' + utmInfo, date: new Date().toISOString() });
+    const lead = { name, phone, course, message: 'Via Popup Lead Form' + utmInfo, date: new Date().toISOString() };
+    leads.push(lead);
     localStorage.setItem('eo_leads', JSON.stringify(leads));
+    saveLeadToCloud(lead);
 
     // Send email query to owner
     sendEmailQuery({

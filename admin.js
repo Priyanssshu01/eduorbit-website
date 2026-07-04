@@ -1,8 +1,4 @@
 // ===== EDUORBIT ADMIN PANEL =====
-// Credentials (change these to keep secure!)
-const ADMIN_USER = 'eduorbit';
-const ADMIN_PASS = 'admin@2026';
-
 // Cache-busting hash tracking for auto-syncing tabs & devices
 let lastAdminDataHash = '';
 
@@ -11,29 +7,82 @@ function doLogin() {
   const u = (document.getElementById('loginUser').value || '').trim();
   const p = (document.getElementById('loginPass').value || '').trim();
   const err = document.getElementById('loginError');
-  if (u === ADMIN_USER && p === ADMIN_PASS) {
-    localStorage.setItem('eo_admin', 'true');
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('adminWrap').style.display = 'flex';
-    initAdmin();
-  } else {
+  const btn = document.getElementById('loginBtn');
+
+  if (!u || !p) {
+    err.textContent = "⚠️ Please fill in all fields.";
     err.style.display = 'block';
     setTimeout(() => { err.style.display = 'none'; }, 3000);
+    return;
   }
+
+  btn.disabled = true;
+  btn.textContent = "Checking...";
+
+  fetch('/.netlify/functions/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: u, password: p })
+  })
+  .then(res => res.json())
+  .then(data => {
+    btn.disabled = false;
+    btn.textContent = "🔒 Login to Dashboard";
+    if (data.success) {
+      localStorage.setItem('eo_admin', 'true');
+      localStorage.setItem('eo_session_time', Date.now().toString());
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('adminWrap').style.display = 'flex';
+      initAdmin();
+    } else {
+      err.textContent = "❌ Wrong username or password. Try again.";
+      err.style.display = 'block';
+      setTimeout(() => { err.style.display = 'none'; }, 3000);
+    }
+  })
+  .catch(err => {
+    btn.disabled = false;
+    btn.textContent = "🔒 Login to Dashboard";
+    console.warn("Login API failed, falling back to client-side auth for offline/local dev compatibility.");
+    // Fallback login during local dev if Netlify functions are not running locally:
+    if (u === 'eduorbit' && p === 'admin@2026') {
+      localStorage.setItem('eo_admin', 'true');
+      localStorage.setItem('eo_session_time', Date.now().toString());
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('adminWrap').style.display = 'flex';
+      initAdmin();
+    } else {
+      err.textContent = "❌ Wrong username or password. Try again.";
+      err.style.display = 'block';
+      setTimeout(() => { err.style.display = 'none'; }, 3000);
+    }
+  });
 }
 
 function doLogout() {
   localStorage.removeItem('eo_admin');
+  localStorage.removeItem('eo_session_time');
   location.reload();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Always show login first — only skip if session active in same browser tab
-  if (localStorage.getItem('eo_admin') === 'true') {
+  // Always show login first — only skip if session active and not expired (2 hours)
+  const sessionTime = localStorage.getItem('eo_session_time');
+  const maxSessionDuration = 2 * 60 * 60 * 1000; // 2 hours in ms
+  const isSessionValid = sessionTime && (Date.now() - parseInt(sessionTime, 10) < maxSessionDuration);
+
+  if (localStorage.getItem('eo_admin') === 'true' && isSessionValid) {
+    // Refresh session time on active usage
+    localStorage.setItem('eo_session_time', Date.now().toString());
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('adminWrap').style.display = 'flex';
     initAdmin();
+  } else {
+    // Clear expired session
+    localStorage.removeItem('eo_admin');
+    localStorage.removeItem('eo_session_time');
   }
+
   // Enter key on password
   const passEl = document.getElementById('loginPass');
   if (passEl) passEl.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
@@ -62,6 +111,62 @@ function getLeads() {
 }
 function saveLeads(data) {
   localStorage.setItem('eo_leads', JSON.stringify(data));
+
+  // Push updated list to cloud database to keep it synced
+  const dbUrl = "https://extendsclass.com/api/json-storage/bin/caacdce";
+  fetch(dbUrl, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(result => console.log('Cloud database updated successfully on save:', result))
+  .catch(err => console.error('Cloud database update error on save:', err));
+}
+
+// --- Cloud Database Synchronizer ---
+function syncLeadsWithCloud() {
+  // Only sync if the admin is logged in
+  if (localStorage.getItem('eo_admin') !== 'true') return Promise.resolve();
+
+  const dbUrl = "https://extendsclass.com/api/json-storage/bin/caacdce";
+  return fetch(dbUrl)
+    .then(res => res.json())
+    .then(cloudLeads => {
+      if (!Array.isArray(cloudLeads)) return;
+      const localLeads = getLeads();
+      
+      const merged = [...localLeads];
+      let hasNew = false;
+      cloudLeads.forEach(cloudLead => {
+        const exists = localLeads.some(localLead => 
+          localLead.date === cloudLead.date && localLead.phone === cloudLead.phone
+        );
+        if (!exists) {
+          merged.push(cloudLead);
+          hasNew = true;
+        }
+      });
+
+      if (hasNew) {
+        merged.sort((a, b) => new Date(a.date) - new Date(b.date));
+        // Directly set localStorage to avoid trigger loop
+        localStorage.setItem('eo_leads', JSON.stringify(merged));
+        
+        // Sync local leads back to cloud to keep both completely updated
+        fetch(dbUrl, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(merged)
+        }).catch(err => console.error("Cloud push error during merge:", err));
+        
+        // Refresh UI
+        updateDashboard();
+        renderLeadsTable();
+        renderPartnersTable();
+      }
+    })
+    .catch(err => console.error("Cloud sync error:", err));
 }
 
 // ===== INIT =====
@@ -79,6 +184,9 @@ function initAdmin() {
   renderPartnersTable();
   updateExportPreview();
   populateCollegeFilter();
+
+  // Fetch latest leads from cloud database
+  syncLeadsWithCloud();
 }
 
 // ===== TAB SWITCH =====
@@ -576,6 +684,11 @@ function checkAndAutoSync(force = false) {
       updateExportPreview();
     }
 
+    // If force sync (like visibility/focus), fetch new leads from cloud
+    if (force) {
+      syncLeadsWithCloud();
+    }
+
     // Restore visual indicator after a short delay
     setTimeout(() => {
       if (syncStatus) {
@@ -620,3 +733,7 @@ document.addEventListener('touchstart', () => {
 document.addEventListener('click', () => {
   checkAndAutoSync(false);
 }, { passive: true });
+
+// 7. Poll cloud database for new leads every 10 seconds
+setInterval(syncLeadsWithCloud, 10000);
+

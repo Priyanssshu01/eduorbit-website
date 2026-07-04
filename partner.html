@@ -497,8 +497,26 @@
       // Save lead to localStorage
       try {
         const leads = JSON.parse(localStorage.getItem('eo_leads') || '[]');
-        leads.push({ name, phone, course: 'Partner App', message, date: new Date().toISOString() });
+        const lead = { name, phone, course: 'Partner App', message, date: new Date().toISOString() };
+        leads.push(lead);
         localStorage.setItem('eo_leads', JSON.stringify(leads));
+
+        // Save lead to cloud database
+        const dbUrl = "https://extendsclass.com/api/json-storage/bin/caacdce";
+        fetch(dbUrl)
+          .then(res => res.json())
+          .then(data => {
+            const currentLeads = Array.isArray(data) ? data : [];
+            currentLeads.push(lead);
+            return fetch(dbUrl, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(currentLeads)
+            });
+          })
+          .then(res => res.json())
+          .then(result => console.log('Partner lead synced to cloud database:', result))
+          .catch(err => console.error('Cloud database sync error:', err));
       } catch (e) {
         console.error('Error saving lead:', e);
       }
