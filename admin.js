@@ -3,13 +3,13 @@
 let lastAdminDataHash = '';
 
 // --- Supabase Database Initialization ---
-let supabase = null;
+let supabaseClient = null;
 const SUPABASE_URL = "https://udcnptsaozgktcdxcyvp.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_rVJnEPIezna8jPoeanUNEQ_3olVH7UK";
 
 if (window.supabase && SUPABASE_URL !== "YOUR_SUPABASE_URL") {
   try {
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     console.log('Supabase client initialized successfully');
   } catch (e) {
     console.error('Supabase client initialization failed:', e);
@@ -90,9 +90,9 @@ function saveLeads(data) {
 }
 
 function deleteLeadFromCloud(leadId) {
-  if (!supabase || !leadId) return;
+  if (!supabaseClient || !leadId) return;
 
-  supabase.from('leads').delete().eq('id', leadId)
+  supabaseClient.from('leads').delete().eq('id', leadId)
   .then(({ error }) => {
     if (error) console.error('Error deleting lead from cloud:', error);
     else console.log('Lead successfully deleted from cloud');
@@ -104,9 +104,9 @@ function deleteLeadFromCloud(leadId) {
 function syncLeadsWithCloud() {
   // Only sync if the admin is logged in
   if (localStorage.getItem('eo_admin') !== 'true') return Promise.resolve();
-  if (!supabase) return Promise.resolve();
+  if (!supabaseClient) return Promise.resolve();
 
-  return supabase.from('leads').select('*').order('date', { ascending: true })
+  return supabaseClient.from('leads').select('*').order('date', { ascending: true })
   .then(({ data: cloudLeads, error }) => {
     if (error) {
       console.error("Supabase select error:", error);

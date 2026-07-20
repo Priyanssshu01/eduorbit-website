@@ -54,13 +54,13 @@
   }
 
   // --- Supabase Database Initialization ---
-  let supabase = null;
+  let supabaseClient = null;
   const SUPABASE_URL = "https://udcnptsaozgktcdxcyvp.supabase.co";
   const SUPABASE_ANON_KEY = "sb_publishable_rVJnEPIezna8jPoeanUNEQ_3olVH7UK";
 
   if (window.supabase && SUPABASE_URL !== "YOUR_SUPABASE_URL") {
     try {
-      supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       console.log('Supabase client initialized successfully');
     } catch (e) {
       console.error('Supabase client initialization failed:', e);
@@ -69,11 +69,11 @@
 
   // --- Cloud Database Lead Saver via Supabase ---
   function saveLeadToCloud(lead) {
-    if (!supabase) {
+    if (!supabaseClient) {
       console.warn('Supabase not configured or failed to load. Lead saved locally only.');
       return;
     }
-    supabase.from('leads').insert([{
+    supabaseClient.from('leads').insert([{
       name: lead.name,
       phone: lead.phone,
       course: lead.course || 'General',
