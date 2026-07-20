@@ -2,61 +2,37 @@
 // Cache-busting hash tracking for auto-syncing tabs & devices
 let lastAdminDataHash = '';
 
+// --- Supabase Database Initialization ---
+let supabase = null;
+const SUPABASE_URL = "https://udcnptsaozgktcdxcyvp.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_rVJnEPIezna8jPoeanUNEQ_3olVH7UK";
+
+if (window.supabase && SUPABASE_URL !== "YOUR_SUPABASE_URL") {
+  try {
+    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    console.log('Supabase client initialized successfully');
+  } catch (e) {
+    console.error('Supabase client initialization failed:', e);
+  }
+}
+
 // ===== AUTH =====
 function doLogin() {
   const u = (document.getElementById('loginUser').value || '').trim();
   const p = (document.getElementById('loginPass').value || '').trim();
   const err = document.getElementById('loginError');
-  const btn = document.getElementById('loginBtn');
 
-  if (!u || !p) {
-    err.textContent = "⚠️ Please fill in all fields.";
+  if (u === 'eduorbit' && p === 'admin@2026') {
+    localStorage.setItem('eo_admin', 'true');
+    localStorage.setItem('eo_session_time', Date.now().toString());
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminWrap').style.display = 'flex';
+    initAdmin();
+  } else {
+    err.textContent = "❌ Wrong username or password. Try again.";
     err.style.display = 'block';
     setTimeout(() => { err.style.display = 'none'; }, 3000);
-    return;
   }
-
-  btn.disabled = true;
-  btn.textContent = "Checking...";
-
-  fetch('/.netlify/functions/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username: u, password: p })
-  })
-  .then(res => res.json())
-  .then(data => {
-    btn.disabled = false;
-    btn.textContent = "🔒 Login to Dashboard";
-    if (data.success) {
-      localStorage.setItem('eo_admin', 'true');
-      localStorage.setItem('eo_session_time', Date.now().toString());
-      document.getElementById('loginScreen').style.display = 'none';
-      document.getElementById('adminWrap').style.display = 'flex';
-      initAdmin();
-    } else {
-      err.textContent = "❌ Wrong username or password. Try again.";
-      err.style.display = 'block';
-      setTimeout(() => { err.style.display = 'none'; }, 3000);
-    }
-  })
-  .catch(err => {
-    btn.disabled = false;
-    btn.textContent = "🔒 Login to Dashboard";
-    console.warn("Login API failed, falling back to client-side auth for offline/local dev compatibility.");
-    // Fallback login during local dev if Netlify functions are not running locally:
-    if (u === 'eduorbit' && p === 'admin@2026') {
-      localStorage.setItem('eo_admin', 'true');
-      localStorage.setItem('eo_session_time', Date.now().toString());
-      document.getElementById('loginScreen').style.display = 'none';
-      document.getElementById('adminWrap').style.display = 'flex';
-      initAdmin();
-    } else {
-      err.textContent = "❌ Wrong username or password. Try again.";
-      err.style.display = 'block';
-      setTimeout(() => { err.style.display = 'none'; }, 3000);
-    }
-  });
 }
 
 function doLogout() {
@@ -111,62 +87,72 @@ function getLeads() {
 }
 function saveLeads(data) {
   localStorage.setItem('eo_leads', JSON.stringify(data));
+}
 
-  // Push updated list to cloud database to keep it synced
-  const dbUrl = "https://extendsclass.com/api/json-storage/bin/caacdce";
-  fetch(dbUrl, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
+function deleteLeadFromCloud(leadId) {
+  if (!supabase || !leadId) return;
+
+  supabase.from('leads').delete().eq('id', leadId)
+  .then(({ error }) => {
+    if (error) console.error('Error deleting lead from cloud:', error);
+    else console.log('Lead successfully deleted from cloud');
   })
-  .then(res => res.json())
-  .then(result => console.log('Cloud database updated successfully on save:', result))
-  .catch(err => console.error('Cloud database update error on save:', err));
+  .catch(err => console.error('Cloud delete exception:', err));
 }
 
 // --- Cloud Database Synchronizer ---
 function syncLeadsWithCloud() {
   // Only sync if the admin is logged in
   if (localStorage.getItem('eo_admin') !== 'true') return Promise.resolve();
+  if (!supabase) return Promise.resolve();
 
-  const dbUrl = "https://extendsclass.com/api/json-storage/bin/caacdce";
-  return fetch(dbUrl)
-    .then(res => res.json())
-    .then(cloudLeads => {
-      if (!Array.isArray(cloudLeads)) return;
-      const localLeads = getLeads();
-      
-      const merged = [...localLeads];
-      let hasNew = false;
-      cloudLeads.forEach(cloudLead => {
-        const exists = localLeads.some(localLead => 
+  return supabase.from('leads').select('*').order('date', { ascending: true })
+  .then(({ data: cloudLeads, error }) => {
+    if (error) {
+      console.error("Supabase select error:", error);
+      return;
+    }
+    if (!Array.isArray(cloudLeads)) {
+      console.warn("Invalid response from Supabase:", cloudLeads);
+      return;
+    }
+    const localLeads = getLeads();
+    
+    // Merge cloud leads into local leads
+    const merged = [...localLeads];
+    let hasNew = false;
+    cloudLeads.forEach(cloudLead => {
+      // Find if local already has a lead with the same date/phone or same id
+      const exists = localLeads.some(localLead => 
+        (localLead.id && localLead.id === cloudLead.id) ||
+        (localLead.date === cloudLead.date && localLead.phone === cloudLead.phone)
+      );
+      if (!exists) {
+        merged.push(cloudLead);
+        hasNew = true;
+      } else {
+        // Attach ID if it was submitted offline locally without one
+        const localIndex = merged.findIndex(localLead => 
           localLead.date === cloudLead.date && localLead.phone === cloudLead.phone
         );
-        if (!exists) {
-          merged.push(cloudLead);
+        if (localIndex !== -1 && !merged[localIndex].id) {
+          merged[localIndex].id = cloudLead.id;
           hasNew = true;
         }
-      });
-
-      if (hasNew) {
-        merged.sort((a, b) => new Date(a.date) - new Date(b.date));
-        // Directly set localStorage to avoid trigger loop
-        localStorage.setItem('eo_leads', JSON.stringify(merged));
-        
-        // Sync local leads back to cloud to keep both completely updated
-        fetch(dbUrl, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(merged)
-        }).catch(err => console.error("Cloud push error during merge:", err));
-        
-        // Refresh UI
-        updateDashboard();
-        renderLeadsTable();
-        renderPartnersTable();
       }
-    })
-    .catch(err => console.error("Cloud sync error:", err));
+    });
+
+    if (hasNew) {
+      merged.sort((a, b) => new Date(a.date) - new Date(b.date));
+      localStorage.setItem('eo_leads', JSON.stringify(merged));
+      
+      // Refresh UI
+      updateDashboard();
+      renderLeadsTable();
+      renderPartnersTable();
+    }
+  })
+  .catch(err => console.error("Cloud sync error:", err));
 }
 
 // ===== INIT =====
@@ -462,8 +448,12 @@ function renderLeadsTable() {
 
 function deleteLead(idx) {
   const leads = getLeads();
+  const leadToDelete = leads[idx];
+  if (leadToDelete && leadToDelete.id) {
+    deleteLeadFromCloud(leadToDelete.id);
+  }
   leads.splice(idx, 1);
-  saveLeads(leads);
+  localStorage.setItem('eo_leads', JSON.stringify(leads));
   renderLeadsTable();
   updateDashboard();
   showToast('🗑 Lead deleted');
@@ -471,8 +461,14 @@ function deleteLead(idx) {
 
 function clearLeads() {
   if (!confirm('Delete ALL student leads? This cannot be undone!')) return;
-  const partnerLeads = getLeads().filter(l => l.course === 'Partner App');
-  saveLeads(partnerLeads);
+  const allLeads = getLeads();
+  const studentLeads = allLeads.filter(l => l.course !== 'Partner App');
+  studentLeads.forEach(l => {
+    if (l.id) deleteLeadFromCloud(l.id);
+  });
+  
+  const partnerLeads = allLeads.filter(l => l.course === 'Partner App');
+  localStorage.setItem('eo_leads', JSON.stringify(partnerLeads));
   renderLeadsTable();
   updateDashboard();
   showToast('🗑 All student leads cleared');
@@ -512,8 +508,12 @@ function renderPartnersTable() {
 
 function deletePartner(idx) {
   const leads = getLeads();
+  const leadToDelete = leads[idx];
+  if (leadToDelete && leadToDelete.id) {
+    deleteLeadFromCloud(leadToDelete.id);
+  }
   leads.splice(idx, 1);
-  saveLeads(leads);
+  localStorage.setItem('eo_leads', JSON.stringify(leads));
   renderPartnersTable();
   updateDashboard();
   showToast('🗑 Partner application deleted');
@@ -521,8 +521,14 @@ function deletePartner(idx) {
 
 function clearPartners() {
   if (!confirm('Delete ALL partner applications? This cannot be undone!')) return;
-  const leads = getLeads().filter(l => l.course !== 'Partner App');
-  saveLeads(leads);
+  const allLeads = getLeads();
+  const partnerLeads = allLeads.filter(l => l.course === 'Partner App');
+  partnerLeads.forEach(l => {
+    if (l.id) deleteLeadFromCloud(l.id);
+  });
+  
+  const studentLeads = allLeads.filter(l => l.course !== 'Partner App');
+  localStorage.setItem('eo_leads', JSON.stringify(studentLeads));
   renderPartnersTable();
   updateDashboard();
   showToast('🗑 All partner apps cleared');
