@@ -339,12 +339,12 @@
     renderPickerChips();
   }
 
-  // Auto-build comparison table with top 4 on load after data ready
+  // Auto-pre-load comparison data silently (NO scroll — user gets hero page first)
   window.addEventListener('load', () => {
     setTimeout(() => {
       renderPickerChips();
-      // Pre-build comparison with default top 4
-      buildCompareTable();
+      // buildCompareTable removed from auto-load — it was scrolling page to compare section
+      // Table will build only when user clicks "Compare Now" button
     }, 1500);
   });
 
