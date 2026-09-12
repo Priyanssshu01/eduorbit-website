@@ -5,7 +5,7 @@
 // Koi bhi cached file nahi serve hogi jab tak network available hai.
 // Jaise hi GitHub pe push hoga, SABKE phone pe update aa jayega.
 
-const CACHE_NAME = 'eduorbit-v4.5'; // Version bump = old cache deleted instantly
+const CACHE_NAME = 'eduorbit-v5.0'; // Version bump = old cache deleted instantly
 
 // --- 1. INSTALL: Skip waiting immediately ---
 self.addEventListener('install', event => {
@@ -20,21 +20,16 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cache => {
           // Koi bhi purana cache — delete!
-          console.log('[SW v3.9] Deleting old cache:', cache);
+          console.log('[SW v5.0] Deleting old cache:', cache);
           return caches.delete(cache);
         })
       );
     }).then(() => {
       // Turant SABKE open tabs/phones ko control lo
       return self.clients.claim();
-    }).then(() => {
-      // Sabko bolo page refresh karo
-      return self.clients.matchAll({ type: 'window' }).then(clients => {
-        clients.forEach(client => {
-          client.postMessage({ type: 'SW_UPDATED', version: '4.5' });
-        });
-      });
     })
+    // NOTE: SW_UPDATED postMessage removed — it was causing window.location.reload(true)
+    // which restored old URL hash (#fees) and jumped mid-page on every fresh visit.
   );
 });
 
