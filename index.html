@@ -251,79 +251,116 @@
   <div id="collegesGrid" style="display:none;"></div>
 
   <!-- =========================================================
-       ANIMATED BUILDINGS CITYSCAPE — COLLEGE EXPLORER
+       ROUND COLLEGE CARDS — DRAGGABLE CAROUSEL
        ========================================================= -->
   <section class="buildings-section" id="colleges">
     <div class="container">
       <div class="buildings-header">
         <span class="section-tag">02 — Partner Colleges</span>
         <h2>Explore Our <em>Partner Colleges</em></h2>
-        <p>Click any building to view fee details, courses, hostel info & more</p>
+        <p>Drag or swipe to browse — tap any college to view full details</p>
       </div>
+      <p class="carousel-drag-hint">
+        ← Drag to slide <span>→</span>
+      </p>
     </div>
-    <div class="buildings-cityscape" id="buildingsCityscape">
-      <!-- Buildings injected by buildings.js -->
-    </div>
-    <div class="buildings-ground"></div>
-    <div class="container">
-      <p style="color:#64748B;text-align:center;margin-top:16px;font-size:0.78rem;">🏙️ Click any college building to view full details, fee structure &amp; enquire directly</p>
+
+    <!-- Carousel Wrapper -->
+    <div style="position:relative;">
+      <button class="carousel-nav-btn carousel-nav-prev" id="carouselPrev" aria-label="Previous">‹</button>
+      <div class="colleges-carousel-wrap" id="collegesCarouselWrap" style="overflow-x:auto;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
+        <div class="colleges-carousel-track" id="collegesCarouselTrack">
+          <!-- Round cards injected by buildings.js -->
+        </div>
+      </div>
+      <button class="carousel-nav-btn carousel-nav-next" id="carouselNext" aria-label="Next">›</button>
     </div>
   </section>
 
   <!-- =========================================================
-       COLLEGE DETAIL MODAL (Buildings popup)
+       COLLEGE DETAIL MODAL (Beige theme, readable text)
        ========================================================= -->
   <div class="cp-overlay" id="buildingModalOverlay">
-    <div class="cp-modal" style="max-height:88vh;overflow-y:auto;">
-      <div class="cp-banner" id="bm-color-bar" style="padding:28px 28px 20px;position:relative;">
+    <div class="cp-modal" style="max-height:90vh;overflow-y:auto;border-radius:20px;">
+
+      <!-- Banner (colored gradient from college) -->
+      <div class="cp-banner" id="bm-color-bar" style="padding:28px 28px 22px;position:relative;border-radius:20px 20px 0 0;">
         <button class="cp-close" id="bmClose" aria-label="Close">✕</button>
         <div style="display:flex;align-items:center;gap:16px;">
-          <div style="font-size:2.8rem;" id="bm-icon">🏛️</div>
+          <div style="font-size:3rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.3));" id="bm-icon">🏛️</div>
           <div>
-            <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;color:rgba(255,255,255,0.6);text-transform:uppercase;margin-bottom:2px;" id="bm-abbr"></div>
-            <h2 style="font-size:1.2rem;font-weight:800;color:#fff;line-height:1.2;margin:0;" id="bm-name"></h2>
+            <div style="font-size:0.7rem;font-weight:800;letter-spacing:0.12em;color:rgba(255,255,255,0.75);text-transform:uppercase;margin-bottom:4px;" id="bm-abbr"></div>
+            <h2 style="font-size:1.25rem;font-weight:900;color:#fff;line-height:1.2;margin:0;text-shadow:0 1px 4px rgba(0,0,0,0.3);" id="bm-name"></h2>
           </div>
         </div>
-        <div style="display:flex;gap:16px;margin-top:16px;flex-wrap:wrap;">
-          <div style="display:flex;align-items:center;gap:5px;font-size:0.78rem;color:rgba(255,255,255,0.7);">📍 <span id="bm-location"></span></div>
-          <div style="display:flex;align-items:center;gap:5px;font-size:0.78rem;color:rgba(255,255,255,0.6);">🎓 <span id="bm-affil"></span></div>
+        <div style="display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:0.78rem;color:rgba(255,255,255,0.85);font-weight:500;">
+            📍 <span id="bm-location"></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:0.75rem;color:rgba(255,255,255,0.7);">
+            🎓 <span id="bm-affil"></span>
+          </div>
         </div>
       </div>
-      <div class="cp-body" style="padding:24px 28px;">
-        <p style="font-size:0.85rem;color:#94A3B8;line-height:1.6;margin-bottom:20px;" id="bm-bio"></p>
-        <div style="margin-bottom:20px;">
-          <h4 style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#64748B;margin-bottom:10px;">Key Highlights</h4>
-          <div id="bm-highlights" style="display:flex;flex-direction:column;gap:2px;"></div>
+
+      <!-- Body — Beige themed, dark readable text -->
+      <div style="padding:24px 28px;background:#FAF7F2;">
+
+        <!-- About -->
+        <p class="bm-modal-bio" id="bm-bio"></p>
+
+        <!-- Key Highlights -->
+        <div style="margin-bottom:22px;">
+          <div class="bm-section-title">Key Highlights</div>
+          <div id="bm-highlights"></div>
         </div>
-        <div style="margin-bottom:20px;">
-          <h4 style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#64748B;margin-bottom:10px;">Courses &amp; Fee Structure</h4>
+
+        <!-- Courses & Fees -->
+        <div style="margin-bottom:22px;">
+          <div class="bm-section-title">Courses &amp; Fee Structure</div>
           <div id="bm-courses"></div>
         </div>
-        <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:12px 14px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;">
-          <span style="font-size:0.78rem;color:#94A3B8;font-weight:600;">🏠 Hostel Facility</span>
-          <span style="font-size:0.82rem;font-weight:700;color:#F1F5F9;" id="bm-hostel"></span>
+
+        <!-- Hostel -->
+        <div class="bm-hostel-box" style="margin-bottom:22px;">
+          <span class="bm-hostel-label">🏠 Hostel Facility</span>
+          <span class="bm-hostel-value" id="bm-hostel-value"></span>
         </div>
-        <div style="margin-bottom:20px;">
-          <h4 style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#64748B;margin-bottom:10px;">Placement Record</h4>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
-            <div style="background:rgba(56,189,248,0.08);border-radius:10px;padding:12px;text-align:center;">
-              <div style="font-size:1.1rem;font-weight:800;color:#38BDF8;" id="bm-avg-pkg"></div>
-              <div style="font-size:0.65rem;color:#64748B;margin-top:2px;">Avg. Package</div>
+
+        <!-- Placement -->
+        <div style="margin-bottom:22px;">
+          <div class="bm-section-title">Placement Record</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+            <div class="bm-stat-box avg">
+              <span class="bm-stat-val" id="bm-avg-pkg"></span>
+              <span class="bm-stat-lbl">Average Package</span>
             </div>
-            <div style="background:rgba(129,140,248,0.08);border-radius:10px;padding:12px;text-align:center;">
-              <div style="font-size:1.1rem;font-weight:800;color:#818CF8;" id="bm-high-pkg"></div>
-              <div style="font-size:0.65rem;color:#64748B;margin-top:2px;">Highest Package</div>
+            <div class="bm-stat-box high">
+              <span class="bm-stat-val" id="bm-high-pkg"></span>
+              <span class="bm-stat-lbl">Highest Package</span>
             </div>
           </div>
           <div style="display:flex;flex-wrap:wrap;gap:6px;" id="bm-companies"></div>
         </div>
+
+        <!-- Links -->
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;">
-          <a id="bm-insta-link" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#E1306C,#833AB4);color:#fff;padding:8px 16px;border-radius:8px;font-size:0.78rem;font-weight:600;text-decoration:none;">📸 Instagram</a>
-          <a id="bm-web-link" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);color:#F1F5F9;border:1px solid rgba(255,255,255,0.15);padding:8px 16px;border-radius:8px;font-size:0.78rem;font-weight:600;text-decoration:none;">🌐 Official Website</a>
+          <a id="bm-insta-link" target="_blank" rel="noopener"
+             style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#E1306C,#833AB4);color:#fff;padding:9px 18px;border-radius:10px;font-size:0.8rem;font-weight:700;text-decoration:none;">
+            📸 Instagram
+          </a>
+          <a id="bm-web-link" target="_blank" rel="noopener"
+             style="display:inline-flex;align-items:center;gap:6px;background:#EDE8DC;color:#2C1810;border:1.5px solid #C9A96E;padding:9px 18px;border-radius:10px;font-size:0.8rem;font-weight:700;text-decoration:none;">
+            🌐 Official Website
+          </a>
         </div>
-        <button id="bm-enquiry-btn" style="width:100%;padding:14px;background:linear-gradient(135deg,#22C55E,#16A34A);border:none;border-radius:12px;color:#fff;font-size:0.95rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+
+        <!-- Enquiry CTA -->
+        <button id="bm-enquiry-btn"
+          style="width:100%;padding:14px;background:linear-gradient(135deg,#C9A96E,#8B6914);border:none;border-radius:12px;color:#fff;font-size:0.95rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:0.02em;box-shadow:0 4px 16px rgba(139,105,20,0.3);">
           💬 WhatsApp Enquiry for This College
         </button>
+
       </div>
     </div>
   </div>
