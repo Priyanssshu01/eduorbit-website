@@ -1,0 +1,576 @@
+/* ===================================================================
+   EDUORBIT — ANIMATED COLLEGE BUILDINGS
+   buildings.css  |  v1.0
+   =================================================================== */
+
+/* ============================================================
+   BUILDINGS SECTION WRAPPER
+   ============================================================ */
+.buildings-section {
+  background: linear-gradient(180deg, #0F172A 0%, #1B2A4A 60%, #0F172A 100%);
+  padding: 80px 0 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Night sky stars */
+.buildings-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 50% 10%, rgba(255,255,255,0.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 25%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 5%, rgba(255,255,255,0.9) 0%, transparent 100%),
+    radial-gradient(1px 1px at 15% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 60%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 30%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 50%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 35% 80%, rgba(255,255,255,0.5) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Moon glow */
+.buildings-section::after {
+  content: '';
+  position: absolute;
+  top: 20px; right: 80px;
+  width: 60px; height: 60px;
+  background: radial-gradient(circle, rgba(255,240,150,0.9) 30%, rgba(255,240,150,0.1) 70%, transparent 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 40px rgba(255,240,150,0.4), 0 0 80px rgba(255,240,150,0.15);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.buildings-section .container { position: relative; z-index: 2; }
+
+/* ============================================================
+   SECTION HEADER
+   ============================================================ */
+.buildings-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+.buildings-header .section-tag {
+  color: #94A3B8;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 12px;
+}
+.buildings-header h2 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: #F1F5F9;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.buildings-header h2 em {
+  font-style: normal;
+  background: linear-gradient(135deg, #38BDF8, #818CF8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.buildings-header p {
+  color: #94A3B8;
+  font-size: 0.95rem;
+}
+
+/* ============================================================
+   BUILDINGS CITYSCAPE GRID
+   ============================================================ */
+.buildings-cityscape {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 0 16px 20px;
+  min-height: 300px;
+}
+
+/* Ground line */
+.buildings-ground {
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #38BDF8 20%, #818CF8 50%, #38BDF8 80%, transparent);
+  border-radius: 4px;
+  margin-top: -4px;
+  box-shadow: 0 0 20px rgba(56,189,248,0.4);
+}
+
+/* ============================================================
+   INDIVIDUAL BUILDING CARD
+   ============================================================ */
+.building-card {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  flex-shrink: 0;
+}
+.building-card:hover {
+  transform: translateY(-8px);
+}
+
+/* The actual building SVG wrapper */
+.building-svg-wrap {
+  position: relative;
+  width: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Building body */
+.building-body {
+  width: 80px;
+  border-radius: 6px 6px 0 0;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+.building-card:hover .building-body {
+  box-shadow: 0 -8px 30px rgba(56,189,248,0.5), 0 0 0 2px rgba(56,189,248,0.3);
+}
+
+/* Rooftop accent */
+.building-rooftop {
+  width: 60px;
+  height: 10px;
+  border-radius: 4px 4px 0 0;
+  margin-bottom: 0;
+  position: relative;
+}
+
+/* Antenna on top */
+.building-antenna {
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(to top, rgba(255,255,255,0.3), rgba(255,255,255,0.8));
+  margin: 0 auto;
+  border-radius: 2px;
+  position: relative;
+}
+.building-antenna::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #F97316;
+  box-shadow: 0 0 8px #F97316, 0 0 16px rgba(249,115,22,0.5);
+  animation: antennaGlow 2s ease-in-out infinite;
+}
+@keyframes antennaGlow {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px #F97316, 0 0 16px rgba(249,115,22,0.5); }
+  50% { opacity: 0.3; box-shadow: 0 0 4px #F97316; }
+}
+
+/* Windows grid */
+.building-windows {
+  display: grid;
+  gap: 4px;
+  padding: 8px 8px 0;
+  position: absolute;
+  inset: 0;
+  padding-bottom: 0;
+}
+.building-win {
+  border-radius: 2px;
+  transition: opacity 0.3s;
+  animation: winFlicker var(--flicker-dur, 4s) var(--flicker-delay, 0s) ease-in-out infinite;
+}
+@keyframes winFlicker {
+  0%, 90%, 100% { opacity: 1; }
+  92% { opacity: 0.2; }
+  95% { opacity: 1; }
+  97% { opacity: 0.4; }
+}
+
+/* College name banner on building */
+.building-name-banner {
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  padding: 4px 6px;
+  text-align: center;
+}
+.building-abbr {
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #fff;
+  line-height: 1.2;
+  display: block;
+}
+.building-naac-badge {
+  font-size: 0.48rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 1px 4px;
+  border-radius: 2px;
+  display: inline-block;
+  margin-top: 2px;
+}
+
+/* Label below building */
+.building-label {
+  margin-top: 8px;
+  text-align: center;
+  max-width: 90px;
+}
+.building-label-name {
+  font-size: 0.58rem;
+  color: #94A3B8;
+  line-height: 1.3;
+  font-weight: 500;
+  display: block;
+}
+.building-label-loc {
+  font-size: 0.5rem;
+  color: #64748B;
+  display: block;
+  margin-top: 1px;
+}
+
+/* Hover tooltip chip */
+.building-card::before {
+  content: 'Click to explore →';
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: rgba(56,189,248,0.95);
+  color: #0F172A;
+  font-size: 0.55rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 10;
+}
+.building-card:hover::before {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Glow ring on hover */
+.building-card:hover .building-body::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(56,189,248,0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* ============================================================
+   FLOATING QUERY BULB BUTTON
+   ============================================================ */
+.query-bulb-btn {
+  position: fixed;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.query-bulb-icon {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, #FBBF24, #F59E0B);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  box-shadow:
+    0 0 15px rgba(251,191,36,0.6),
+    0 0 35px rgba(251,191,36,0.3),
+    0 4px 15px rgba(0,0,0,0.3);
+  animation: bulbPulse 2.5s ease-in-out infinite;
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  position: relative;
+}
+
+/* Filament glow */
+.query-bulb-icon::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, rgba(255,255,255,0.8) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.query-bulb-icon::before {
+  content: '';
+  position: absolute;
+  bottom: -8px; left: 50%;
+  transform: translateX(-50%);
+  width: 20px; height: 8px;
+  background: linear-gradient(to bottom, #78716C, #57534E);
+  border-radius: 0 0 4px 4px;
+  border-top: 2px solid #A8A29E;
+}
+
+@keyframes bulbPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(251,191,36,0.6), 0 0 35px rgba(251,191,36,0.3), 0 4px 15px rgba(0,0,0,0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(251,191,36,0.9), 0 0 60px rgba(251,191,36,0.5), 0 4px 20px rgba(0,0,0,0.3);
+  }
+}
+
+.query-bulb-btn:hover .query-bulb-icon {
+  transform: scale(1.12);
+  animation: none;
+  box-shadow: 0 0 30px rgba(251,191,36,1), 0 0 70px rgba(251,191,36,0.6), 0 6px 20px rgba(0,0,0,0.4);
+}
+
+.query-bulb-label {
+  background: linear-gradient(135deg, #FBBF24, #F59E0B);
+  color: #0F172A;
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(251,191,36,0.4);
+}
+
+/* ============================================================
+   QUERY POPUP MODAL
+   ============================================================ */
+.query-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.75);
+  backdrop-filter: blur(10px);
+  z-index: 9500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s;
+}
+.query-popup-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+.query-popup-box {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  border: 1px solid rgba(56,189,248,0.2);
+  border-radius: 20px;
+  padding: 32px;
+  max-width: 440px;
+  width: 100%;
+  position: relative;
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.5), 0 0 40px rgba(56,189,248,0.1);
+}
+.query-popup-overlay.open .query-popup-box {
+  transform: scale(1) translateY(0);
+}
+
+.query-popup-bulb-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.query-popup-bulb-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 8px;
+  animation: bulbIconBounce 2s ease-in-out infinite;
+}
+@keyframes bulbIconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+.query-popup-bulb-header h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #F1F5F9;
+  margin-bottom: 4px;
+}
+.query-popup-bulb-header p {
+  font-size: 0.82rem;
+  color: #94A3B8;
+}
+
+.query-popup-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: #94A3B8;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+.query-popup-close:hover { background: rgba(239,68,68,0.2); color: #F87171; }
+
+.query-popup-form .qp-field {
+  margin-bottom: 14px;
+}
+.query-popup-form label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #94A3B8;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.query-popup-form input,
+.query-popup-form select,
+.query-popup-form textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 11px 14px;
+  color: #F1F5F9;
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+.query-popup-form input:focus,
+.query-popup-form select:focus,
+.query-popup-form textarea:focus {
+  border-color: rgba(56,189,248,0.5);
+  box-shadow: 0 0 0 3px rgba(56,189,248,0.1);
+}
+.query-popup-form select option { background: #1E293B; }
+.query-popup-form textarea { height: 80px; resize: none; }
+
+.qp-submit-btn {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, #38BDF8, #818CF8);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  margin-top: 4px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.qp-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(56,189,248,0.4);
+}
+.qp-or-divider {
+  display: flex; align-items: center; gap: 10px;
+  margin: 16px 0;
+}
+.qp-or-divider::before, .qp-or-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.1);
+}
+.qp-or-divider span {
+  font-size: 0.72rem;
+  color: #64748B;
+  letter-spacing: 0.06em;
+}
+.qp-wa-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #22C55E, #16A34A);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.qp-wa-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(34,197,94,0.4);
+}
+.qp-success-msg {
+  display: none;
+  text-align: center;
+  padding: 20px 0 10px;
+}
+.qp-success-msg.show { display: block; }
+.qp-success-icon { font-size: 2.5rem; display: block; margin-bottom: 10px; }
+.qp-success-msg h4 { color: #4ADE80; font-size: 1.1rem; margin-bottom: 6px; }
+.qp-success-msg p { color: #94A3B8; font-size: 0.82rem; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  .buildings-cityscape {
+    gap: 8px;
+  }
+  .building-svg-wrap { width: 70px; }
+  .building-body { width: 62px; }
+  .building-rooftop { width: 46px; }
+  .building-abbr { font-size: 0.52rem; }
+  .building-label-name { font-size: 0.5rem; }
+  .query-bulb-btn {
+    right: 14px;
+    top: auto;
+    bottom: 90px;
+    transform: none;
+  }
+  .query-popup-box {
+    padding: 24px 20px;
+    border-radius: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .building-win,
+  .building-antenna::after,
+  .query-bulb-icon,
+  .query-popup-bulb-icon {
+    animation: none !important;
+  }
+  .building-card {
+    transition: none;
+  }
+}

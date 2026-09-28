@@ -73,6 +73,7 @@
   <link rel="stylesheet" href="colleges.css?v=1.1">
   <link rel="stylesheet" href="marketing.css?v=3.7">
   <link rel="stylesheet" href="mobile.css?v=1.0">
+  <link rel="stylesheet" href="buildings.css?v=1.0">
 </head>
 <body>
 
@@ -97,7 +98,6 @@
         <a href="#loans" class="nav-link" data-hover>Loans & Scholarships</a>
         <a href="wbjee-predictor.html" class="nav-link" data-hover>WBJEE Predictor</a>
         <a href="#services" class="nav-link" data-hover>Services</a>
-        <a href="partner.html" class="nav-link" data-hover>Earn Money</a>
         <a href="#contact" class="nav-link nav-link--cta" data-hover>Free Counselling</a>
       </div>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
@@ -116,7 +116,6 @@
       <a href="#loans" class="mobile-link">Loans & Scholarships</a>
       <a href="wbjee-predictor.html" class="mobile-link">WBJEE Predictor</a>
       <a href="#services" class="mobile-link">Services</a>
-      <a href="partner.html" class="mobile-link">Earning Opportunity</a>
       <a href="#contact" class="mobile-link">Free Counselling</a>
     </div>
     <!-- Call CTA inside mobile menu -->
@@ -170,7 +169,6 @@
           <button class="btn btn-primary" onclick="document.getElementById('eligibility').scrollIntoView({behavior: 'smooth'})">Check Eligibility</button>
           <button class="btn btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Free Counselling</button>
           <button class="btn btn-primary" style="background:var(--green);border-color:var(--green);margin-left:8px" onclick="openReceiptModal()">🎟️ Generate Fee Receipt</button>
-          <a href="partner.html" class="btn btn-primary" style="background:linear-gradient(135deg, #FF8008, #FFC837);border-color:transparent;color:#fff;margin-left:8px">💰 Earn Upto ₹1 Lakh/Adm</a>
         </div>
       <div class="hero-stats reveal-up" style="--delay: 0.6s">
         <div class="stat">
@@ -249,21 +247,86 @@
     </div>
   </div>
 
-  <!-- Colleges Section -->
-  <section class="section section--colleges" id="colleges">
+  <!-- Colleges Section (hidden grid kept for JS compatibility) -->
+  <div id="collegesGrid" style="display:none;"></div>
+
+  <!-- =========================================================
+       ANIMATED BUILDINGS CITYSCAPE — COLLEGE EXPLORER
+       ========================================================= -->
+  <section class="buildings-section" id="colleges">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag" data-anim="up-sm">02 — Partner Colleges</span>
-        <h2 class="section-title" data-anim="up">Top Colleges & <em>Universities</em></h2>
-        <p class="section-sub" data-anim="up" style="--anim-delay: 0.1s">Explore premium institutions approved under student credit card schemes.</p>
+      <div class="buildings-header">
+        <span class="section-tag">02 — Partner Colleges</span>
+        <h2>Explore Our <em>Partner Colleges</em></h2>
+        <p>Click any building to view fee details, courses, hostel info & more</p>
       </div>
-      <div class="colleges-grid" id="collegesGrid" data-stagger="fast">
-        <!-- Populated by JS -->
-      </div>
-      <!-- Click hint -->
-      <p class="colleges-click-hint" data-anim="up" style="--anim-delay:0.3s">👆 Click any college card to view full profile, Instagram &amp; branch details</p>
+    </div>
+    <div class="buildings-cityscape" id="buildingsCityscape">
+      <!-- Buildings injected by buildings.js -->
+    </div>
+    <div class="buildings-ground"></div>
+    <div class="container">
+      <p style="color:#64748B;text-align:center;margin-top:16px;font-size:0.78rem;">🏙️ Click any college building to view full details, fee structure &amp; enquire directly</p>
     </div>
   </section>
+
+  <!-- =========================================================
+       COLLEGE DETAIL MODAL (Buildings popup)
+       ========================================================= -->
+  <div class="cp-overlay" id="buildingModalOverlay">
+    <div class="cp-modal" style="max-height:88vh;overflow-y:auto;">
+      <div class="cp-banner" id="bm-color-bar" style="padding:28px 28px 20px;position:relative;">
+        <button class="cp-close" id="bmClose" aria-label="Close">✕</button>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="font-size:2.8rem;" id="bm-icon">🏛️</div>
+          <div>
+            <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;color:rgba(255,255,255,0.6);text-transform:uppercase;margin-bottom:2px;" id="bm-abbr"></div>
+            <h2 style="font-size:1.2rem;font-weight:800;color:#fff;line-height:1.2;margin:0;" id="bm-name"></h2>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;margin-top:16px;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:0.78rem;color:rgba(255,255,255,0.7);">📍 <span id="bm-location"></span></div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:0.78rem;color:rgba(255,255,255,0.6);">🎓 <span id="bm-affil"></span></div>
+        </div>
+      </div>
+      <div class="cp-body" style="padding:24px 28px;">
+        <p style="font-size:0.85rem;color:#94A3B8;line-height:1.6;margin-bottom:20px;" id="bm-bio"></p>
+        <div style="margin-bottom:20px;">
+          <h4 style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#64748B;margin-bottom:10px;">Key Highlights</h4>
+          <div id="bm-highlights" style="display:flex;flex-direction:column;gap:2px;"></div>
+        </div>
+        <div style="margin-bottom:20px;">
+          <h4 style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#64748B;margin-bottom:10px;">Courses &amp; Fee Structure</h4>
+          <div id="bm-courses"></div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:12px 14px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:0.78rem;color:#94A3B8;font-weight:600;">🏠 Hostel Facility</span>
+          <span style="font-size:0.82rem;font-weight:700;color:#F1F5F9;" id="bm-hostel"></span>
+        </div>
+        <div style="margin-bottom:20px;">
+          <h4 style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#64748B;margin-bottom:10px;">Placement Record</h4>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+            <div style="background:rgba(56,189,248,0.08);border-radius:10px;padding:12px;text-align:center;">
+              <div style="font-size:1.1rem;font-weight:800;color:#38BDF8;" id="bm-avg-pkg"></div>
+              <div style="font-size:0.65rem;color:#64748B;margin-top:2px;">Avg. Package</div>
+            </div>
+            <div style="background:rgba(129,140,248,0.08);border-radius:10px;padding:12px;text-align:center;">
+              <div style="font-size:1.1rem;font-weight:800;color:#818CF8;" id="bm-high-pkg"></div>
+              <div style="font-size:0.65rem;color:#64748B;margin-top:2px;">Highest Package</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;" id="bm-companies"></div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;">
+          <a id="bm-insta-link" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#E1306C,#833AB4);color:#fff;padding:8px 16px;border-radius:8px;font-size:0.78rem;font-weight:600;text-decoration:none;">📸 Instagram</a>
+          <a id="bm-web-link" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);color:#F1F5F9;border:1px solid rgba(255,255,255,0.15);padding:8px 16px;border-radius:8px;font-size:0.78rem;font-weight:600;text-decoration:none;">🌐 Official Website</a>
+        </div>
+        <button id="bm-enquiry-btn" style="width:100%;padding:14px;background:linear-gradient(135deg,#22C55E,#16A34A);border:none;border-radius:12px;color:#fff;font-size:0.95rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+          💬 WhatsApp Enquiry for This College
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Branch Comparison Section -->
   <section class="section section--compare" id="compare">
@@ -993,13 +1056,12 @@
   <script src="colleges.js?v=1.1"></script>
   <script src="marketing.js?v=3.6"></script>
   <script src="animations.js?v=1.1"></script>
+  <script src="buildings.js?v=1.0"></script>
   <script>
     // ===== SCROLL RESTORATION FIX =====
-    // Browser ko bolo: hash/scroll position mat restore karo on page load
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
-    // Page load hote hi top pe le jao
     window.addEventListener('load', () => {
       if (!window.location.hash) {
         window.scrollTo(0, 0);
@@ -1011,17 +1073,86 @@
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js?v=5.0').then(registration => {
           console.log('SW registered: v5.0');
-
-          // Har 30 min mein SW update check karo (no page reload)
           setInterval(() => {
             navigator.serviceWorker.getRegistration().then(reg => {
               if (reg) reg.update();
             });
           }, 30 * 60 * 1000);
-
         }).catch(err => console.log('SW Error:', err));
       });
     }
   </script>
+
+  <!-- =========================================================
+       FLOATING LIGHTBULB QUERY BUTTON
+       ========================================================= -->
+  <button class="query-bulb-btn" id="queryBulbBtn" aria-label="Quick Query">
+    <div class="query-bulb-icon">💡</div>
+    <span class="query-bulb-label">Quick Query</span>
+  </button>
+
+  <!-- =========================================================
+       QUERY POPUP MODAL
+       ========================================================= -->
+  <div class="query-popup-overlay" id="queryPopupOverlay">
+    <div class="query-popup-box">
+      <button class="query-popup-close" id="qpClose" aria-label="Close">✕</button>
+      <div class="query-popup-bulb-header">
+        <span class="query-popup-bulb-icon">💡</span>
+        <h3>Quick College Enquiry</h3>
+        <p>Fill in your details and we'll call you back within 1 hour!</p>
+      </div>
+
+      <div id="qpSuccessMsg" class="qp-success-msg">
+        <span class="qp-success-icon">✅</span>
+        <h4>Query Sent Successfully!</h4>
+        <p>Our counselor will call you back within 1 hour. Stay tuned!</p>
+      </div>
+
+      <form class="query-popup-form" id="queryPopupForm">
+        <div class="qp-field">
+          <label for="qpName">Your Full Name</label>
+          <input type="text" id="qpName" name="name" placeholder="e.g. Rahul Kumar" required>
+        </div>
+        <div class="qp-field">
+          <label for="qpPhone">WhatsApp / Phone Number</label>
+          <input type="tel" id="qpPhone" name="phone" placeholder="e.g. 9876543210" required pattern="[0-9]{10}">
+        </div>
+        <div class="qp-field">
+          <label for="qpCollege">Interested College (Optional)</label>
+          <select id="qpCollege" name="college">
+            <option value="">-- Select College --</option>
+            <option>JIS College of Engineering (JISCE)</option>
+            <option>Narula Institute of Technology (NIT)</option>
+            <option>Guru Nanak Institute of Technology (GNIT)</option>
+            <option>Dr Sudhir Chandra Sur Institute (Sur Tech)</option>
+            <option>Asansol Engineering College (AEC)</option>
+            <option>Institute of Engineering & Management (IEM)</option>
+            <option>Heritage Institute of Technology (HIT)</option>
+            <option>Techno India University (TIU)</option>
+            <option>Haldia Institute of Technology</option>
+            <option>Adamas University</option>
+            <option>Brainware University</option>
+            <option>NSHM Knowledge Campus</option>
+            <option>IES University Bhopal</option>
+            <option>Not Sure — Need Guidance</option>
+          </select>
+        </div>
+        <div class="qp-field">
+          <label for="qpMsg">Your Message (Optional)</label>
+          <textarea id="qpMsg" name="message" placeholder="e.g. I want B.Tech CSE admission, please guide..."></textarea>
+        </div>
+        <button type="submit" class="qp-submit-btn">
+          📩 Send My Query
+        </button>
+        <div class="qp-or-divider"><span>OR</span></div>
+        <a href="https://wa.me/919546201805?text=Hi%20EduOrbit!%20I%20want%20admission%20guidance." target="_blank" rel="noopener" class="qp-wa-btn">
+          💬 Chat on WhatsApp
+        </a>
+      </form>
+    </div>
+  </div>
+
 </body>
+
 </html>
