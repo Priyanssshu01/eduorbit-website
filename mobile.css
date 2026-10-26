@@ -64,55 +64,86 @@ img, video, iframe, embed {
    ============================================================ */
 @media (max-width: 768px) {
   .hero {
-    padding: 100px 20px 60px;
-    min-height: 100svh; /* use small viewport height on mobile */
+    padding: 95px 18px 48px;
+    min-height: auto;
+  }
+  .hero-badge {
+    font-size: 0.74rem;
+    padding: 6px 14px;
+    margin-bottom: 16px;
   }
   .hero-title .title-line {
-    font-size: clamp(2rem, 8vw, 3rem);
-    letter-spacing: -0.03em;
+    font-size: clamp(2rem, 8.5vw, 2.6rem);
+    letter-spacing: -0.02em;
+    line-height: 1.18;
   }
   .hero-sub {
-    font-size: 0.92rem;
-    padding: 0 8px;
+    font-size: 0.94rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.88);
+    padding: 0 4px;
+    margin-bottom: 24px;
   }
   .hero-actions {
+    display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 12px;
-    margin-bottom: 40px;
+    gap: 10px;
+    margin-bottom: 30px;
   }
   .hero-actions .btn {
-    width: 100%;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    min-height: 48px;
+    font-size: 0.92rem;
+    font-weight: 700;
     justify-content: center;
+    border-radius: 12px;
   }
   .hero-stats {
-    gap: 20px;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 16px 8px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    width: 100%;
   }
-  .stat-divider {
-    display: none;
+  .hero-stats .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
   .stat-num {
-    font-size: 1.6rem;
+    font-size: 1.35rem !important;
+    font-weight: 800;
+    color: #F5C518;
+  }
+  .stat-plus {
+    font-size: 1rem;
+    color: #F5C518;
+  }
+  .stat-label {
+    font-size: 0.65rem !important;
+    color: rgba(255, 255, 255, 0.75);
+    margin-top: 2px;
+    line-height: 1.25;
+  }
+  .stat-divider {
+    display: none !important;
   }
   .hero-scroll {
-    display: none;
+    display: none !important;
   }
   .hero-bg-text {
-    font-size: 5rem;
-    opacity: 0.4;
-  }
-  .orb-1 { width: 200px; height: 200px; }
-  .orb-2 { width: 180px; height: 180px; }
-  .orb-3 { width: 150px; height: 150px; }
-}
-
-@media (max-width: 400px) {
-  .hero-title .title-line {
-    font-size: 1.8rem;
-  }
-  .hero-stats {
-    flex-direction: column;
-    gap: 16px;
+    font-size: 4rem;
+    opacity: 0.16;
   }
 }
 
@@ -122,70 +153,125 @@ img, video, iframe, embed {
 @media (max-width: 768px) {
   .about-grid {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 28px;
   }
   .about-text p {
-    font-size: 0.9rem;
+    font-size: 0.92rem;
+    line-height: 1.6;
   }
 }
 
 /* ============================================================
-   COLLEGES GRID — MOBILE
+   COLLEGES GRID — MOBILE (Clean, spacious 1-Card per row)
    ============================================================ */
 @media (max-width: 768px) {
   .colleges-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+    padding: 0 2px;
   }
   .college-card {
-    padding: 20px 16px;
+    padding: 22px 20px 20px !important;
+    border-radius: 18px !important;
+    background: #ffffff !important;
+    border: 1.5px solid rgba(27, 77, 142, 0.1) !important;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05) !important;
+    position: relative;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
-  .college-card-emoji {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
-  .college-card-name {
-    font-size: 0.85rem;
-  }
-  .college-card-meta {
-    gap: 4px;
-    margin-bottom: 10px;
-  }
-  .college-tag {
-    font-size: 0.62rem;
-    padding: 3px 8px;
-  }
-  .college-card-location {
-    font-size: 0.72rem;
-  }
-  .college-card-insta {
-    font-size: 0.68rem;
+  .college-card:active {
+    transform: scale(0.98);
   }
   .college-card-abbr {
-    font-size: 0.6rem;
-    top: 12px;
-    right: 12px;
-  }
-  .colleges-click-hint {
-    font-size: 0.75rem;
-    margin-top: 12px;
-  }
-}
-
-@media (max-width: 400px) {
-  .colleges-grid {
-    grid-template-columns: 1fr;
-  }
-  .college-card {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex-direction: row;
+    position: absolute !important;
+    top: 18px !important;
+    right: 18px !important;
+    font-size: 0.72rem !important;
+    font-weight: 800 !important;
+    color: #1B4D8E !important;
+    background: rgba(27, 77, 142, 0.08) !important;
+    padding: 4px 10px !important;
+    border-radius: 6px !important;
+    letter-spacing: 0.05em !important;
+    opacity: 1 !important;
   }
   .college-card-emoji {
-    font-size: 2rem;
-    margin-bottom: 0;
-    flex-shrink: 0;
+    font-size: 2.2rem !important;
+    margin-bottom: 10px !important;
+    display: block !important;
+  }
+  .college-card-name {
+    font-size: 1.12rem !important;
+    font-weight: 800 !important;
+    color: #0F172A !important;
+    line-height: 1.35 !important;
+    margin-bottom: 10px !important;
+    padding-right: 60px;
+  }
+  .college-card-meta {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    margin-bottom: 10px !important;
+  }
+  .college-tag {
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    padding: 4px 10px !important;
+    border-radius: 6px !important;
+  }
+  .college-tag--naac {
+    background: #ECFDF5 !important;
+    color: #065F46 !important;
+    border: 1px solid rgba(16, 185, 129, 0.25) !important;
+  }
+  .college-tag--est {
+    background: #F8FAFC !important;
+    color: #64748B !important;
+    border: 1px solid rgba(100, 116, 139, 0.2) !important;
+  }
+  .college-card-location {
+    font-size: 0.84rem !important;
+    color: #475569 !important;
+    margin-bottom: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+  .college-card-insta {
+    font-size: 0.78rem !important;
+    color: #E1306C !important;
+    font-weight: 600 !important;
+    margin-bottom: 4px !important;
+  }
+  /* Explicit touch CTA button on mobile */
+  .college-card::after {
+    content: 'View Full Profile & Fees →' !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    background: #F1F5F9 !important;
+    color: #1B4D8E !important;
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
+    padding: 11px 16px !important;
+    border-radius: 10px !important;
+    margin-top: 14px !important;
+    border: 1px solid rgba(27, 77, 142, 0.12) !important;
+    letter-spacing: 0.02em !important;
+  }
+  .colleges-click-hint {
+    font-size: 0.8rem;
+    color: #64748B;
+    margin-top: 14px;
+    text-align: center;
   }
 }
 
@@ -195,25 +281,64 @@ img, video, iframe, embed {
 @media (max-width: 768px) {
   .cmp-picker {
     padding: 18px 16px;
+    border-radius: 16px;
+  }
+  .cmp-picker-label {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 12px;
   }
   .cmp-picker-chips {
-    gap: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
   }
   .cmp-chip {
-    font-size: 0.72rem;
-    padding: 7px 12px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    padding: 8px 14px;
+    border-radius: 8px;
+    min-height: 40px;
   }
   .cmp-compare-btn {
-    width: 100%;
+    width: 100% !important;
     text-align: center;
+    padding: 14px !important;
+    font-size: 0.95rem !important;
+    font-weight: 800 !important;
+    border-radius: 12px !important;
+  }
+  .cmp-scroll {
+    border-radius: 14px;
+    -webkit-overflow-scrolling: touch;
+    background: #fff;
+    border: 1px solid rgba(27, 77, 142, 0.1);
+  }
+  .cmp-table {
+    min-width: 580px;
   }
   .cmp-table thead th,
   .cmp-table tbody td {
-    padding: 10px 10px;
-    font-size: 0.75rem;
+    padding: 10px 12px;
+    font-size: 0.8rem;
   }
-  .cmp-table thead th:first-child {
-    width: 110px;
+  .cmp-table thead th:first-child,
+  .cmp-table tbody td:first-child {
+    position: sticky;
+    left: 0;
+    background: #ffffff;
+    z-index: 2;
+    box-shadow: 2px 0 6px rgba(0,0,0,0.06);
+    font-weight: 700;
+  }
+  .cmp-reset-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    font-size: 0.85rem;
+    border-radius: 10px;
   }
 }
 
@@ -223,35 +348,115 @@ img, video, iframe, embed {
 @media (max-width: 768px) {
   .fee-filters {
     grid-template-columns: 1fr;
-    gap: 16px;
-    padding: 20px 16px;
-    margin-bottom: 24px;
+    gap: 14px;
+    padding: 18px 16px;
+    margin-bottom: 20px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    border: 1px solid rgba(27, 77, 142, 0.08);
+  }
+  .filter-group label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 4px;
+  }
+  .filter-select,
+  .filter-search {
+    width: 100%;
+    font-size: 16px !important; /* Prevents iPhone auto-zoom */
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1.5px solid #CBD5E1;
+    background: #F8FAFC;
+    color: #0F172A;
   }
   .fee-table-scroll {
     -webkit-overflow-scrolling: touch;
+    border-radius: 14px;
+    background: #ffffff;
+    border: 1px solid rgba(27,77,142,0.1);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    position: relative;
+  }
+  .fee-table-scroll::before {
+    content: '👉 Swipe left/right to see all semester & hostel fees ➔';
+    display: block;
+    background: #EFF6FF;
+    color: #1E40AF;
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-align: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid #DBEAFE;
+    letter-spacing: 0.02em;
+  }
+  .fee-table-scroll::after {
+    display: none !important;
   }
   .fee-table {
-    min-width: 680px; /* allow horizontal scroll */
+    min-width: 660px;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  /* Sticky Course column so student always knows which course */
+  .fee-table th:first-child,
+  .fee-table td:first-child {
+    position: sticky;
+    left: 0;
+    background: #ffffff;
+    z-index: 2;
+    box-shadow: 3px 0 8px rgba(0,0,0,0.06);
+    font-weight: 700;
+    color: #0F172A;
+  }
+  .fee-table th:first-child {
+    background: #F8FAFC;
+  }
+  .fee-table th {
+    font-size: 0.7rem;
+    padding: 10px 12px;
+    background: #F8FAFC;
+    color: #475569;
+    text-transform: uppercase;
+  }
+  .fee-table td {
+    font-size: 0.82rem;
+    padding: 12px 12px;
+    border-bottom: 1px solid #F1F5F9;
   }
   .filter-pills {
     flex-wrap: nowrap;
     overflow-x: auto;
-    padding-bottom: 4px;
+    padding-bottom: 6px;
     scrollbar-width: none;
+    gap: 8px;
   }
   .filter-pills::-webkit-scrollbar { display: none; }
   .pill {
     white-space: nowrap;
     flex-shrink: 0;
-    padding: 7px 14px;
-    font-size: 0.75rem;
+    padding: 8px 16px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    border-radius: 8px;
   }
   .fee-detail-btn {
-    padding: 5px 10px;
-    font-size: 0.65rem;
+    padding: 7px 12px !important;
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+    white-space: nowrap;
   }
-  .fee-load-more { padding: 20px 0 0; }
-  .fee-more-btn { padding: 12px 28px; font-size: 0.82rem; }
+  .fee-load-more { padding: 18px 0 0; }
+  .fee-more-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    border-radius: 12px;
+  }
 }
 
 /* ============================================================
@@ -278,12 +483,43 @@ img, video, iframe, embed {
    ELIGIBILITY CHECKER — MOBILE
    ============================================================ */
 @media (max-width: 768px) {
+  .elig-checker {
+    padding: 0;
+  }
   .elig-form {
-    padding: 24px 18px;
+    padding: 22px 16px;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    border: 1px solid rgba(27, 77, 142, 0.08);
   }
   .elig-form-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
+  }
+  .elig-field label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 6px;
+  }
+  .elig-field select,
+  .elig-field input {
+    font-size: 16px !important; /* Prevents iOS auto-zoom */
+    padding: 13px 14px;
+    border-radius: 10px;
+    border: 1.5px solid #CBD5E1;
+    background: #F8FAFC;
+    color: #0F172A;
+    width: 100%;
+  }
+  .elig-btn {
+    width: 100% !important;
+    min-height: 48px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    border-radius: 12px;
+    margin-top: 10px;
   }
   .elig-cards {
     grid-template-columns: 1fr;
@@ -291,9 +527,15 @@ img, video, iframe, embed {
   }
   .elig-card {
     padding: 18px 16px;
+    border-radius: 14px;
+    background: #ffffff;
+    border: 1.5px solid rgba(27,77,142,0.1);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.04);
   }
   .elig-card-name {
-    font-size: 0.92rem;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #0F172A;
   }
 }
 
@@ -350,14 +592,41 @@ img, video, iframe, embed {
 @media (max-width: 768px) {
   .contact-grid {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 28px;
   }
   .form-row {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
   }
   .contact-form {
+    padding: 22px 18px;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    border: 1px solid rgba(27,77,142,0.08);
     gap: 14px;
+  }
+  .form-group label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #334155;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 16px !important; /* Prevents iOS auto-zoom */
+    padding: 13px 14px;
+    border-radius: 10px;
+    border: 1.5px solid #CBD5E1;
+    background: #F8FAFC;
+    color: #0F172A;
+  }
+  .contact-form .btn {
+    width: 100%;
+    min-height: 48px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    border-radius: 12px;
   }
   .contact-value {
     font-size: 0.95rem;
@@ -398,22 +667,35 @@ img, video, iframe, embed {
 }
 
 /* ============================================================
-   COLLEGE PROFILE MODAL — MOBILE
+   COLLEGE PROFILE MODAL — MOBILE (Bottom sheet feel)
    ============================================================ */
 @media (max-width: 768px) {
   .cp-overlay {
-    padding: 10px;
-    align-items: flex-end; /* slide up from bottom on mobile */
+    padding: 0 !important;
+    align-items: flex-end !important;
+    background: rgba(15, 23, 42, 0.8) !important;
   }
   .cp-modal {
-    border-radius: 20px 20px 16px 16px;
-    max-height: 92vh;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 22px 22px 0 0 !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
   }
   .cp-banner {
-    padding: 20px 18px;
+    padding: 22px 18px 18px !important;
+    position: relative;
+    border-radius: 22px 22px 0 0 !important;
     flex-direction: row;
     align-items: center;
     gap: 14px;
+  }
+  .cp-close {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 1.1rem !important;
+    top: 14px !important;
+    right: 14px !important;
   }
   .cp-banner-icon {
     width: 52px;
@@ -423,13 +705,16 @@ img, video, iframe, embed {
     flex-shrink: 0;
   }
   .cp-name {
-    font-size: 0.95rem;
+    font-size: 1.1rem !important;
+    font-weight: 800 !important;
+    line-height: 1.3 !important;
+    padding-right: 36px;
   }
   .cp-body {
-    padding: 0 16px 20px;
+    padding: 16px 18px 24px !important;
   }
   .cp-stats-row {
-    flex-direction: row; /* keep row on mobile, just smaller */
+    flex-direction: row;
   }
   .cp-stat {
     padding: 12px 8px;
@@ -441,14 +726,17 @@ img, video, iframe, embed {
     font-size: 0.6rem;
   }
   .cp-tabs {
-    gap: 2px;
+    gap: 6px !important;
+    padding-bottom: 4px;
     overflow-x: auto;
     scrollbar-width: none;
   }
   .cp-tabs::-webkit-scrollbar { display: none; }
   .cp-tab {
-    font-size: 0.75rem;
-    padding: 9px 12px;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    padding: 9px 14px !important;
+    border-radius: 8px !important;
     white-space: nowrap;
     flex-shrink: 0;
   }
@@ -493,15 +781,22 @@ img, video, iframe, embed {
    RECEIPT MODAL — MOBILE
    ============================================================ */
 @media (max-width: 768px) {
+  .receipt-overlay {
+    padding: 0 !important;
+    align-items: flex-end !important;
+    background: rgba(15, 23, 42, 0.8) !important;
+  }
   .receipt-modal {
-    padding: 24px 18px;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 22px 22px 0 0 !important;
+    padding: 24px 18px !important;
     max-height: 90vh;
     overflow-y: auto;
-    border-radius: 20px;
   }
-  .receipt-overlay {
-    padding: 10px;
-    align-items: flex-end;
+  .receipt-form input,
+  .receipt-form select {
+    font-size: 16px !important;
   }
 }
 
@@ -510,38 +805,42 @@ img, video, iframe, embed {
    ============================================================ */
 @media (max-width: 480px) {
   .lead-popup {
-    padding: 28px 18px;
-    margin: 10px;
-    border-radius: 20px;
-    max-height: 90vh;
+    padding: 24px 18px;
+    margin: 14px;
+    border-radius: 18px;
+    max-height: 88vh;
     overflow-y: auto;
   }
   .lead-popup-title {
     font-size: 1.2rem;
+    font-weight: 800;
   }
   .lead-popup-sub {
     font-size: 0.85rem;
   }
   .lead-popup-btn {
-    font-size: 0.88rem;
+    font-size: 0.92rem;
     padding: 14px;
+    font-weight: 700;
+  }
+  .lead-popup-form input,
+  .lead-popup-form select {
+    font-size: 16px !important;
   }
 }
 
 /* ============================================================
-   WHATSAPP FLOATING BUTTON — MOBILE
+   FLOATING BUTTONS ON MOBILE — NO OVERLAP & NO CLUTTER
    ============================================================ */
 @media (max-width: 768px) {
-  .whatsapp-float {
-    bottom: 16px;
-    right: 16px;
-    width: 52px;
-    height: 52px;
+  /* Hide floating round button because mobileStickyBar already has 1-tap WhatsApp */
+  .wa-float,
+  .whatsapp-float,
+  .whatsapp-fab {
+    display: none !important;
   }
-  .whatsapp-float svg,
-  .whatsapp-float img {
-    width: 26px;
-    height: 26px;
+  .wa-tooltip {
+    display: none !important;
   }
 }
 
@@ -747,10 +1046,6 @@ img, video, iframe, embed {
    TOUCH INTERACTION IMPROVEMENTS
    ============================================================ */
 @media (hover: none) {
-  /* Remove hover states that don't work on touch */
-  .college-card::after {
-    display: none;
-  }
   .btn:hover {
     transform: none;
   }
@@ -759,11 +1054,11 @@ img, video, iframe, embed {
     border: 1.5px solid rgba(27,77,142,0.12);
   }
   .college-card:active {
-    transform: scale(0.97);
+    transform: scale(0.98);
     transition: transform 0.1s;
   }
   .btn:active {
-    transform: scale(0.97);
+    transform: scale(0.98);
     opacity: 0.9;
   }
 }
@@ -778,15 +1073,15 @@ img, video, iframe, embed {
 
 @media (max-width: 768px) {
   .mobile-sticky-bar {
-    display: flex;
+    display: flex !important;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     z-index: 4000;
     background: #0F172A;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 0 -8px 32px rgba(0,0,0,0.25);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 -8px 28px rgba(0,0,0,0.3);
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 
@@ -798,10 +1093,10 @@ img, video, iframe, embed {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 10px 6px;
+    padding: 8px 4px;
     text-decoration: none;
     gap: 3px;
-    transition: background 0.2s;
+    transition: opacity 0.15s ease;
     min-height: 56px;
   }
 
@@ -809,26 +1104,26 @@ img, video, iframe, embed {
     background: linear-gradient(135deg, #1B4D8E, #2563EB);
     border-right: 1px solid rgba(255,255,255,0.08);
   }
-  .msb-call:active { background: #1B4D8E; }
+  .msb-call:active { opacity: 0.85; }
 
   .msb-whatsapp {
     background: linear-gradient(135deg, #075E54, #25D366);
     border-right: 1px solid rgba(255,255,255,0.08);
   }
-  .msb-whatsapp:active { background: #075E54; }
+  .msb-whatsapp:active { opacity: 0.85; }
 
   .msb-check {
     background: linear-gradient(135deg, #D97706, #F59E0B);
   }
-  .msb-check:active { background: #D97706; }
+  .msb-check:active { opacity: 0.85; }
 
   .msb-icon {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     line-height: 1;
   }
   .msb-text {
-    font-size: 0.62rem;
-    font-weight: 700;
+    font-size: 0.65rem;
+    font-weight: 800;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: #fff;
@@ -836,11 +1131,11 @@ img, video, iframe, embed {
   }
 
   /* Prevent content being hidden behind sticky bar */
-  main, footer {
-    padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+  main {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
   }
-  footer {
-    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+  footer, .footer {
+    padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px)) !important;
   }
 }
 
