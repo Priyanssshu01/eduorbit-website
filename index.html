@@ -73,7 +73,6 @@
   <link rel="stylesheet" href="colleges.css?v=1.1">
   <link rel="stylesheet" href="marketing.css?v=3.7">
   <link rel="stylesheet" href="mobile.css?v=1.0">
-  <link rel="stylesheet" href="buildings.css?v=1.0">
 </head>
 <body>
 
@@ -139,8 +138,6 @@
       <span class="msb-icon">✅</span>
       <span class="msb-text">Check Eligibility</span>
     </a>
-  </div>
-
   </div>
 
   <main id="mainContent">
@@ -247,123 +244,21 @@
     </div>
   </div>
 
-  <!-- Colleges Section (hidden grid kept for JS compatibility) -->
-  <div id="collegesGrid" style="display:none;"></div>
-
-  <!-- =========================================================
-       ROUND COLLEGE CARDS — DRAGGABLE CAROUSEL
-       ========================================================= -->
-  <section class="buildings-section" id="colleges">
+  <!-- Colleges Section -->
+  <section class="section section--colleges" id="colleges">
     <div class="container">
-      <div class="buildings-header">
-        <span class="section-tag">02 — Partner Colleges</span>
-        <h2>Explore Our <em>Partner Colleges</em></h2>
-        <p>Drag or swipe to browse — tap any college to view full details</p>
+      <div class="section-header">
+        <span class="section-tag" data-anim="up-sm">02 — Partner Colleges</span>
+        <h2 class="section-title" data-anim="up">Top Colleges & <em>Universities</em></h2>
+        <p class="section-sub" data-anim="up" style="--anim-delay: 0.1s">Explore premium institutions approved under student credit card schemes.</p>
       </div>
-      <p class="carousel-drag-hint">
-        ← Drag to slide <span>→</span>
-      </p>
-    </div>
-
-    <!-- Carousel Wrapper -->
-    <div style="position:relative;">
-      <button class="carousel-nav-btn carousel-nav-prev" id="carouselPrev" aria-label="Previous">‹</button>
-      <div class="colleges-carousel-wrap" id="collegesCarouselWrap" style="overflow-x:auto;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
-        <div class="colleges-carousel-track" id="collegesCarouselTrack">
-          <!-- Round cards injected by buildings.js -->
-        </div>
+      <div class="colleges-grid" id="collegesGrid" data-stagger="fast">
+        <!-- Populated by JS -->
       </div>
-      <button class="carousel-nav-btn carousel-nav-next" id="carouselNext" aria-label="Next">›</button>
+      <!-- Click hint -->
+      <p class="colleges-click-hint" data-anim="up" style="--anim-delay:0.3s">👆 Click any college card to view full profile, Instagram &amp; branch details</p>
     </div>
   </section>
-
-  <!-- =========================================================
-       COLLEGE DETAIL MODAL (Beige theme, readable text)
-       ========================================================= -->
-  <div class="cp-overlay" id="buildingModalOverlay">
-    <div class="cp-modal" style="max-height:90vh;overflow-y:auto;border-radius:20px;">
-
-      <!-- Banner (colored gradient from college) -->
-      <div class="cp-banner" id="bm-color-bar" style="padding:28px 28px 22px;position:relative;border-radius:20px 20px 0 0;">
-        <button class="cp-close" id="bmClose" aria-label="Close">✕</button>
-        <div style="display:flex;align-items:center;gap:16px;">
-          <div style="font-size:3rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.3));" id="bm-icon">🏛️</div>
-          <div>
-            <div style="font-size:0.7rem;font-weight:800;letter-spacing:0.12em;color:rgba(255,255,255,0.75);text-transform:uppercase;margin-bottom:4px;" id="bm-abbr"></div>
-            <h2 style="font-size:1.25rem;font-weight:900;color:#fff;line-height:1.2;margin:0;text-shadow:0 1px 4px rgba(0,0,0,0.3);" id="bm-name"></h2>
-          </div>
-        </div>
-        <div style="display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;">
-          <div style="display:flex;align-items:center;gap:5px;font-size:0.78rem;color:rgba(255,255,255,0.85);font-weight:500;">
-            📍 <span id="bm-location"></span>
-          </div>
-          <div style="display:flex;align-items:center;gap:5px;font-size:0.75rem;color:rgba(255,255,255,0.7);">
-            🎓 <span id="bm-affil"></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Body — Beige themed, dark readable text -->
-      <div style="padding:24px 28px;background:#FAF7F2;">
-
-        <!-- About -->
-        <p class="bm-modal-bio" id="bm-bio"></p>
-
-        <!-- Key Highlights -->
-        <div style="margin-bottom:22px;">
-          <div class="bm-section-title">Key Highlights</div>
-          <div id="bm-highlights"></div>
-        </div>
-
-        <!-- Courses & Fees -->
-        <div style="margin-bottom:22px;">
-          <div class="bm-section-title">Courses &amp; Fee Structure</div>
-          <div id="bm-courses"></div>
-        </div>
-
-        <!-- Hostel -->
-        <div class="bm-hostel-box" style="margin-bottom:22px;">
-          <span class="bm-hostel-label">🏠 Hostel Facility</span>
-          <span class="bm-hostel-value" id="bm-hostel-value"></span>
-        </div>
-
-        <!-- Placement -->
-        <div style="margin-bottom:22px;">
-          <div class="bm-section-title">Placement Record</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
-            <div class="bm-stat-box avg">
-              <span class="bm-stat-val" id="bm-avg-pkg"></span>
-              <span class="bm-stat-lbl">Average Package</span>
-            </div>
-            <div class="bm-stat-box high">
-              <span class="bm-stat-val" id="bm-high-pkg"></span>
-              <span class="bm-stat-lbl">Highest Package</span>
-            </div>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:6px;" id="bm-companies"></div>
-        </div>
-
-        <!-- Links -->
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;">
-          <a id="bm-insta-link" target="_blank" rel="noopener"
-             style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#E1306C,#833AB4);color:#fff;padding:9px 18px;border-radius:10px;font-size:0.8rem;font-weight:700;text-decoration:none;">
-            📸 Instagram
-          </a>
-          <a id="bm-web-link" target="_blank" rel="noopener"
-             style="display:inline-flex;align-items:center;gap:6px;background:#EDE8DC;color:#2C1810;border:1.5px solid #C9A96E;padding:9px 18px;border-radius:10px;font-size:0.8rem;font-weight:700;text-decoration:none;">
-            🌐 Official Website
-          </a>
-        </div>
-
-        <!-- Enquiry CTA -->
-        <button id="bm-enquiry-btn"
-          style="width:100%;padding:14px;background:linear-gradient(135deg,#C9A96E,#8B6914);border:none;border-radius:12px;color:#fff;font-size:0.95rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:0.02em;box-shadow:0 4px 16px rgba(139,105,20,0.3);">
-          💬 WhatsApp Enquiry for This College
-        </button>
-
-      </div>
-    </div>
-  </div>
 
   <!-- Branch Comparison Section -->
   <section class="section section--compare" id="compare">
@@ -1093,7 +988,6 @@
   <script src="colleges.js?v=1.1"></script>
   <script src="marketing.js?v=3.6"></script>
   <script src="animations.js?v=1.1"></script>
-  <script src="buildings.js?v=1.0"></script>
   <script>
     // ===== SCROLL RESTORATION FIX =====
     if ('scrollRestoration' in history) {
@@ -1108,8 +1002,8 @@
     // ===== SERVICE WORKER — REGISTRATION (No forced reload) =====
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js?v=5.0').then(registration => {
-          console.log('SW registered: v5.0');
+        navigator.serviceWorker.register('./sw.js?v=6.0').then(registration => {
+          console.log('SW registered: v6.0');
           setInterval(() => {
             navigator.serviceWorker.getRegistration().then(reg => {
               if (reg) reg.update();
@@ -1119,77 +1013,6 @@
       });
     }
   </script>
-
-  <!-- =========================================================
-       FLOATING LIGHTBULB QUERY BUTTON
-       ========================================================= -->
-  <button class="query-bulb-btn" id="queryBulbBtn" aria-label="Quick Query">
-    <div class="query-bulb-icon">💡</div>
-    <span class="query-bulb-label">Quick Query</span>
-  </button>
-
-  <!-- =========================================================
-       QUERY POPUP MODAL
-       ========================================================= -->
-  <div class="query-popup-overlay" id="queryPopupOverlay">
-    <div class="query-popup-box">
-      <button class="query-popup-close" id="qpClose" aria-label="Close">✕</button>
-      <div class="query-popup-bulb-header">
-        <span class="query-popup-bulb-icon">💡</span>
-        <h3>Quick College Enquiry</h3>
-        <p>Fill in your details and we'll call you back within 1 hour!</p>
-      </div>
-
-      <div id="qpSuccessMsg" class="qp-success-msg">
-        <span class="qp-success-icon">✅</span>
-        <h4>Query Sent Successfully!</h4>
-        <p>Our counselor will call you back within 1 hour. Stay tuned!</p>
-      </div>
-
-      <form class="query-popup-form" id="queryPopupForm">
-        <div class="qp-field">
-          <label for="qpName">Your Full Name</label>
-          <input type="text" id="qpName" name="name" placeholder="e.g. Rahul Kumar" required>
-        </div>
-        <div class="qp-field">
-          <label for="qpPhone">WhatsApp / Phone Number</label>
-          <input type="tel" id="qpPhone" name="phone" placeholder="e.g. 9876543210" required pattern="[0-9]{10}">
-        </div>
-        <div class="qp-field">
-          <label for="qpCollege">Interested College (Optional)</label>
-          <select id="qpCollege" name="college">
-            <option value="">-- Select College --</option>
-            <option>JIS College of Engineering (JISCE)</option>
-            <option>Narula Institute of Technology (NIT)</option>
-            <option>Guru Nanak Institute of Technology (GNIT)</option>
-            <option>Dr Sudhir Chandra Sur Institute (Sur Tech)</option>
-            <option>Asansol Engineering College (AEC)</option>
-            <option>Institute of Engineering & Management (IEM)</option>
-            <option>Heritage Institute of Technology (HIT)</option>
-            <option>Techno India University (TIU)</option>
-            <option>Haldia Institute of Technology</option>
-            <option>Adamas University</option>
-            <option>Brainware University</option>
-            <option>NSHM Knowledge Campus</option>
-            <option>IES University Bhopal</option>
-            <option>Not Sure — Need Guidance</option>
-          </select>
-        </div>
-        <div class="qp-field">
-          <label for="qpMsg">Your Message (Optional)</label>
-          <textarea id="qpMsg" name="message" placeholder="e.g. I want B.Tech CSE admission, please guide..."></textarea>
-        </div>
-        <button type="submit" class="qp-submit-btn">
-          📩 Send My Query
-        </button>
-        <div class="qp-or-divider"><span>OR</span></div>
-        <a href="https://wa.me/919546201805?text=Hi%20EduOrbit!%20I%20want%20admission%20guidance." target="_blank" rel="noopener" class="qp-wa-btn">
-          💬 Chat on WhatsApp
-        </a>
-      </form>
-    </div>
-  </div>
-
 </body>
 
 </html>
