@@ -53,38 +53,26 @@
     .catch(err => console.error('Error sending query email:', err));
   }
 
-  // --- Supabase Database Initialization ---
-  let supabaseClient = null;
-  const SUPABASE_URL = "https://udcnptsaozgktcdxcyvp.supabase.co";
-  const SUPABASE_ANON_KEY = "sb_publishable_rVJnEPIezna8jPoeanUNEQ_3olVH7UK";
+  // --- Firebase Cloud Database Lead Saver ---
+  const FIREBASE_DB_URL = "https://eduorbit-leads-default-rtdb.firebaseio.com";
 
-  if (window.supabase && SUPABASE_URL !== "YOUR_SUPABASE_URL") {
-    try {
-      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      console.log('Supabase client initialized successfully');
-    } catch (e) {
-      console.error('Supabase client initialization failed:', e);
-    }
-  }
-
-  // --- Cloud Database Lead Saver via Supabase ---
   function saveLeadToCloud(lead) {
-    if (!supabaseClient) {
-      console.warn('Supabase not configured or failed to load. Lead saved locally only.');
-      return;
-    }
-    supabaseClient.from('leads').insert([{
-      name: lead.name,
-      phone: lead.phone,
-      course: lead.course || 'General',
-      message: lead.message || '',
-      date: lead.date
-    }])
-    .then(({ error }) => {
-      if (error) console.error('Cloud database sync error:', error);
-      else console.log('Lead successfully synced to cloud database');
+    if (!FIREBASE_DB_URL) return;
+
+    fetch(`${FIREBASE_DB_URL}/leads.json`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: lead.name || '',
+        phone: lead.phone || '',
+        course: lead.course || 'General',
+        message: lead.message || '',
+        date: lead.date || new Date().toISOString()
+      })
     })
-    .catch(err => console.error('Cloud database insert exception:', err));
+    .then(res => res.json())
+    .then(data => console.log('Lead successfully synced to Firebase Cloud:', data))
+    .catch(err => console.error('Firebase Cloud insert exception:', err));
   }
 
   // --- Loader ---

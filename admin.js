@@ -2,19 +2,8 @@
 // Cache-busting hash tracking for auto-syncing tabs & devices
 let lastAdminDataHash = '';
 
-// --- Supabase Database Initialization ---
-let supabaseClient = null;
-const SUPABASE_URL = "https://udcnptsaozgktcdxcyvp.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_rVJnEPIezna8jPoeanUNEQ_3olVH7UK";
-
-if (window.supabase && SUPABASE_URL !== "YOUR_SUPABASE_URL") {
-  try {
-    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    console.log('Supabase client initialized successfully');
-  } catch (e) {
-    console.error('Supabase client initialization failed:', e);
-  }
-}
+// --- Firebase Realtime Database Configuration ---
+const FIREBASE_DB_URL = "https://eduorbit-leads-default-rtdb.firebaseio.com";
 
 // ===== AUTH =====
 function doLogin() {
@@ -90,69 +79,60 @@ function saveLeads(data) {
 }
 
 function deleteLeadFromCloud(leadId) {
-  if (!supabaseClient || !leadId) return;
+  if (!FIREBASE_DB_URL || !leadId) return;
 
-  supabaseClient.from('leads').delete().eq('id', leadId)
-  .then(({ error }) => {
-    if (error) console.error('Error deleting lead from cloud:', error);
-    else console.log('Lead successfully deleted from cloud');
-  })
-  .catch(err => console.error('Cloud delete exception:', err));
+  fetch(`${FIREBASE_DB_URL}/leads/${leadId}.json`, { method: "DELETE" })
+    .then(() => console.log('Lead successfully deleted from Firebase Cloud'))
+    .catch(err => console.error('Cloud delete exception:', err));
 }
 
 // --- Cloud Database Synchronizer ---
 function syncLeadsWithCloud() {
-  // Only sync if the admin is logged in
   if (localStorage.getItem('eo_admin') !== 'true') return Promise.resolve();
-  if (!supabaseClient) return Promise.resolve();
+  if (!FIREBASE_DB_URL) return Promise.resolve();
 
-  return supabaseClient.from('leads').select('*').order('date', { ascending: true })
-  .then(({ data: cloudLeads, error }) => {
-    if (error) {
-      console.error("Supabase select error:", error);
-      return;
-    }
-    if (!Array.isArray(cloudLeads)) {
-      console.warn("Invalid response from Supabase:", cloudLeads);
-      return;
-    }
-    const localLeads = getLeads();
-    
-    // Merge cloud leads into local leads
-    const merged = [...localLeads];
-    let hasNew = false;
-    cloudLeads.forEach(cloudLead => {
-      // Find if local already has a lead with the same date/phone or same id
-      const exists = localLeads.some(localLead => 
-        (localLead.id && localLead.id === cloudLead.id) ||
-        (localLead.date === cloudLead.date && localLead.phone === cloudLead.phone)
-      );
-      if (!exists) {
-        merged.push(cloudLead);
-        hasNew = true;
-      } else {
-        // Attach ID if it was submitted offline locally without one
-        const localIndex = merged.findIndex(localLead => 
-          localLead.date === cloudLead.date && localLead.phone === cloudLead.phone
-        );
-        if (localIndex !== -1 && !merged[localIndex].id) {
-          merged[localIndex].id = cloudLead.id;
-          hasNew = true;
-        }
+  const syncStatusEl = document.getElementById('syncStatus');
+
+  return fetch(`${FIREBASE_DB_URL}/leads.json`)
+    .then(res => res.json())
+    .then(data => {
+      const cloudLeads = [];
+      if (data && typeof data === 'object') {
+        Object.keys(data).forEach(key => {
+          if (data[key]) {
+            cloudLeads.push({
+              id: key,
+              name: data[key].name || '',
+              phone: data[key].phone || '',
+              course: data[key].course || 'General',
+              message: data[key].message || '',
+              date: data[key].date || new Date().toISOString()
+            });
+          }
+        });
       }
-    });
 
-    if (hasNew) {
-      merged.sort((a, b) => new Date(a.date) - new Date(b.date));
-      localStorage.setItem('eo_leads', JSON.stringify(merged));
-      
-      // Refresh UI
+      // Sort newest first
+      cloudLeads.sort((a, b) => new Date(b.date) - new Date(a.date));
+      localStorage.setItem('eo_leads', JSON.stringify(cloudLeads));
+
+      if (syncStatusEl) {
+        syncStatusEl.innerHTML = '<span style="width:6px; height:6px; background:#10b981; border-radius:50%; display:inline-block;"></span> Live Connected';
+        syncStatusEl.style.color = '#10b981';
+        syncStatusEl.style.background = 'rgba(16,185,129,0.1)';
+      }
+
       updateDashboard();
       renderLeadsTable();
-      renderPartnersTable();
-    }
-  })
-  .catch(err => console.error("Cloud sync error:", err));
+    })
+    .catch(err => {
+      console.error("Firebase sync error:", err);
+      if (syncStatusEl) {
+        syncStatusEl.innerHTML = '<span style="width:6px; height:6px; background:#ef4444; border-radius:50%; display:inline-block;"></span> Sync Error';
+        syncStatusEl.style.color = '#ef4444';
+        syncStatusEl.style.background = 'rgba(239,68,68,0.1)';
+      }
+    });
 }
 
 // ===== INIT =====
@@ -167,7 +147,6 @@ function initAdmin() {
   renderCollegesTable();
   renderCoursesTable();
   renderLeadsTable();
-  renderPartnersTable();
   updateExportPreview();
   populateCollegeFilter();
 
@@ -186,10 +165,9 @@ function showTab(tab, btn) {
       if (b.textContent.toLowerCase().includes(tab.substring(0,4))) b.classList.add('active');
     });
   }
-  const titles = { dashboard:'Dashboard', colleges:'Colleges', courses:'Courses', leads:'Student Leads', partners:'Partner Applications', export:'Export Data' };
+  const titles = { dashboard:'Dashboard', colleges:'Colleges', courses:'Courses', leads:'Student Leads', export:'Export Data' };
   document.getElementById('pageTitle').textContent = titles[tab] || tab;
   if (tab === 'export') updateExportPreview();
-  if (tab === 'partners') renderPartnersTable();
   if (window.innerWidth <= 768) toggleSidebar();
 }
 
@@ -200,15 +178,13 @@ function updateDashboard() {
   const leads = getLeads();
   const today = new Date().toDateString();
 
-  const studentLeads = leads.filter(l => l.course !== 'Partner App');
-  const partnerLeads = leads.filter(l => l.course === 'Partner App');
+  const studentLeads = leads;
   const todayStudentLeads = studentLeads.filter(l => new Date(l.date).toDateString() === today);
 
   document.getElementById('statColleges').textContent = colleges.length;
   document.getElementById('statCourses').textContent = courses.length;
   document.getElementById('statLeads').textContent = studentLeads.length;
   document.getElementById('statToday').textContent = todayStudentLeads.length;
-  document.getElementById('statPartners').textContent = partnerLeads.length;
 
   const recentDiv = document.getElementById('recentLeads');
   const recent = [...studentLeads].reverse().slice(0, 5);
@@ -462,86 +438,13 @@ function deleteLead(idx) {
 function clearLeads() {
   if (!confirm('Delete ALL student leads? This cannot be undone!')) return;
   const allLeads = getLeads();
-  const studentLeads = allLeads.filter(l => l.course !== 'Partner App');
-  studentLeads.forEach(l => {
+  allLeads.forEach(l => {
     if (l.id) deleteLeadFromCloud(l.id);
   });
-  
-  const partnerLeads = allLeads.filter(l => l.course === 'Partner App');
-  localStorage.setItem('eo_leads', JSON.stringify(partnerLeads));
+  localStorage.setItem('eo_leads', '[]');
   renderLeadsTable();
   updateDashboard();
   showToast('🗑 All student leads cleared');
-}
-
-// ===== PARTNERS TABLE =====
-function renderPartnersTable() {
-  const allLeads = getLeads();
-  const partners = allLeads.map((l, idx) => ({ ...l, origIdx: idx })).filter(l => l.course === 'Partner App');
-  const tbody = document.getElementById('partnersBody');
-  if (!tbody) return;
-  if (partners.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#9ca3af;padding:40px">No partner applications yet. When partners sign up, they will appear here.</td></tr>';
-    return;
-  }
-  
-  tbody.innerHTML = [...partners].reverse().map((l, i) => {
-    let profile = 'Other';
-    if (l.message && l.message.includes('Profile: ')) {
-      const match = l.message.match(/Profile:\s*([^|]+)/);
-      if (match) profile = match[1].trim();
-    }
-    
-    return `
-    <tr>
-      <td style="color:#9ca3af">${partners.length - i}</td>
-      <td class="cell-name">${escHtml(l.name)}</td>
-      <td>${escHtml(l.phone)}</td>
-      <td><span class="badge badge-green">${escHtml(profile)}</span></td>
-      <td style="font-size:.78rem;color:#6b7280;max-width:250px">${escHtml(l.message || '')}</td>
-      <td style="font-size:.78rem;white-space:nowrap">${new Date(l.date).toLocaleDateString('en-IN')}</td>
-      <td><a class="btn-sm btn-edit" href="https://wa.me/919546201805?text=${encodeURIComponent(`New Partner App%0AName: ${l.name}%0APhone: ${l.phone}%0ADetails: ${l.message||'-'}`)}" target="_blank">📲 Enquiry</a></td>
-      <td><button class="btn-sm btn-del" onclick="deletePartner(${l.origIdx})">🗑</button></td>
-    </tr>`;
-  }).join('');
-}
-
-function deletePartner(idx) {
-  const leads = getLeads();
-  const leadToDelete = leads[idx];
-  if (leadToDelete && leadToDelete.id) {
-    deleteLeadFromCloud(leadToDelete.id);
-  }
-  leads.splice(idx, 1);
-  localStorage.setItem('eo_leads', JSON.stringify(leads));
-  renderPartnersTable();
-  updateDashboard();
-  showToast('🗑 Partner application deleted');
-}
-
-function clearPartners() {
-  if (!confirm('Delete ALL partner applications? This cannot be undone!')) return;
-  const allLeads = getLeads();
-  const partnerLeads = allLeads.filter(l => l.course === 'Partner App');
-  partnerLeads.forEach(l => {
-    if (l.id) deleteLeadFromCloud(l.id);
-  });
-  
-  const studentLeads = allLeads.filter(l => l.course !== 'Partner App');
-  localStorage.setItem('eo_leads', JSON.stringify(studentLeads));
-  renderPartnersTable();
-  updateDashboard();
-  showToast('🗑 All partner apps cleared');
-}
-
-function exportPartnersCSV() {
-  const partners = getLeads().filter(l => l.course === 'Partner App');
-  if (!partners.length) { showToast('No partner applications to export'); return; }
-  const rows = [['#','Name','Phone','Details','Date']];
-  partners.forEach((l, i) => rows.push([i+1, l.name, l.phone, l.message||'', new Date(l.date).toLocaleDateString()]));
-  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
-  downloadFile('eduorbit_partners.csv', csv, 'text/csv');
-  showToast('📥 CSV downloaded!');
 }
 
 function exportLeadsCSV() {
@@ -680,7 +583,6 @@ function checkAndAutoSync(force = false) {
     // Safe dashboards and leads are always updated in real-time
     updateDashboard();
     renderLeadsTable();
-    renderPartnersTable();
 
     // If no modal is open, we can safely refresh colleges & courses lists too
     if (!isModalOpen) {
