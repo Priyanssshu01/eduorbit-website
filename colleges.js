@@ -70,7 +70,13 @@
     document.getElementById('cpLoc').textContent = college.location || '';
 
     // Branches Tab
-    const branches = COURSES.filter(c => c.colleges.includes(college.abbr));
+    const branches = COURSES.filter(c => (c.colleges || []).some(col => 
+      col === college.abbr || 
+      col === college.id.toUpperCase() || 
+      col.toLowerCase() === college.id.toLowerCase() ||
+      (col === 'SURTECH' && (college.abbr === 'Sur Tech' || college.id === 'surtech')) ||
+      (col === 'HALDIA' && (college.abbr.includes('Haldia') || college.id === 'haldia'))
+    ));
     const branchList = document.getElementById('cpBranchList');
     if (branches.length) {
       branchList.innerHTML = branches.map(b => `

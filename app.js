@@ -603,12 +603,14 @@
   window.openReceiptModal = function() {
     const colSelect = document.getElementById('rCollege');
     colSelect.innerHTML = '<option value="">Select College *</option>' + 
-      COLLEGES.map(c => `<option value="${c.abbr}">${c.name}</option>`).join('');
+      COLLEGES.map(c => `<option value="${c.abbr}">${c.name} (${c.abbr})</option>`).join('');
     
     document.getElementById('receiptFormView').style.display = 'block';
     document.getElementById('receiptPrintView').style.display = 'none';
-    document.getElementById('printedTicket').classList.remove('printing');
+    const printedTicket = document.getElementById('printedTicket');
+    if (printedTicket) printedTicket.classList.remove('printing');
     document.getElementById('receiptForm').reset();
+    document.getElementById('rCourse').innerHTML = '<option value="">Select College First *</option>';
     document.getElementById('receiptOverlay').classList.add('show');
   };
 
@@ -617,71 +619,207 @@
   };
 
   window.updateReceiptCourses = function() {
-    const col = document.getElementById('rCollege').value;
+    const colVal = document.getElementById('rCollege').value;
     const courseSelect = document.getElementById('rCourse');
-    if (!col) {
-      courseSelect.innerHTML = '<option value="">Select Course *</option>';
+    if (!colVal) {
+      courseSelect.innerHTML = '<option value="">Select College First *</option>';
       return;
     }
-    const available = COURSES.filter(c => c.colleges.includes(col));
-    courseSelect.innerHTML = '<option value="">Select Course *</option>' + 
-      available.map(c => `<option value="${c.name}">${c.name} (${c.type})</option>`).join('');
+
+    const colObj = COLLEGES.find(c => 
+      c.abbr === colVal || 
+      c.id === colVal || 
+      c.abbr.toLowerCase() === colVal.toLowerCase() ||
+      c.id.toLowerCase() === colVal.toLowerCase()
+    );
+    const targetAbbr = colObj ? colObj.abbr : colVal;
+
+    // Filter courses matching this college
+    const matched = [];
+    COURSES.forEach((c, idx) => {
+      const match = (c.colleges || []).some(cc => 
+        cc === targetAbbr || 
+        (colObj && (
+          cc.toUpperCase() === colObj.abbr.toUpperCase() || 
+          cc.toUpperCase() === colObj.id.toUpperCase() ||
+          cc.toLowerCase() === colObj.name.toLowerCase()
+        ))
+      );
+      if (match) {
+        matched.push({ course: c, idx: idx });
+      }
+    });
+
+    if (matched.length === 0) {
+      courseSelect.innerHTML = '<option value="">No courses listed for this college</option>';
+      return;
+    }
+
+    // Group by course type / degree
+    const groups = {};
+    matched.forEach(item => {
+      const groupName = item.course.type || 'Other Courses';
+      if (!groups[groupName]) groups[groupName] = [];
+      groups[groupName].push(item);
+    });
+
+    let html = '<option value="">Select Course *</option>';
+    for (const [groupName, items] of Object.entries(groups)) {
+      html += `<optgroup label="🎓 ${groupName}">`;
+      items.forEach(item => {
+        const feeStr = item.course.totalFee ? ` - ₹${item.course.totalFee.toLocaleString('en-IN')}` : '';
+        html += `<option value="${item.idx}">${item.course.name} (${item.course.duration} Yrs${feeStr})</option>`;
+      });
+      html += `</optgroup>`;
+    }
+    courseSelect.innerHTML = html;
   };
 
   window.generateReceipt = function(e) {
     e.preventDefault();
     const name = document.getElementById('rName').value.trim();
     const phone = document.getElementById('rPhone').value.trim();
-    const colAbbr = document.getElementById('rCollege').value;
-    const courseName = document.getElementById('rCourse').value;
+    const colVal = document.getElementById('rCollege').value;
+    const courseVal = document.getElementById('rCourse').value;
 
-    const college = COLLEGES.find(c => c.abbr === colAbbr);
-    const course = COURSES.find(c => c.name === courseName && c.colleges.includes(colAbbr));
+    if (!colVal || courseVal === '') {
+      showToast('⚠️ Please select both a college and a course.');
+      return;
+    }
+
+    const college = COLLEGES.find(c => 
+      c.abbr === colVal || 
+      c.id === colVal || 
+      c.abbr.toLowerCase() === colVal.toLowerCase() ||
+      c.id.toLowerCase() === colVal.toLowerCase()
+    );
+
+    const courseIdx = parseInt(courseVal, 10);
+    const course = COURSES[courseIdx];
 
     if (!college || !course) {
       showToast('⚠️ Please select a valid college and course combination.');
       return;
     }
 
+    const courseDisplayName = `${course.name} (${course.type})`;
+
     // Save lead
     const leads = JSON.parse(localStorage.getItem('eo_leads') || '[]');
     const utmInfo = getUTMSourceInfo();
-    const lead = { name, phone, course: courseName, message: `Fee Receipt generated for ${colAbbr}` + utmInfo, date: new Date().toISOString(), stage: 'new' };
+    const lead = { 
+      name, 
+      phone, 
+      college: college.name, 
+      course: courseDisplayName, 
+      totalFee: course.totalFee,
+      message: `Fee Receipt generated for ${college.abbr} - ${courseDisplayName}` + utmInfo, 
+      date: new Date().toISOString(), 
+      stage: 'new' 
+    };
     leads.push(lead);
     localStorage.setItem('eo_leads', JSON.stringify(leads));
     saveLeadToCloud(lead);
 
     // Send email query to owner
     sendEmailQuery({
-      _subject: `Fee Receipt Generated - ${name} (${courseName})`,
+      _subject: `Fee Receipt Generated - ${name} (${courseDisplayName})`,
       Name: name,
       Phone: phone,
       College: `${college.name} (${college.abbr})`,
-      Course: courseName,
+      Course: courseDisplayName,
       TotalFee: `INR ${course.totalFee.toLocaleString('en-IN')}`,
-      Source: `Fee Receipt generated for ${colAbbr}` + utmInfo
+      Source: `Fee Receipt generated for ${college.abbr}` + utmInfo
     });
 
-    // Populate Receipt
-    document.getElementById('tName').textContent = name;
-    document.getElementById('tCollege').textContent = college.abbr;
-    document.getElementById('tCourse').textContent = course.type;
+    // Populate Receipt Slip
+    const receiptNum = `EO-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+    const dateStr = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
     
+    const tMeta = document.getElementById('tMeta');
+    if (tMeta) tMeta.textContent = `Slip #${receiptNum} • ${dateStr}`;
+
+    const tName = document.getElementById('tName');
+    if (tName) tName.textContent = name;
+
+    const tPhone = document.getElementById('tPhone');
+    if (tPhone) tPhone.textContent = phone;
+
+    const tCollege = document.getElementById('tCollege');
+    if (tCollege) tCollege.textContent = `${college.name} (${college.abbr})`;
+
+    const tCourse = document.getElementById('tCourse');
+    if (tCourse) tCourse.textContent = course.name;
+
+    const tProgram = document.getElementById('tProgram');
+    if (tProgram) tProgram.textContent = `${course.type} • ${course.duration} Year${course.duration > 1 ? 's' : ''}`;
+    
+    // Year-wise fee breakdown
     let yearHtml = '';
-    for(let i=0; i<course.duration; i++) {
-      yearHtml += `<div class="t-row"><span>Year ${i+1}:</span><strong>${formatCurrency(course.yearWise[i])}</strong></div>`;
+    const duration = course.duration || 4;
+    for (let i = 0; i < duration; i++) {
+      let yw = 0;
+      if (course.yearWise && course.yearWise[i] !== undefined && typeof course.yearWise[i] === 'number') {
+        yw = course.yearWise[i];
+      } else if (course.totalFee) {
+        yw = Math.round(course.totalFee / duration);
+      }
+      yearHtml += `<div class="t-row"><span>Year ${i+1}:</span><strong>${formatCurrency(yw)}</strong></div>`;
     }
     document.getElementById('tYears').innerHTML = yearHtml;
     document.getElementById('tTotal').textContent = formatCurrency(course.totalFee);
 
-    // Animate
+    // Optional Hostel Row
+    const tHostelRow = document.getElementById('tHostelRow');
+    const tHostel = document.getElementById('tHostel');
+    if (tHostelRow && tHostel) {
+      if (course.hostelBoys && course.hostelBoys !== 'N/A') {
+        tHostel.textContent = `~${formatCurrency(course.hostelBoys)} (${duration} Yrs)`;
+        tHostelRow.style.display = 'flex';
+      } else {
+        tHostelRow.style.display = 'none';
+      }
+    }
+
+    // Switch view and animate printer
     document.getElementById('receiptFormView').style.display = 'none';
     document.getElementById('receiptPrintView').style.display = 'block';
     
-    // Trigger CSS animation by adding class after a tiny delay
-    setTimeout(() => {
-      document.getElementById('printedTicket').classList.add('printing');
-    }, 50);
+    const printedTicket = document.getElementById('printedTicket');
+    if (printedTicket) {
+      printedTicket.classList.remove('printing');
+      setTimeout(() => {
+        printedTicket.classList.add('printing');
+      }, 60);
+    }
+  };
+
+  window.shareReceiptWhatsApp = function() {
+    const name = document.getElementById('tName')?.textContent || '';
+    const col = document.getElementById('tCollege')?.textContent || '';
+    const crs = document.getElementById('tCourse')?.textContent || '';
+    const prg = document.getElementById('tProgram')?.textContent || '';
+    const tot = document.getElementById('tTotal')?.textContent || '';
+
+    const text = `Hi EduOrbit! I just generated my Admission Fee Estimate:\n\n` +
+      `👤 Student: ${name}\n` +
+      `🏛️ College: ${col}\n` +
+      `📚 Course: ${crs} (${prg})\n` +
+      `💰 Total Tuition Fee: ${tot}\n\n` +
+      `Please assist me with direct seat booking and Bihar DRCC / loan process.`;
+
+    window.open(`https://wa.me/919546201805?text=${encodeURIComponent(text)}`, '_blank');
+  };
+
+  window.printReceiptSlip = function() {
+    window.print();
+  };
+
+  window.resetReceiptForm = function() {
+    document.getElementById('receiptPrintView').style.display = 'none';
+    document.getElementById('receiptFormView').style.display = 'block';
+    const printedTicket = document.getElementById('printedTicket');
+    if (printedTicket) printedTicket.classList.remove('printing');
   };
   let popupShown = false;
   function showLeadPopup() {
